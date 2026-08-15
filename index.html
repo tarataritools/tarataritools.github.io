@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>TaraTari · tools</title>
+
+    <!-- Google Fonts + Material Symbols -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Flex:opsz,wght@8..144,400..700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Rounded" rel="stylesheet" />
+
+    <style>
+        /* ============================================================
+           Dark · Green/Mint colour scheme (M3‑inspired)
+           ============================================================ */
+        :root {
+            --md-sys-color-primary: #4CAF50;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: #1E3A2A;
+            --md-sys-color-on-primary-container: #A5D6A7;
+
+            --md-sys-color-secondary: #26A69A;
+            --md-sys-color-on-secondary: #FFFFFF;
+            --md-sys-color-secondary-container: #1A2E2A;
+            --md-sys-color-on-secondary-container: #80CBC4;
+
+            --md-sys-color-tertiary: #7CB342;
+            --md-sys-color-on-tertiary: #FFFFFF;
+            --md-sys-color-tertiary-container: #1F3A1A;
+            --md-sys-color-on-tertiary-container: #AED581;
+
+            --md-sys-color-surface: #121212;
+            --md-sys-color-on-surface: #E8E8E8;
+            --md-sys-color-surface-variant: #1E1E1E;
+            --md-sys-color-on-surface-variant: #A0A0A0;
+
+            --md-sys-color-surface-container-lowest: #0A0A0A;
+            --md-sys-color-surface-container-low: #1A1A1A;
+            --md-sys-color-surface-container: #222222;
+            --md-sys-color-surface-container-high: #2A2A2A;
+            --md-sys-color-surface-container-highest: #323232;
+
+            --md-sys-color-outline: #3A5A3A;
+            --md-sys-color-outline-variant: #2A3A2A;
+
+            --md-sys-color-error: #CF6679;
+            --md-sys-color-on-error: #121212;
+
+            --md-sys-elevation-1: 0 1px 3px rgba(0, 0, 0, 0.6), 0 1px 2px rgba(0, 0, 0, 0.4);
+            --md-sys-elevation-2: 0 1px 3px rgba(0, 0, 0, 0.7), 0 2px 6px 2px rgba(0, 0, 0, 0.4);
+            --md-sys-elevation-3: 0 1px 4px rgba(0, 0, 0, 0.8), 0 4px 10px 4px rgba(0, 0, 0, 0.3);
+
+            --md-shape-xs: 4px;
+            --md-shape-sm: 8px;
+            --md-shape-md: 12px;
+            --md-shape-lg: 16px;
+            --md-shape-xl: 28px;
+            --md-shape-full: 999px;
+
+            --md-font-brand: 'Roboto Flex', 'Roboto', sans-serif;
+            --md-font-plain: 'Roboto', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            font-family: var(--md-font-plain);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .material-symbols-rounded {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+            line-height: 1;
+            user-select: none;
+        }
+
+        /* ---------- Top App Bar ---------- */
+        .top-app-bar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            height: 64px;
+            padding: 0 16px;
+            background: var(--md-sys-color-surface-container);
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .top-app-bar__logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .top-app-bar__logo .material-symbols-rounded {
+            font-size: 28px;
+            color: var(--md-sys-color-primary);
+        }
+
+        .top-app-bar__title {
+            font-family: var(--md-font-brand);
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            margin: 0;
+        }
+
+        .top-app-bar__title span {
+            color: var(--md-sys-color-primary);
+        }
+
+        .top-app-bar__spacer {
+            flex: 1;
+        }
+
+        /* ---------- GitHub icon button (top app bar) ---------- */
+        .github-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            background: var(--md-sys-color-surface-container-high);
+            color: var(--md-sys-color-on-surface);
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s, transform 0.15s;
+            flex-shrink: 0;
+        }
+
+        .github-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .github-btn:hover {
+            background: var(--md-sys-color-secondary-container);
+            border-color: var(--md-sys-color-secondary);
+            color: var(--md-sys-color-on-secondary-container);
+        }
+
+        .github-btn:active {
+            transform: scale(0.94);
+        }
+
+        /* ---------- Content ---------- */
+        .content {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 16px 20px 32px;
+        }
+
+        .page {
+            animation: fade-in 0.2s ease;
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .page {
+                animation: none;
+            }
+        }
+
+        .page__header {
+            margin-bottom: 20px;
+        }
+
+        .page__title {
+            font-family: var(--md-font-brand);
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin: 0 0 4px;
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .page__subtitle {
+            font-size: 14px;
+            color: var(--md-sys-color-on-surface-variant);
+            margin: 0;
+        }
+
+        /* ---------- Search Bar ---------- */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            height: 52px;
+            padding: 0 16px;
+            border-radius: var(--md-shape-full);
+            background: var(--md-sys-color-surface-container-high);
+            color: var(--md-sys-color-on-surface-variant);
+            margin-bottom: 20px;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-bar:focus-within {
+            border-color: var(--md-sys-color-primary);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.25);
+        }
+
+        .search-bar .material-symbols-rounded {
+            color: var(--md-sys-color-primary);
+        }
+
+        .search-bar input {
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 16px;
+            flex: 1;
+            color: var(--md-sys-color-on-surface);
+            font-family: var(--md-font-plain);
+        }
+
+        .search-bar input::placeholder {
+            color: var(--md-sys-color-on-surface-variant);
+            opacity: 0.7;
+        }
+
+        .search-bar__clear {
+            background: none;
+            border: none;
+            color: var(--md-sys-color-on-surface-variant);
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.15s;
+        }
+
+        .search-bar__clear:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        /* ---------- Platform filter (All / Mobile / PC) ---------- */
+        .platform-filter {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            max-width: 320px;
+            margin: 18px auto 0;
+            padding: 4px;
+            background: var(--md-sys-color-surface-container-low);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            border-radius: var(--md-shape-full);
+        }
+
+        .platform-filter__btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border-radius: var(--md-shape-full);
+            border: none;
+            background: transparent;
+            color: var(--md-sys-color-on-surface-variant);
+            font-family: var(--md-font-plain);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .platform-filter__btn .material-symbols-rounded {
+            font-size: 16px;
+        }
+
+        .platform-filter__btn.is-active {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+        }
+
+        /* ---------- Category sections (homepage browse view) ---------- */
+        .category-section {
+            margin-bottom: 28px;
+        }
+
+        .category-section__title {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            font-family: var(--md-font-brand);
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .category-section__count {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        /* ---------- Filter Pills ---------- */
+        .filter-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .filter-pill {
+            padding: 4px 14px;
+            border-radius: var(--md-shape-full);
+            border: 1px solid var(--md-sys-color-outline);
+            background: transparent;
+            font-size: 13px;
+            font-weight: 500;
+            font-family: var(--md-font-plain);
+            color: var(--md-sys-color-on-surface-variant);
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s, color 0.15s;
+        }
+
+        .filter-pill:hover {
+            background: var(--md-sys-color-surface-container-highest);
+        }
+
+        .filter-pill.is-active {
+            background: var(--md-sys-color-secondary-container);
+            border-color: var(--md-sys-color-secondary);
+            color: var(--md-sys-color-on-secondary-container);
+        }
+
+        /* ---------- Tools Grid ---------- */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 12px;
+            margin-top: 4px;
+        }
+
+        .tool-card {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 14px 16px;
+            border-radius: var(--md-shape-lg);
+            background: var(--md-sys-color-surface-container-low);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            cursor: pointer;
+            transition: background 0.15s, box-shadow 0.15s, transform 0.15s;
+            text-decoration: none;
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .tool-card:hover {
+            background: var(--md-sys-color-surface-container-highest);
+            box-shadow: var(--md-sys-elevation-1);
+            transform: translateY(-2px);
+        }
+
+        .tool-card:active {
+            transform: scale(0.98);
+        }
+
+        .tool-card__top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tool-card__icon {
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            border-radius: var(--md-shape-sm);
+            background: var(--md-sys-color-surface-container-highest);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .tool-card__icon img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        .tool-card__icon .material-symbols-rounded {
+            font-size: 26px;
+            color: var(--md-sys-color-primary);
+        }
+
+        .tool-card__top-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .tool-card__name {
+            font-weight: 600;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .tool-card__category {
+            font-size: 11px;
+            color: var(--md-sys-color-primary);
+            font-weight: 500;
+        }
+
+        .tool-card__desc {
+            font-size: 12px;
+            color: var(--md-sys-color-on-surface-variant);
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* ---------- OS badges ---------- */
+        .os-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .os-badge {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            padding: 2px 7px 2px 5px;
+            border-radius: var(--md-shape-full);
+            background: var(--md-sys-color-surface-container-highest);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            color: var(--md-sys-color-on-surface-variant);
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .os-badge img {
+            width: 11px;
+            height: 11px;
+            display: block;
+        }
+
+        .os-badge .material-symbols-rounded {
+            font-size: 12px;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .tool-card__os-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--md-sys-color-on-surface-variant);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        /* ---------- Visit site footer ---------- */
+        .tool-card__footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 2px;
+        }
+
+        .tool-card__visit {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--md-sys-color-primary);
+            text-decoration: none;
+        }
+
+        .tool-card__visit .material-symbols-rounded {
+            font-size: 14px;
+        }
+
+        /* ---------- Empty State ---------- */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .empty-state .material-symbols-rounded {
+            font-size: 48px;
+            color: var(--md-sys-color-outline);
+            margin-bottom: 12px;
+        }
+
+        .empty-state p {
+            font-size: 15px;
+            margin: 0;
+        }
+
+        /* ---------- Mobile Bottom Navigation (Material 3) ---------- */
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 30;
+            height: 72px;
+            padding-bottom: env(safe-area-inset-bottom, 0);
+            background: var(--md-sys-color-surface-container);
+            border-top: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .bottom-nav__item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            padding: 8px 0 12px;
+            color: var(--md-sys-color-on-surface-variant);
+            font-family: var(--md-font-plain);
+            transition: color 0.2s;
+            position: relative;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .bottom-nav__icon {
+            width: 56px;
+            height: 32px;
+            border-radius: var(--md-shape-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .bottom-nav__icon svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        .bottom-nav__icon .material-symbols-rounded {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            transition: font-variation-settings 0.2s ease;
+        }
+
+        .bottom-nav__label {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .bottom-nav__item.is-active {
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .bottom-nav__item.is-active .bottom-nav__icon {
+            background: var(--md-sys-color-secondary-container);
+        }
+
+        .bottom-nav__item.is-active .bottom-nav__icon .material-symbols-rounded {
+            color: var(--md-sys-color-on-secondary-container);
+            font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .bottom-nav__item:active .bottom-nav__icon {
+            background: var(--md-sys-color-surface-container-highest);
+        }
+
+        /* ---------- Back to Top Button (Uiverse by waliddu001) ---------- */
+        .back-to-top-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            z-index: 50;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgb(20, 20, 20);
+            border: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 0px 0px 4px rgba(76, 175, 80, 0.253);
+            cursor: pointer;
+            transition-duration: 0.3s;
+            overflow: hidden;
+            position: fixed;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.8);
+            transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s, width 0.3s, border-radius 0.3s;
+        }
+
+        .back-to-top-btn.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        .back-to-top-btn .svgIcon {
+            width: 16px;
+            transition-duration: 0.3s;
+            flex-shrink: 0;
+        }
+
+        .back-to-top-btn .svgIcon path {
+            fill: white;
+        }
+
+        .back-to-top-btn:hover {
+            width: 140px;
+            border-radius: 50px;
+            transition-duration: 0.3s;
+            background-color: var(--md-sys-color-primary);
+            align-items: center;
+            box-shadow: 0px 0px 0px 4px rgba(76, 175, 80, 0.4);
+        }
+
+        .back-to-top-btn:hover .svgIcon {
+            transition-duration: 0.3s;
+            transform: translateY(-200%);
+        }
+
+        .back-to-top-btn::before {
+            position: absolute;
+            bottom: -20px;
+            content: "Back to Top";
+            color: white;
+            font-size: 0px;
+            white-space: nowrap;
+            transition: font-size 0.3s, bottom 0.3s, opacity 0.3s;
+            opacity: 0;
+        }
+
+        .back-to-top-btn:hover::before {
+            font-size: 13px;
+            opacity: 1;
+            bottom: unset;
+            transition-duration: 0.3s;
+        }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 768px) {
+            .bottom-nav {
+                display: flex;
+            }
+
+            .top-app-bar .github-btn {
+                display: none;
+            }
+
+            .platform-filter {
+                display: none;
+            }
+
+            .content {
+                padding-bottom: 88px;
+            }
+
+            .back-to-top-btn {
+                bottom: 96px;
+                right: 16px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .bottom-nav {
+                display: none !important;
+            }
+
+            .content {
+                padding-bottom: 48px;
+            }
+
+            .back-to-top-btn {
+                bottom: 30px;
+                right: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content {
+                padding: 12px 14px 24px;
+            }
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            .top-app-bar__title {
+                font-size: 17px;
+            }
+            .page__title {
+                font-size: 24px;
+            }
+            .bottom-nav {
+                height: 64px;
+            }
+            .bottom-nav__label {
+                font-size: 10px;
+            }
+        }
+
+        @media (min-width: 600px) {
+            .tools-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        /* ---------- Home hero: suggestion slider ---------- */
+        .suggestion-slider {
+            position: relative;
+            margin: 4px 0 28px;
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+        }
+
+        .suggestion-slider__track {
+            display: flex;
+            gap: 12px;
+            width: max-content;
+            animation: slide-left 34s linear infinite;
+        }
+
+        .suggestion-slider:hover .suggestion-slider__track {
+            animation-play-state: paused;
+        }
+
+        @keyframes slide-left {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .suggestion-slider__track {
+                animation: none;
+                overflow-x: auto;
+            }
+        }
+
+        .suggestion-card {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 220px;
+            padding: 10px 14px;
+            border-radius: var(--md-shape-lg);
+            background: var(--md-sys-color-surface-container-low);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            text-decoration: none;
+            color: var(--md-sys-color-on-surface);
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s;
+        }
+
+        .suggestion-card:hover {
+            background: var(--md-sys-color-surface-container-highest);
+            border-color: var(--md-sys-color-outline);
+        }
+
+        .suggestion-card__icon {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: var(--md-shape-sm);
+            background: var(--md-sys-color-surface-container-highest);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .suggestion-card__icon img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+        }
+
+        .suggestion-card__text {
+            min-width: 0;
+        }
+
+        .suggestion-card__name {
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .suggestion-card__label {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--md-sys-color-primary);
+        }
+
+        /* ---------- Home hero: search ---------- */
+        .search-hero {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .search-hero__title {
+            font-family: var(--md-font-brand);
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .search-hero__title span {
+            color: var(--md-sys-color-primary);
+        }
+
+        .search-hero__subtitle {
+            font-size: 14px;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-bottom: 18px;
+        }
+
+        .search-bar--hero {
+            height: 56px;
+            max-width: 560px;
+            margin: 0 auto;
+            padding: 0 20px;
+            background: var(--md-sys-color-surface-container-high);
+            box-shadow: var(--md-sys-elevation-1);
+        }
+
+        .search-bar--hero input {
+            font-size: 16px;
+        }
+
+        /* ---------- Quick suggestion chips ---------- */
+        .quick-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            max-width: 560px;
+            margin: 14px auto 8px;
+        }
+
+        .quick-suggestions__label {
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-bottom: 2px;
+        }
+
+        .quick-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: var(--md-shape-full);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            background: var(--md-sys-color-surface-container-low);
+            color: var(--md-sys-color-on-surface-variant);
+            font-family: var(--md-font-plain);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s, color 0.15s;
+        }
+
+        .quick-chip .material-symbols-rounded {
+            font-size: 16px;
+        }
+
+        .quick-chip:hover {
+            background: var(--md-sys-color-primary-container);
+            border-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary-container);
+        }
+
+        .browse-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 28px 0 14px;
+            color: var(--md-sys-color-on-surface-variant);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .browse-divider::before,
+        .browse-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--md-sys-color-outline-variant);
+        }
+
+        /* ---------- GitHub "star us" modal ---------- */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+        }
+
+        .modal-overlay.is-open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-card {
+            width: 100%;
+            max-width: 360px;
+            background: var(--md-sys-color-surface-container-high);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            border-radius: var(--md-shape-xl);
+            padding: 28px 24px 24px;
+            text-align: center;
+            box-shadow: var(--md-sys-elevation-3);
+            transform: scale(0.94) translateY(8px);
+            transition: transform 0.2s ease;
+        }
+
+        .modal-overlay.is-open .modal-card {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-card__icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 14px;
+            border-radius: 50%;
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-card__icon svg {
+            width: 28px;
+            height: 28px;
+            fill: currentColor;
+        }
+
+        .modal-card__title {
+            font-family: var(--md-font-brand);
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .modal-card__desc {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-bottom: 22px;
+        }
+
+        .modal-card__actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .modal-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            height: 44px;
+            border-radius: var(--md-shape-full);
+            font-family: var(--md-font-plain);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            transition: box-shadow 0.15s, background 0.15s;
+        }
+
+        .modal-btn--filled {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+        }
+
+        .modal-btn--filled:hover {
+            box-shadow: var(--md-sys-elevation-2);
+        }
+
+        .modal-btn--filled svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .modal-btn--text {
+            background: transparent;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .modal-btn--text:hover {
+            background: var(--md-sys-color-surface-container-highest);
+        }
+
+        /* select styling for global search */
+        .search-select {
+            padding: 6px 14px;
+            border-radius: var(--md-shape-full);
+            border: 1px solid var(--md-sys-color-outline);
+            background: var(--md-sys-color-surface-container);
+            font-family: var(--md-font-plain);
+            font-size: 13px;
+            color: var(--md-sys-color-on-surface);
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-select:focus {
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .search-select option {
+            background: var(--md-sys-color-surface-container);
+            color: var(--md-sys-color-on-surface);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== TOP APP BAR ===== -->
+    <header class="top-app-bar">
+        <a href="#" class="top-app-bar__logo" aria-label="TaraTari home">
+            <span class="material-symbols-rounded">build</span>
+            <span class="top-app-bar__title">Tara<span>Tari</span></span>
+        </a>
+
+        <span class="top-app-bar__spacer"></span>
+
+        <button class="github-btn" id="githubTopBtn" aria-label="Star TaraTari on GitHub" title="Star us on GitHub">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        </button>
+    </header>
+
+    <!-- ===== CONTENT ===== -->
+    <main class="content">
+
+        <!-- HOME -->
+        <section class="page" id="page-home">
+
+            <!-- Suggestion slider -->
+            <div class="suggestion-slider" aria-label="Featured tools">
+                <div class="suggestion-slider__track" id="suggestionTrack"></div>
+            </div>
+
+            <!-- Hero search -->
+            <div class="search-hero">
+                <h2 class="search-hero__title">Tara<span>Tari</span> tools</h2>
+                <p class="search-hero__subtitle">Your curated collection of open‑source &amp; privacy‑first apps</p>
+
+                <div class="search-bar search-bar--hero" id="homeSearchBar">
+                    <span class="material-symbols-rounded">search</span>
+                    <input type="text" id="homeSearchInput" placeholder="Search by name, category, or description…" />
+                    <button class="search-bar__clear" id="homeSearchClear" aria-label="Clear search">
+                        <span class="material-symbols-rounded" style="font-size:20px;">close</span>
+                    </button>
+                </div>
+
+                <div class="quick-suggestions" id="quickSuggestions">
+                    <span class="quick-suggestions__label">Popular searches</span>
+                </div>
+
+                <div class="platform-filter" id="platformFilter" role="tablist" aria-label="Filter by platform">
+                    <button class="platform-filter__btn is-active" data-platform="all">
+                        <span class="material-symbols-rounded">apps</span>All
+                    </button>
+                    <button class="platform-filter__btn" data-platform="mobile">
+                        <span class="material-symbols-rounded">smartphone</span>Mobile
+                    </button>
+                    <button class="platform-filter__btn" data-platform="pc">
+                        <span class="material-symbols-rounded">desktop_windows</span>PC
+                    </button>
+                </div>
+            </div>
+
+            <div class="browse-divider" id="browseDivider">Browse all tools</div>
+
+            <!-- Grouped-by-category browse view (default) -->
+            <div id="categorySections"></div>
+
+            <!-- Flat search-results view (shown while a search query is active) -->
+            <div class="tools-grid" id="homeGrid" hidden></div>
+        </section>
+
+    </main>
+
+    <!-- ===== BACK TO TOP BUTTON ===== -->
+    <button class="back-to-top-btn" id="backToTopBtn" aria-label="Back to Top">
+        <svg class="svgIcon" viewBox="0 0 384 512">
+            <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/>
+        </svg>
+    </button>
+
+    <!-- ===== MOBILE BOTTOM NAVIGATION (Material 3) ===== -->
+    <nav class="bottom-nav" id="mobileBottomNav" aria-label="Filter by platform">
+        <button class="bottom-nav__item is-active" data-platform="all">
+            <span class="bottom-nav__icon">
+                <span class="material-symbols-rounded">apps</span>
+            </span>
+            <span class="bottom-nav__label">All</span>
+        </button>
+        <button class="bottom-nav__item" data-platform="mobile">
+            <span class="bottom-nav__icon">
+                <span class="material-symbols-rounded">smartphone</span>
+            </span>
+            <span class="bottom-nav__label">Mobile</span>
+        </button>
+        <button class="bottom-nav__item" data-platform="pc">
+            <span class="bottom-nav__icon">
+                <span class="material-symbols-rounded">desktop_windows</span>
+            </span>
+            <span class="bottom-nav__label">PC</span>
+        </button>
+        <button class="bottom-nav__item" id="githubBottomBtn">
+            <span class="bottom-nav__icon">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+            </span>
+            <span class="bottom-nav__label">GitHub</span>
+        </button>
+    </nav>
+
+    <!-- ===== GITHUB "STAR US" MODAL ===== -->
+    <div class="modal-overlay" id="githubModal" role="dialog" aria-modal="true" aria-labelledby="githubModalTitle">
+        <div class="modal-card">
+            <div class="modal-card__icon">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+            </div>
+            <h3 class="modal-card__title" id="githubModalTitle">Enjoying TaraTari?</h3>
+            <p class="modal-card__desc">If this collection has saved you time, a star on GitHub helps other people find it too — it takes two seconds.</p>
+            <div class="modal-card__actions">
+                <a class="modal-btn modal-btn--filled" href="http://github.com/tarataritools/tarataritools.github.io" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+                    Star on GitHub
+                </a>
+                <button class="modal-btn modal-btn--text" id="githubModalClose">Maybe later</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ================================================================
+        //  TOOLS DATABASE
+        // ================================================================
+        // platforms: subset of Windows / Linux / macOS / Android / iOS / Web
+        // isOS: true suppresses OS badges entirely (used for OS install images)
+        const toolsDatabase = [
+            // Archive / Compression
+            { id: 1, name: "7-Zip", url: "https://7-zip.org/download.html",
+                icon: "https://7-zip.org/7ziplogo.png", category: "Archive / Compression",
+                platforms: ["Windows", "Linux"], desc: "High compression file archiver." },
+            { id: 2, name: "PeaZip", url: "https://peazip.github.io/",
+                icon: "https://img.alternativeto.net/icons/280/peazip_237831.svg", category: "Archive / Compression",
+                platforms: ["Windows", "Linux"], desc: "Cross-platform archive manager." },
+
+            // Video / Media
+            { id: 3, name: "OBS Studio", url: "https://obsproject.com/",
+                icon: "https://obsproject.com/assets/images/new_icon_small-r.png", category: "Video / Media",
+                platforms: ["Windows", "Linux", "macOS"], desc: "Open source streaming & recording." },
+            { id: 4, name: "VLC", url: "https://www.videolan.org/vlc/",
+                icon: "https://img.alternativeto.net/icons/280/vlc-media-player_233348.svg", category: "Video / Media",
+                platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Plays everything, lightweight." },
+            { id: 5, name: "MPV Player", url: "https://mpv.io/installation/",
+                icon: "https://img.alternativeto.net/icons/280/mpv_248928.svg", category: "Video / Media",
+                platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Minimal, scriptable video player." },
+
+            // Display / Utilities
+            { id: 6, name: "Twinkle Tray", url: "https://twinkletray.com/",
+                icon: "https://raw.githubusercontent.com/xanderfrangos/twinkle-tray/master/src/assets/logo.png",
+                category: "Display / Utilities", platforms: ["Windows"], desc: "Multi-monitor brightness control." },
+            { id: 7, name: "Everything", url: "https://www.voidtools.com/downloads/",
+                icon: "https://images.sftcdn.net/images/t_app-icon-m/p/d799b3be-96d4-11e6-9fb5-00163ed833e7/1046586710/everything-download-Everything.jpg",
+                category: "Display / Utilities", platforms: ["Windows"], desc: "Instant file search by name." },
+            { id: 8, name: "WinGet UI", url: "https://www.marticliment.com/wingetui/",
+                icon: "https://img.alternativeto.net/icons/140/avif/wingetui_285145.png",
+                category: "Display / Utilities", platforms: ["Windows"], desc: "Graphical interface for WinGet." },
+
+            // Office / Productivity
+            { id: 9, name: "LibreOffice", url: "https://www.libreoffice.org/download/",
+                icon: "https://img.alternativeto.net/icons/280/libreoffice_233404.svg", category: "Office / Productivity",
+                platforms: ["Windows", "Linux"], desc: "Full open source office suite." },
+            { id: 10, name: "ONLYOFFICE", url: "https://www.onlyoffice.com/download-desktop",
+                icon: "https://img.alternativeto.net/icons/280/onlyoffice_245488.svg", category: "Office / Productivity",
+                platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "MS Office compatible suite." },
+            { id: 11, name: "Anytype", url: "https://anytype.io/",
+                icon: "https://img.alternativeto.net/icons/280/anytype_245495.svg", category: "Office / Productivity",
+                platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Local-first encrypted workspace." },
+
+            // Browsers
+            { id: 12, name: "Waterfox", url: "https://www.waterfox.com/",
+                icon: "https://vectorified.com/images/waterfox-icon-18.png", category: "Browsers",
+                platforms: ["Windows", "Linux", "macOS", "Android"], desc: "Fast, ethical Firefox-based browser." },
+            { id: 13, name: "Firefox", url: "https://www.mozilla.org/firefox/new/",
+                icon: "https://img.alternativeto.net/icons/280/firefox_232783.svg", category: "Browsers",
+                platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Popular open source browser." },
+            { id: 14, name: "Brave", url: "https://brave.com/download/",
+                icon: "https://brave.com/static-assets/images/brave-logo-sans-text.svg", category: "Browsers",
+                platforms: ["Windows", "Linux", "macOS"], desc: "Chromium based with built-in adblock." },
+            { id: 15, name: "Helium", url: "https://helium.computer/",
+                icon: "https://raw.githubusercontent.com/mbrukman/helium-browser/main/resources/branding/app_icon/raw.png",
+                category: "Browsers", platforms: ["Windows", "Linux", "macOS"], desc: "Lightweight Chromium fork." },
+            { id: 16, name: "Zen Browser", url: "https://zen-browser.app/",
+                icon: "https://static1.xdaimages.com/wordpress/wp-content/uploads/2025/05/zen-browser-logo.png",
+                category: "Browsers", platforms: ["Windows", "Linux", "macOS"], desc: "Vertical tabs, minimal design." },
+
+            // Download Managers
+            { id: 17, name: "Free Download Manager", url: "https://www.freedownloadmanager.org/",
+                icon: "https://www.google.com/s2/favicons?sz=128&domain=freedownloadmanager.org",
+                category: "Download Managers", platforms: ["Windows", "Linux", "Android"],
+                desc: "Download manager & torrent client." },
+            { id: 18, name: "AB Download Manager", url: "https://abdownloadmanager.com/",
+                icon: "https://img.alternativeto.net/icons/280/ab-download-manager_235917.svg",
+                category: "Download Managers", platforms: ["Windows", "Linux", "Android"],
+                desc: "Open source download manager." },
+
+            // Torrent
+            { id: 19, name: "qBittorrent", url: "https://www.qbittorrent.org/download.php",
+                icon: "https://media.sys.truenas.net/apps/qbittorrent/icons/icon.png", category: "Torrent",
+                platforms: ["Windows", "Linux"], desc: "Free, ad-free BitTorrent client." },
+
+            // PDF
+            { id: 20, name: "SumatraPDF", url: "https://www.sumatrapdfreader.org/download-free-pdf-viewer",
+                icon: "https://img.alternativeto.net/icons/140/avif/sumatra-pdf_205324.png", category: "PDF",
+                platforms: ["Windows", "Linux"], desc: "Minimal, fast PDF reader." },
+
+            // Password Managers
+            { id: 21, name: "Bitwarden", url: "https://bitwarden.com/download/",
+                icon: "https://img.alternativeto.net/icons/140/bitwarden--free-password-manager_233375.svg",
+                category: "Password Managers", platforms: ["Windows", "Linux", "macOS", "Android", "iOS"],
+                desc: "Encrypted password manager." },
+            { id: 22, name: "Proton Pass", url: "https://proton.me/pass/download",
+                icon: "https://img.alternativeto.net/icons/140/proton-pass_237644.svg",
+                category: "Password Managers", platforms: ["Windows", "Linux", "macOS", "Android", "iOS"],
+                desc: "Privacy-first password manager." },
+
+            // Screenshots
+            { id: 23, name: "Greenshot", url: "https://getgreenshot.org/downloads/",
+                icon: "https://img.alternativeto.net/icons/280/greenshot_252998.svg", category: "Screenshots",
+                platforms: ["Windows"], desc: "Lightweight screenshot tool." },
+            { id: 24, name: "ShareX", url: "https://getsharex.com/downloads/",
+                icon: "https://img.alternativeto.net/icons/280/sharex_233027.svg", category: "Screenshots",
+                platforms: ["Windows", "Linux"], desc: "Advanced screen capture & annotation." },
+            { id: 25, name: "Flameshot", url: "https://flameshot.org/#download",
+                icon: "https://img.alternativeto.net/icons/140/flameshot_234680.svg", category: "Screenshots",
+                platforms: ["Windows"], desc: "Powerful screenshot annotation tool." },
+
+            // File Sharing
+            { id: 26, name: "LocalSend", url: "https://localsend.org/",
+                icon: "https://img.alternativeto.net/icons/280/localsend_251558.svg", category: "File Sharing",
+                platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Cross-platform local file sharing." },
+
+            // Communication
+            { id: 27, name: "Revolt", url: "https://revolt.chat/download",
+                icon: "https://img.alternativeto.net/icons/140/revolt-chat_278179.svg", category: "Communication",
+                platforms: ["Windows", "Linux", "macOS"], desc: "Open source Discord alternative." },
+
+            // Gaming
+            { id: 28, name: "Playnite", url: "https://playnite.link/",
+                icon: "https://img.alternativeto.net/icons/140/playnite_233369.svg", category: "Gaming",
+                platforms: ["Windows"], desc: "Unified video game library manager." },
+            { id: 29, name: "Heroic Games Launcher", url: "https://heroicgameslauncher.com/",
+                icon: "https://img.alternativeto.net/icons/140/heroic-games-launcher_238974.svg", category: "Gaming",
+                platforms: ["Windows"], desc: "Open source Epic/GOG launcher." },
+            { id: 30, name: "AntiMicroX", url: "https://github.com/AntiMicroX/antimicrox/releases",
+                icon: "https://img.alternativeto.net/icons/140/avif/antimicrox_170260.png", category: "Gaming",
+                platforms: ["Windows"], desc: "Map keyboard/mouse to a gamepad." },
+
+            // Controller / Phone Tools
+            { id: 31, name: "Monect", url: "https://www.monect.com/",
+                icon: "https://images.sftcdn.net/images/t_app-icon-m/p/26a4fc82-7d40-467b-81de-334cb944e4e2/1851832726/monect-pc-remote-Monect%20PC%20Remote-icon.png",
+                category: "Controller / Phone Tools", platforms: ["Windows", "Android", "iOS"],
+                desc: "Use your phone as a PC remote/gamepad." },
+
+            // Online Tools
+            { id: 32, name: "123apps", url: "https://123apps.com/",
+                icon: "https://img.alternativeto.net/icons/140/avif/http--123apps-com-_254932.png",
+                category: "Online Tools", platforms: ["Web"], desc: "Online tools for audio, video, PDF." },
+
+            // System / Android Tools
+            { id: 33, name: "Android Debloat Package",
+                url: "https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation",
+                iconSymbol: "android", category: "System / Android Tools", platforms: ["Windows", "Linux"],
+                desc: "Remove Android bloatware safely via ADB." },
+
+            // Operating Systems (no OS badges — this IS an OS image)
+            { id: 34, name: "Windows 10 ISO", url: "https://www.microsoft.com/software-download/windows10",
+                iconSymbol: "album", category: "Operating Systems", platforms: ["Windows"], isOS: true,
+                desc: "Official Windows 10 installation image." },
+        ];
+
+        // Category display order (matches the catalog spec)
+        const CATEGORY_ORDER = [
+            "Archive / Compression", "Video / Media", "Display / Utilities", "Office / Productivity",
+            "Browsers", "Download Managers", "Torrent", "PDF", "Password Managers", "Screenshots",
+            "File Sharing", "Communication", "Gaming", "Controller / Phone Tools", "Online Tools",
+            "System / Android Tools", "Operating Systems",
+        ];
+
+        // ================================================================
+        //  OS BADGE META
+        // ================================================================
+        const PLATFORM_META = {
+            Windows: { label: "Windows", icon: "https://cdn.simpleicons.org/windows/e8eaed", type: "img" },
+            Linux: { label: "Linux", icon: "https://cdn.simpleicons.org/linux/e8eaed", type: "img" },
+            macOS: { label: "macOS", icon: "https://cdn.simpleicons.org/apple/e8eaed", type: "img" },
+            Android: { label: "Android", icon: "https://cdn.simpleicons.org/android/e8eaed", type: "img" },
+            iOS: { label: "iOS", icon: "https://cdn.simpleicons.org/apple/e8eaed", type: "img" },
+            Web: { label: "Web", icon: "public", type: "symbol" },
+        };
+
+        const PC_PLATFORMS = ["Windows", "Linux", "macOS", "Web"];
+        const MOBILE_PLATFORMS = ["Android", "iOS"];
+
+        function isPCTool(tool) {
+            return tool.platforms.some(p => PC_PLATFORMS.includes(p));
+        }
+        function isMobileTool(tool) {
+            return tool.platforms.some(p => MOBILE_PLATFORMS.includes(p));
+        }
+
+        function renderOsBadges(tool) {
+            if (tool.isOS) return '';
+            return `<div class="os-badges">${tool.platforms.map(p => {
+                const meta = PLATFORM_META[p];
+                if (!meta) return '';
+                const iconHtml = meta.type === 'img'
+                    ? `<img src="${meta.icon}" alt="" onerror="this.style.display='none'" />`
+                    : `<span class="material-symbols-rounded">${meta.icon}</span>`;
+                return `<span class="os-badge" title="${meta.label}">${iconHtml}${meta.label}</span>`;
+            }).join('')}</div>`;
+        }
+
+        // ================================================================
+        //  HELPERS
+        // ================================================================
+        function escapeHtml(str) {
+            return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[m]);
+        }
+
+        function renderToolCard(tool) {
+            const iconHtml = tool.iconSymbol
+                ? `<span class="material-symbols-rounded">${tool.iconSymbol}</span>`
+                : `<img src="${escapeHtml(tool.icon)}" onerror="this.src='https://placehold.co/44x44/2c2c2c/4CAF50?text=?'" alt="" />`;
+
+            return `
+            <div class="tool-card" data-url="${escapeHtml(tool.url)}">
+              <div class="tool-card__top">
+                <div class="tool-card__icon">${iconHtml}</div>
+                <div class="tool-card__top-info">
+                  <div class="tool-card__name">${escapeHtml(tool.name)}</div>
+                  <div class="tool-card__category">${escapeHtml(tool.category)}</div>
+                </div>
+              </div>
+              <div class="tool-card__desc">${escapeHtml(tool.desc)}</div>
+              ${tool.isOS
+                  ? '<span class="tool-card__os-tag"><span class="material-symbols-rounded" style="font-size:13px;">info</span>OS install image — no platform badges</span>'
+                  : renderOsBadges(tool)}
+              <div class="tool-card__footer">
+                <a class="tool-card__visit" href="${escapeHtml(tool.url)}" target="_blank" rel="noopener" onclick="event.stopPropagation();">
+                  Official site <span class="material-symbols-rounded">open_in_new</span>
+                </a>
+              </div>
+            </div>
+          `;
+        }
+
+        function renderTools(gridId, tools) {
+            const grid = document.getElementById(gridId);
+            if (!grid) return;
+            if (!tools || tools.length === 0) {
+                grid.innerHTML = `
+              <div class="empty-state">
+                <span class="material-symbols-rounded">search_off</span>
+                <p>No tools found</p>
+              </div>
+            `;
+                return;
+            }
+            grid.innerHTML = tools.map(renderToolCard).join('');
+            grid.querySelectorAll('.tool-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    window.open(card.dataset.url, '_blank');
+                });
+            });
+        }
+
+        // Relevance score for a single tool against a tokenized query.
+        // Returns 0 if any token fails to match anywhere (AND matching across words),
+        // otherwise a positive score used to rank the best matches first.
+        function scoreTool(tool, tokens) {
+            const name = tool.name.toLowerCase();
+            const desc = tool.desc.toLowerCase();
+            const cat = tool.category.toLowerCase();
+            let score = 0;
+
+            for (const tok of tokens) {
+                let tokenScore = 0;
+                if (name === tok) tokenScore = 100;
+                else if (name.startsWith(tok)) tokenScore = 60;
+                else if (name.includes(tok)) tokenScore = 35;
+                else if (cat === tok) tokenScore = 30;
+                else if (cat.includes(tok)) tokenScore = 18;
+                else if (desc.includes(tok)) tokenScore = 8;
+
+                if (tokenScore === 0) return 0; // every word must match somewhere
+                score += tokenScore;
+            }
+            return score;
+        }
+
+        function searchTools(tools, query) {
+            const tokens = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+            return tools
+                .map(t => ({ t, score: scoreTool(t, tokens) }))
+                .filter(r => r.score > 0)
+                .sort((a, b) => b.score - a.score)
+                .map(r => r.t);
+        }
+
+        // Small debounce helper so typing feels smooth even while re-rendering grids.
+        function debounce(fn, wait) {
+            let timer = null;
+            return function (...args) {
+                clearTimeout(timer);
+                timer = setTimeout(() => fn.apply(this, args), wait);
+            };
+        }
+
+        // ================================================================
+        //  STATE
+        // ================================================================
+        let homeQuery = '';
+        let platformFilter = 'all'; // 'all' | 'mobile' | 'pc'
+
+        // ================================================================
+        //  RENDER: HOME
+        // ================================================================
+        function toolsForPlatformFilter() {
+            if (platformFilter === 'mobile') return toolsDatabase.filter(isMobileTool);
+            if (platformFilter === 'pc') return toolsDatabase.filter(isPCTool);
+            return toolsDatabase; // 'all' — mixed PC + mobile
+        }
+
+        function renderCategorySections(tools) {
+            const container = document.getElementById('categorySections');
+            const byCategory = new Map();
+            tools.forEach(t => {
+                if (!byCategory.has(t.category)) byCategory.set(t.category, []);
+                byCategory.get(t.category).push(t);
+            });
+
+            const orderedCats = CATEGORY_ORDER.filter(c => byCategory.has(c));
+            if (orderedCats.length === 0) {
+                container.innerHTML = `
+              <div class="empty-state">
+                <span class="material-symbols-rounded">search_off</span>
+                <p>No tools found for this filter</p>
+              </div>
+            `;
+                return;
+            }
+
+            container.innerHTML = orderedCats.map(cat => {
+                const items = byCategory.get(cat);
+                return `
+              <div class="category-section">
+                <div class="category-section__title">${escapeHtml(cat)}
+                  <span class="category-section__count">(${items.length})</span>
+                </div>
+                <div class="tools-grid">${items.map(renderToolCard).join('')}</div>
+              </div>
+            `;
+            }).join('');
+
+            container.querySelectorAll('.tool-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    window.open(card.dataset.url, '_blank');
+                });
+            });
+        }
+
+        function renderHome() {
+            const homeGrid = document.getElementById('homeGrid');
+            const categorySections = document.getElementById('categorySections');
+            const browseDivider = document.getElementById('browseDivider');
+            const base = toolsForPlatformFilter();
+
+            if (homeQuery && homeQuery.trim()) {
+                // Flat, relevance-ranked search results
+                homeGrid.hidden = false;
+                categorySections.hidden = true;
+                browseDivider.hidden = true;
+                renderTools('homeGrid', searchTools(base, homeQuery));
+            } else {
+                // Default grouped-by-category browse view
+                homeGrid.hidden = true;
+                categorySections.hidden = false;
+                browseDivider.hidden = false;
+                renderCategorySections(base);
+            }
+        }
+
+        // ================================================================
+        //  PLATFORM FILTER (All / Mobile / PC) — desktop segmented control
+        //  and mobile bottom nav both drive/reflect the same state.
+        // ================================================================
+        document.querySelectorAll('.platform-filter__btn[data-platform], .bottom-nav__item[data-platform]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                platformFilter = btn.dataset.platform;
+                document.querySelectorAll('.platform-filter__btn[data-platform], .bottom-nav__item[data-platform]').forEach(b =>
+                    b.classList.toggle('is-active', b.dataset.platform === platformFilter));
+                renderHome();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // ================================================================
+        //  GITHUB "STAR US" MODAL
+        // ================================================================
+        const githubModal = document.getElementById('githubModal');
+
+        function openGithubModal() {
+            githubModal.classList.add('is-open');
+        }
+        function closeGithubModal() {
+            githubModal.classList.remove('is-open');
+        }
+
+        document.getElementById('githubTopBtn').addEventListener('click', openGithubModal);
+        document.getElementById('githubBottomBtn').addEventListener('click', openGithubModal);
+        document.getElementById('githubModalClose').addEventListener('click', closeGithubModal);
+        githubModal.addEventListener('click', (e) => {
+            if (e.target === githubModal) closeGithubModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && githubModal.classList.contains('is-open')) closeGithubModal();
+        });
+
+        // ================================================================
+        //  SCROLL: Back to Top visibility
+        // ================================================================
+        const backToTopBtn = document.getElementById('backToTopBtn');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ================================================================
+        //  SEARCH BINDINGS (debounced for smooth typing)
+        // ================================================================
+        const homeInput = document.getElementById('homeSearchInput');
+        const homeClear = document.getElementById('homeSearchClear');
+        const debouncedRenderHome = debounce(renderHome, 120);
+        homeInput.addEventListener('input', () => { homeQuery = homeInput.value;
+            debouncedRenderHome(); });
+        homeClear.addEventListener('click', () => { homeInput.value = '';
+            homeQuery = '';
+            renderHome();
+            homeInput.focus(); });
+
+        // ================================================================
+        //  HOME HERO: suggestion slider + quick-search chips
+        // ================================================================
+        const FEATURED_IDS = [13, 14, 21, 4, 19, 26, 3, 9];
+
+        function renderSuggestionSlider() {
+            const track = document.getElementById('suggestionTrack');
+            const featured = FEATURED_IDS
+                .map(id => toolsDatabase.find(t => t.id === id))
+                .filter(Boolean);
+            if (!featured.length || !track) return;
+
+            const cardHtml = (tool) => {
+                const iconHtml = tool.iconSymbol
+                    ? `<span class="material-symbols-rounded">${tool.iconSymbol}</span>`
+                    : `<img src="${escapeHtml(tool.icon)}" onerror="this.src='https://placehold.co/36x36/2c2c2c/4CAF50?text=?'" alt="" />`;
+                return `
+              <div class="suggestion-card" data-url="${escapeHtml(tool.url)}">
+                <div class="suggestion-card__icon">${iconHtml}</div>
+                <div class="suggestion-card__text">
+                  <div class="suggestion-card__label">Featured</div>
+                  <div class="suggestion-card__name">${escapeHtml(tool.name)}</div>
+                </div>
+              </div>
+            `;
+            };
+            // Duplicate the list so the CSS marquee loop is seamless.
+            track.innerHTML = featured.map(cardHtml).join('') + featured.map(cardHtml).join('');
+            track.querySelectorAll('.suggestion-card').forEach(card => {
+                card.addEventListener('click', () => window.open(card.dataset.url, '_blank'));
+            });
+        }
+
+        const QUICK_SUGGESTIONS = [
+            { label: 'Browsers', icon: 'public', query: 'browsers' },
+            { label: 'PDF tools', icon: 'picture_as_pdf', query: 'pdf' },
+            { label: 'Password manager', icon: 'password', query: 'password' },
+            { label: 'Screenshots', icon: 'screenshot_monitor', query: 'screenshot' },
+            { label: 'Gaming', icon: 'sports_esports', query: 'gaming' },
+        ];
+
+        function renderQuickSuggestions() {
+            const container = document.getElementById('quickSuggestions');
+            const chipsHtml = QUICK_SUGGESTIONS.map(s => `
+              <button class="quick-chip" data-query="${escapeHtml(s.query)}">
+                <span class="material-symbols-rounded">${s.icon}</span>${escapeHtml(s.label)}
+              </button>
+            `).join('');
+            container.insertAdjacentHTML('beforeend', chipsHtml);
+            container.querySelectorAll('.quick-chip').forEach(chip => {
+                chip.addEventListener('click', () => {
+                    homeInput.value = chip.dataset.query;
+                    homeQuery = chip.dataset.query;
+                    renderHome();
+                    homeInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                });
+            });
+        }
+
+        // ================================================================
+        //  INIT
+        // ================================================================
+        renderSuggestionSlider();
+        renderQuickSuggestions();
+        renderHome();
+    </script>
+
+
+</body>
+</html>
