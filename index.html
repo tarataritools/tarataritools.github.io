@@ -3,11 +3,26 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>TaraTari · tools + optimizer</title>
 
-    <!-- Google Fonts + Material Symbols -->
+    <!-- ===== SEO ===== -->
+    <title>TaraTari Tools · Open Source Software Directory</title>
+    <meta name="description" content="TaraTari Tools is a curated collection of open-source, privacy-first software for Windows, Linux, macOS, Android, and iOS. Discover apps, optimizers, and package managers." />
+    <meta name="keywords" content="TaraTari Tools, open source software, privacy tools, Windows optimization, Linux apps, macOS software, Android debloat, package managers" />
+    <link rel="canonical" href="https://tarataritools.github.io/" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="TaraTari Tools · Open Source Software Directory" />
+    <meta property="og:description" content="Curated open-source &amp; privacy-first apps for every platform." />
+    <meta property="og:url" content="https://tarataritools.github.io/" />
+    <meta property="og:type" content="website" />
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#121212" />
+
+    <!-- Google Fonts: Poppins + Material Symbols -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Flex:opsz,wght@8..144,400..700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Rounded" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
@@ -59,8 +74,8 @@
             --md-shape-xl: 28px;
             --md-shape-full: 999px;
 
-            --md-font-brand: 'Roboto Flex', 'Roboto', sans-serif;
-            --md-font-plain: 'Roboto', sans-serif;
+            --md-font-brand: 'Poppins', sans-serif;
+            --md-font-plain: 'Poppins', sans-serif;
 
             /* legacy */
             --bg-elevated: #1a1f30;
@@ -124,39 +139,31 @@
         .top-app-bar__logo {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             text-decoration: none;
             color: var(--md-sys-color-on-surface);
         }
 
-        .top-app-bar__logo .material-symbols-rounded {
-            font-size: 28px;
-            color: var(--md-sys-color-primary);
+        .top-app-bar__logo img {
+            height: 36px;
+            width: auto;
+            display: block;
         }
 
-        .top-app-bar__title {
+        .top-app-bar__logo .logo-text {
             font-family: var(--md-font-brand);
             font-size: 20px;
-            font-weight: 600;
-            letter-spacing: 0.01em;
-            margin: 0;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--md-sys-color-on-surface);
         }
 
-        .top-app-bar__title span {
+        .top-app-bar__logo .logo-text span {
             color: var(--md-sys-color-primary);
         }
 
         .top-app-bar__spacer {
             flex: 1;
-        }
-
-        .top-app-bar__badge {
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--md-sys-color-primary);
-            background: var(--md-sys-color-primary-container);
-            padding: 2px 10px;
-            border-radius: var(--md-shape-full);
         }
 
         /* ---------- Desktop inline nav tabs (top app bar) ---------- */
@@ -1588,9 +1595,9 @@
 
     <!-- ===== TOP APP BAR ===== -->
     <header class="top-app-bar">
-        <a href="#" class="top-app-bar__logo" aria-label="TaraTari home" data-target="home">
-            <span class="material-symbols-rounded">build</span>
-            <span class="top-app-bar__title">Tara<span>Tari</span></span>
+        <a href="#" class="top-app-bar__logo" aria-label="TaraTari Tools home" data-target="home">
+            <img src="https://raw.githubusercontent.com/tarataritools/tarataritools.github.io/main/images/TaraTariToolsLogo.png" alt="TaraTari Tools logo" onerror="this.style.display='none'" />
+            <span class="logo-text">Tara<span>Tari</span></span>
         </a>
 
         <!-- Desktop inline nav (mobile uses the bottom nav instead) -->
@@ -1607,23 +1614,23 @@
         </nav>
 
         <span class="top-app-bar__spacer"></span>
-        <button class="github-btn" id="githubTopBtn" aria-label="GitHub" title="TaraTari on GitHub" data-target="github">
+        <button class="github-btn" id="githubTopBtn" aria-label="GitHub" title="TaraTari Tools on GitHub" data-target="github">
             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
         </button>
     </header>
 
     <div class="wrapper">
 
-        <!-- ════════════════════════════════════════ -->
-        <!-- PAGE: HOME                               -->
-        <!-- ════════════════════════════════════════ -->
+        <!-- ========================================================== -->
+        <!-- PAGE: HOME                                                  -->
+        <!-- ========================================================== -->
         <section class="page" id="page-home">
             <div class="section-card">
                 <div class="section-inner">
 
                     <!-- Hero search -->
                     <div class="search-hero">
-                        <h2 class="search-hero__title">Tara<span>Tari</span> software</h2>
+                        <h1 class="search-hero__title">Tara<span>Tari</span> Tools</h1>
                         <p class="search-hero__subtitle">Curated open‑source &amp; privacy‑first apps</p>
                         <div class="search-bar search-bar--hero" id="mainSearchBar">
                             <span class="material-symbols-rounded">search</span>
@@ -1675,17 +1682,17 @@
             </div>
         </section>
 
-        <!-- ════════════════════════════════════════ -->
-        <!-- PAGE: OPTIMIZE                           -->
-        <!-- ════════════════════════════════════════ -->
+        <!-- ========================================================== -->
+        <!-- PAGE: OPTIMIZE                                             -->
+        <!-- ========================================================== -->
         <section class="page" id="page-optimize" hidden>
 
         <!-- ---------- PC variant (full hub) ---------- -->
         <div class="optimize-pc">
 
-        <!-- ════════════════════════════════════════ -->
-        <!-- SECTION 2: TARATARI OS TOOL (flagship)  -->
-        <!-- ════════════════════════════════════════ -->
+        <!-- ========================================================== -->
+        <!-- SECTION: TARATARI OS TOOL (flagship)                       -->
+        <!-- ========================================================== -->
         <div class="section-card" style="border-color: var(--md-sys-color-primary);">
             <div class="section-inner">
                 <div class="section-title">
@@ -1844,10 +1851,9 @@
             </div>
         </div>
 
-        <!-- ════════════════════════════════════════ -->
-        <!-- SECTION 3: QUICK POWERSHELL TWEAKS       -->
-        <!-- (lightweight alternative — no reinstall) -->
-        <!-- ════════════════════════════════════════ -->
+        <!-- ========================================================== -->
+        <!-- SECTION: QUICK POWERSHELL TWEAKS + WINGET INSTALL          -->
+        <!-- ========================================================== -->
         <div class="section-card" style="border-color: var(--md-sys-color-secondary);">
             <div class="section-inner">
                 <div class="section-title">
@@ -1904,20 +1910,50 @@
                         </p>
                     </div>
                 </div>
+
+                <!-- ===== WINGET INSTALL TUTORIAL ===== -->
+                <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--md-sys-color-outline-variant);">
+                    <div class="cmd-header" style="margin-bottom:0.5rem;">
+                        <i class="fas fa-graduation-cap" style="color:var(--md-sys-color-primary); font-size:1.2rem;"></i>
+                        <h4 style="font-size:1rem; font-weight:700; color:var(--md-sys-color-on-surface);">How to install WinGet (Windows Package Manager)</h4>
+                    </div>
+
+                    <div style="font-size:0.78rem; color:var(--md-sys-color-on-surface-variant); line-height:1.7; margin-bottom:0.8rem;">
+                        <p><strong>1. Check if you already have it:</strong> Open PowerShell and type <code style="background:var(--bg-code); padding:0.1rem 0.4rem; border-radius:4px;">winget --version</code> — if you see a version number, you're good to go.</p>
+                        <p><strong>2. If not installed, run this in PowerShell (Admin):</strong></p>
+                    </div>
+
+                    <div class="cmd-terminal">
+                        <div class="cmd-terminal__bar">
+                            <span class="cmd-terminal__dot cmd-terminal__dot--red"></span>
+                            <span class="cmd-terminal__dot cmd-terminal__dot--yellow"></span>
+                            <span class="cmd-terminal__dot cmd-terminal__dot--green"></span>
+                            <span class="cmd-terminal__label">PowerShell (Admin)</span>
+                        </div>
+                        <div class="cmd-terminal__body">
+                            <span class="cmd-terminal__prompt">PS&gt;</span>
+                            <code style="font-size:0.68rem;">$progressPreference = 'silentlyContinue'; $url = $(Invoke-RestMethod https://api.github.com/repos/microsoft/winget-cli/releases/latest).assets.browser_download_url | Where-Object {$_.EndsWith(&quot;.msixbundle&quot;)}; $file = &quot;$env:TEMP\Microsoft.DesktopAppInstaller.msixbundle&quot;; Invoke-WebRequest -Uri $url -OutFile $file; Add-AppxPackage $file</code>
+                            <button class="btn-copy-sm" data-copy-text='$progressPreference = "silentlyContinue"; $url = $(Invoke-RestMethod https://api.github.com/repos/microsoft/winget-cli/releases/latest).assets.browser_download_url | Where-Object {$_.EndsWith(".msixbundle")}; $file = "$env:TEMP\Microsoft.DesktopAppInstaller.msixbundle"; Invoke-WebRequest -Uri $url -OutFile $file; Add-AppxPackage $file'>Copy</button>
+                        </div>
+                    </div>
+                    <p style="font-size:0.65rem; color:var(--md-sys-color-on-surface-variant); margin-top:0.4rem;">
+                        This downloads the latest WinGet installer from GitHub and installs it. Close and reopen PowerShell, then run <code style="font-size:0.65rem; background:var(--bg-code); padding:0.1rem 0.4rem; border-radius:4px;">winget --version</code> to confirm.
+                    </p>
+                </div>
+
             </div>
         </div>
 
         <div class="site-footer">
-            <i class="fas fa-shield-haltered"></i> TaraTari — Curated tools &amp; Windows optimization &nbsp;|&nbsp;
+            <i class="fas fa-shield-haltered"></i> TaraTari Tools — Curated software &amp; Windows optimization &nbsp;|&nbsp;
             <a href="#" target="_blank">Back to Top</a>
         </div>
 
         </div><!-- /optimize-pc -->
 
-        <!-- ════════════════════════════════════════ -->
-        <!-- SECTION 4: PACKAGE MANAGERS + OPTIMIZERS  -->
-        <!-- (App Store / Optimization Tools / Starter Pack) -->
-        <!-- ════════════════════════════════════════ -->
+        <!-- ========================================================== -->
+        <!-- SECTION: PACKAGE MANAGERS + OPTIMIZERS                     -->
+        <!-- ========================================================== -->
         <div class="optimize-pc">
         <div class="section-card">
             <div class="section-inner">
@@ -1940,29 +1976,6 @@
                     <div class="optimize-subsection__title"><i class="fas fa-box-open"></i> Windows Starter Pack</div>
                     <p class="optimize-subsection__subtitle">First time setting up Windows? Pick one to bulk-install your apps.</p>
                     <div class="tools-grid" id="starterPackGrid"></div>
-
-                    <div class="command-card" style="margin-top:1rem;">
-                        <div class="cmd-header">
-                            <i class="fas fa-graduation-cap"></i>
-                            <h4>New to WinGet? Try your first install</h4>
-                        </div>
-                        <div class="cmd-terminal">
-                            <div class="cmd-terminal__bar">
-                                <span class="cmd-terminal__dot cmd-terminal__dot--red"></span>
-                                <span class="cmd-terminal__dot cmd-terminal__dot--yellow"></span>
-                                <span class="cmd-terminal__dot cmd-terminal__dot--green"></span>
-                                <span class="cmd-terminal__label">PowerShell</span>
-                            </div>
-                            <div class="cmd-terminal__body">
-                                <span class="cmd-terminal__prompt">PS&gt;</span>
-                                <code>winget install 7zip.7zip</code>
-                                <button class="btn-copy-sm" data-copy-text='winget install 7zip.7zip'>Copy</button>
-                            </div>
-                        </div>
-                        <p style="font-size:0.65rem; color:var(--md-sys-color-on-surface-variant); margin-top:0.4rem;">
-                            WinGet ships with Windows 10/11. Open PowerShell and swap <code style="font-size:0.65rem;">7zip.7zip</code> for any app's WinGet ID — run <code style="font-size:0.65rem;">winget search &lt;name&gt;</code> to find one.
-                        </p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1991,14 +2004,14 @@
 
         </section>
 
-        <!-- ════════════════════════════════════════ -->
-        <!-- PAGE: SEARCH                              -->
-        <!-- ════════════════════════════════════════ -->
+        <!-- ========================================================== -->
+        <!-- PAGE: SEARCH                                                -->
+        <!-- ========================================================== -->
         <section class="page" id="page-search" hidden>
             <div class="section-card">
                 <div class="section-inner">
                     <div class="search-hero">
-                        <h2 class="search-hero__title">Search</h2>
+                        <h1 class="search-hero__title">Search</h1>
                         <p class="search-hero__subtitle">Find any tool across the whole catalog</p>
                         <div class="search-bar search-bar--hero" id="searchPageBar">
                             <span class="material-symbols-rounded">search</span>
@@ -2026,9 +2039,9 @@
             </div>
         </section>
 
-        <!-- ════════════════════════════════════════ -->
-        <!-- PAGE: GITHUB                              -->
-        <!-- ════════════════════════════════════════ -->
+        <!-- ========================================================== -->
+        <!-- PAGE: GITHUB                                                -->
+        <!-- ========================================================== -->
         <section class="page" id="page-github" hidden>
             <div class="section-card">
                 <div class="section-inner">
@@ -2036,7 +2049,7 @@
                         <div class="github-page-card__icon">
                             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
                         </div>
-                        <h3 class="github-page-card__title">Enjoying TaraTari?</h3>
+                        <h3 class="github-page-card__title">Enjoying TaraTari Tools?</h3>
                         <p class="github-page-card__desc">If this collection has saved you time, a star on GitHub helps other people find it too — it takes two seconds.</p>
                         <div class="modal-card__actions">
                             <a class="modal-btn modal-btn--filled" href="https://github.com/tarataritools/tarataritools.github.io" target="_blank" rel="noopener">
@@ -2308,7 +2321,7 @@
                 const meta = PLATFORM_META[p];
                 if (!meta) return '';
                 const iconHtml = meta.type === 'img'
-                    ? `<img src="${meta.icon}" alt="" onerror="this.style.display='none'" />`
+                    ? `<img src="${meta.icon}" alt="${meta.label} OS badge" onerror="this.style.display='none'" />`
                     : `<span class="material-symbols-rounded">${meta.icon}</span>`;
                 return `<span class="os-badge os-badge--${p.toLowerCase()}" title="${meta.label}">${iconHtml}${meta.label}</span>`;
             }).join('')}</div>`;
@@ -2324,7 +2337,7 @@
         function renderToolCard(tool) {
             const iconHtml = tool.iconSymbol
                 ? `<span class="material-symbols-rounded">${tool.iconSymbol}</span>`
-                : `<img src="${escapeHtml(tool.icon)}" onerror="this.src='https://placehold.co/44x44/2c2c2c/4CAF50?text=?'" alt="" />`;
+                : `<img src="${escapeHtml(tool.icon)}" alt="${escapeHtml(tool.name)} icon" onerror="this.src='https://placehold.co/44x44/2c2c2c/4CAF50?text=?'" />`;
 
             const osBadgesHtml = renderOsBadges(tool);
             const osTag = tool.isOS ?
@@ -2563,7 +2576,7 @@
             track.innerHTML = items.map((tool, i) => {
                 const iconHtml = tool.iconSymbol ?
                     `<span class="material-symbols-rounded">${tool.iconSymbol}</span>` :
-                    `<img src="${escapeHtml(tool.icon)}" onerror="this.src='https://placehold.co/46x46/2c2c2c/4CAF50?text=?'" alt="" />`;
+                    `<img src="${escapeHtml(tool.icon)}" alt="${escapeHtml(tool.name)} icon" onerror="this.src='https://placehold.co/46x46/2c2c2c/4CAF50?text=?'" />`;
                 return `
               <div class="trending-card${i === 0 ? ' is-active' : ''}" data-url="${escapeHtml(tool.url)}" data-index="${i}">
                 <div class="trending-card__icon">${iconHtml}</div>
@@ -2613,9 +2626,11 @@
         //  OPTIMIZE PAGE — subsections (App Store / Optimization / Starter Pack)
         // ================================================================
         function renderOptimizeSubsections() {
-            renderTools('appStoreGrid', [40, 39].map(id => toolsDatabase.find(t => t.id === id)).filter(Boolean));
+            // App Store: Winstall (38) + UniGetUI (39)
+            renderTools('appStoreGrid', [38, 39].map(id => toolsDatabase.find(t => t.id === id)).filter(Boolean));
             renderTools('optimizationToolsGrid', [36, 37].map(id => toolsDatabase.find(t => t.id === id)).filter(Boolean));
-            renderTools('starterPackGrid', [40, 41].map(id => toolsDatabase.find(t => t.id === id)).filter(Boolean));
+            // Starter Pack: Winstall (38) + Ninite (41)
+            renderTools('starterPackGrid', [38, 41].map(id => toolsDatabase.find(t => t.id === id)).filter(Boolean));
         }
 
         function renderMobileOptimize() {
@@ -2904,6 +2919,62 @@
                 nextBtn.style.opacity = '1';
                 nextBtn.style.cursor = 'pointer';
             }
+        }
+
+        // ================================================================
+        //  COPY BUTTONS
+        // ================================================================
+        function setupCopyButtons() {
+            document.querySelectorAll('.btn-copy-sm[data-copy-text]').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var text = this.getAttribute('data-copy-text');
+                    copyTextToClipboard(text, this);
+                });
+            });
+        }
+
+        function copyTextToClipboard(text, btn) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function() {
+                    showCopied(btn);
+                }).catch(function() {
+                    fallbackCopy(text, btn);
+                });
+            } else {
+                fallbackCopy(text, btn);
+            }
+        }
+
+        function fallbackCopy(text, btn) {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            ta.style.top = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+                var success = document.execCommand('copy');
+                if (success) {
+                    showCopied(btn);
+                } else {
+                    alert('Failed to copy. Please copy manually.');
+                }
+            } catch (e) {
+                alert('Failed to copy. Please copy manually.');
+            }
+            document.body.removeChild(ta);
+        }
+
+        function showCopied(btn) {
+            var origHTML = btn.innerHTML;
+            btn.classList.add('copied');
+            btn.innerHTML = '<i class="fas fa-check"></i> Copied';
+            setTimeout(function() {
+                btn.classList.remove('copied');
+                btn.innerHTML = origHTML;
+            }, 2000);
         }
 
         // ================================================================
