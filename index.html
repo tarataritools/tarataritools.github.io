@@ -6,20 +6,17 @@
 
     <!-- ===== SEO ===== -->
     <title>TaraTari Tools · Open Source Software Directory</title>
-    <meta name="description" content="TaraTari Tools is a curated collection of open-source, privacy-first software for Windows, Linux, macOS, Android, and iOS. Discover apps, optimizers, and package managers." />
-    <meta name="keywords" content="TaraTari Tools, open source software, privacy tools, Windows optimization, Linux apps, macOS software, Android debloat, package managers" />
+    <meta name="description" content="TaraTari Tools is a curated collection of open-source, privacy-first software for Windows, Linux, macOS, Android, and iOS. Discover apps, optimizers, package managers, and clean Windows ISOs." />
+    <meta name="keywords" content="TaraTari Tools, open source software, privacy tools, Windows optimization, Linux apps, macOS software, Android debloat, package managers, Windows ISO" />
     <link rel="canonical" href="https://tarataritools.github.io/" />
 
-    <!-- Open Graph -->
     <meta property="og:title" content="TaraTari Tools · Open Source Software Directory" />
     <meta property="og:description" content="Curated open-source &amp; privacy-first apps for every platform." />
     <meta property="og:url" content="https://tarataritools.github.io/" />
     <meta property="og:type" content="website" />
 
-    <!-- Theme Color -->
     <meta name="theme-color" content="#121212" />
 
-    <!-- Google Fonts: Poppins + Material Symbols -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -27,9 +24,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
     <style>
-        /* ============================================================
-           Dark · Green/Mint colour scheme (M3‑inspired)
-           ============================================================ */
         :root {
             --md-sys-color-primary: #4CAF50;
             --md-sys-color-on-primary: #FFFFFF;
@@ -77,7 +71,6 @@
             --md-font-brand: 'Poppins', sans-serif;
             --md-font-plain: 'Poppins', sans-serif;
 
-            /* legacy */
             --bg-elevated: #1a1f30;
             --bg-code: #0a0e1a;
             --text-secondary: #a5b3d4;
@@ -91,11 +84,7 @@
             --accent-glow: rgba(76, 175, 80, 0.35);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background: radial-gradient(ellipse at 30% 15%, #0d111f 0%, #05080f 55%, #020408 100%);
@@ -117,10 +106,9 @@
             user-select: none;
         }
 
-        /* ---------- Top App Bar ---------- */
         .top-app-bar {
             width: 100%;
-            max-width: 920px;
+            max-width: 860px;
             position: sticky;
             top: 0;
             z-index: 20;
@@ -128,12 +116,13 @@
             align-items: center;
             gap: 8px;
             height: 64px;
-            padding: 0 16px;
+            padding: 0 12px 0 18px;
             background: var(--md-sys-color-surface-container);
-            border-bottom: 1px solid var(--md-sys-color-outline-variant);
-            border-radius: 0 0 var(--md-shape-lg) var(--md-shape-lg);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            border-radius: var(--md-shape-xl);
             margin-bottom: 1rem;
-            backdrop-filter: blur(6px);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--md-sys-elevation-1);
         }
 
         .top-app-bar__logo {
@@ -144,11 +133,7 @@
             color: var(--md-sys-color-on-surface);
         }
 
-        .top-app-bar__logo img {
-            height: 36px;
-            width: auto;
-            display: block;
-        }
+        .top-app-bar__logo img { height: 36px; width: auto; display: block; }
 
         .top-app-bar__logo .logo-text {
             font-family: var(--md-font-brand);
@@ -158,20 +143,14 @@
             color: var(--md-sys-color-on-surface);
         }
 
-        .top-app-bar__logo .logo-text span {
-            color: var(--md-sys-color-primary);
-        }
+        .top-app-bar__logo .logo-text span { color: var(--md-sys-color-primary); }
+        .top-app-bar__spacer { flex: 1; }
 
-        .top-app-bar__spacer {
-            flex: 1;
-        }
-
-        /* ---------- Desktop inline nav tabs (top app bar) ---------- */
         .nav-tabs {
             display: none;
             align-items: center;
             gap: 4px;
-            margin-left: 20px;
+            margin-left: 16px;
         }
 
         .nav-tabs__item {
@@ -188,11 +167,10 @@
             font-weight: 600;
             cursor: pointer;
             transition: background 0.15s, color 0.15s;
+            white-space: nowrap;
         }
 
-        .nav-tabs__item .material-symbols-rounded {
-            font-size: 18px;
-        }
+        .nav-tabs__item .material-symbols-rounded { font-size: 18px; }
 
         .nav-tabs__item:hover {
             background: var(--md-sys-color-surface-container-high);
@@ -208,11 +186,8 @@
             font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
         }
 
-        @media (min-width:769px) {
-            .nav-tabs { display: flex; }
-        }
+        @media (min-width:769px) { .nav-tabs { display: flex; } }
 
-        /* ---------- GitHub icon button ---------- */
         .github-btn {
             display: flex;
             align-items: center;
@@ -228,11 +203,7 @@
             flex-shrink: 0;
         }
 
-        .github-btn svg {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-        }
+        .github-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
         .github-btn:hover {
             background: var(--md-sys-color-secondary-container);
@@ -240,11 +211,8 @@
             color: var(--md-sys-color-on-secondary-container);
         }
 
-        .github-btn:active {
-            transform: scale(0.94);
-        }
+        .github-btn:active { transform: scale(0.94); }
 
-        /* ---------- Wrapper ---------- */
         .wrapper {
             width: 100%;
             max-width: 860px;
@@ -253,15 +221,12 @@
             flex-direction: column;
         }
 
-        .page {
-            animation: page-in 0.2s ease;
-        }
+        .page { animation: page-in 0.2s ease; }
         @keyframes page-in {
             from { opacity: 0; transform: translateY(4px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Optimize page: PC vs Mobile variants toggle by breakpoint */
         .optimize-mobile { display: none; }
         .optimize-pc { display: block; }
         @media (max-width:768px) {
@@ -269,7 +234,6 @@
             .optimize-pc { display: none; }
         }
 
-        /* ---------- Section Cards ---------- */
         .section-card {
             background: var(--md-sys-color-surface-container-low);
             border-radius: var(--md-shape-xl);
@@ -278,9 +242,7 @@
             box-shadow: var(--md-sys-elevation-2);
             margin-bottom: 1.5rem;
         }
-        .section-inner {
-            padding: 2rem 2rem 1.5rem;
-        }
+        .section-inner { padding: 2rem 2rem 1.5rem; }
         .section-title {
             font-size: 1.5rem;
             font-weight: 700;
@@ -292,9 +254,7 @@
             font-family: var(--md-font-brand);
             margin-bottom: 1rem;
         }
-        .section-title i {
-            font-size: 1.4rem;
-        }
+        .section-title i { font-size: 1.4rem; }
         .section-subtitle {
             font-size: 0.85rem;
             color: var(--md-sys-color-on-surface-variant);
@@ -306,10 +266,7 @@
             .section-title { font-size: 1.2rem; }
         }
 
-        /* ---------- Optimize page subsections ---------- */
-        .optimize-subsection {
-            margin-top: 1.8rem;
-        }
+        .optimize-subsection { margin-top: 1.8rem; }
         .optimize-subsection__title {
             display: flex;
             align-items: center;
@@ -330,7 +287,6 @@
             margin: -0.5rem 0 0.9rem;
         }
 
-        /* ---------- Mobile-limited optimize notice ---------- */
         .coming-soon-note {
             display: flex;
             align-items: center;
@@ -343,11 +299,8 @@
             font-size: 0.8rem;
             margin-top: 1.2rem;
         }
-        .coming-soon-note i {
-            color: var(--md-sys-color-secondary);
-        }
+        .coming-soon-note i { color: var(--md-sys-color-secondary); }
 
-        /* ---------- GitHub page (was modal) ---------- */
         .github-page-card {
             max-width: 420px;
             margin: 1.5rem auto;
@@ -365,11 +318,7 @@
             align-items: center;
             justify-content: center;
         }
-        .github-page-card__icon svg {
-            width: 32px;
-            height: 32px;
-            fill: currentColor;
-        }
+        .github-page-card__icon svg { width: 32px; height: 32px; fill: currentColor; }
         .github-page-card__title {
             font-family: var(--md-font-brand);
             font-size: 20px;
@@ -383,12 +332,7 @@
             margin-bottom: 24px;
         }
 
-        /* ---------- Commands ---------- */
-        .commands-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 0.8rem;
-        }
+        .commands-grid { display: grid; grid-template-columns: 1fr; gap: 0.8rem; }
         .command-card {
             background: var(--md-sys-color-surface-container);
             border-radius: var(--md-shape-lg);
@@ -396,9 +340,7 @@
             border: 1px solid var(--md-sys-color-outline-variant);
             transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .command-card:hover {
-            border-color: var(--md-sys-color-primary);
-        }
+        .command-card:hover { border-color: var(--md-sys-color-primary); }
         .command-card .cmd-header {
             display: flex;
             align-items: center;
@@ -417,7 +359,6 @@
             color: var(--md-sys-color-on-surface);
         }
 
-        /* Terminal-style command window */
         .cmd-terminal {
             background: var(--bg-code);
             border: 1px solid var(--md-sys-color-outline-variant);
@@ -489,23 +430,14 @@
             white-space: nowrap;
             border: none;
         }
-        .btn-copy-sm:hover {
-            background: #2c3655;
-            color: #fff;
-        }
+        .btn-copy-sm:hover { background: #2c3655; color: #fff; }
         .btn-copy-sm.copied {
             background: var(--success);
             color: #fff;
             pointer-events: none;
         }
 
-        /* ---------- OS badges ---------- */
-        .os-badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            margin-top: 4px;
-        }
+        .os-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
         .os-badge {
             display: flex;
             align-items: center;
@@ -518,11 +450,7 @@
             font-size: 10px;
             font-weight: 600;
         }
-        .os-badge img {
-            width: 11px;
-            height: 11px;
-            display: block;
-        }
+        .os-badge img { width: 11px; height: 11px; display: block; }
         .os-badge .material-symbols-rounded {
             font-size: 12px;
             color: var(--md-sys-color-on-surface-variant);
@@ -545,7 +473,6 @@
             letter-spacing: 0.04em;
         }
 
-        /* ---------- Tools Grid (main catalog) ---------- */
         .tools-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -573,15 +500,9 @@
             transform: translateY(-2px);
         }
 
-        .tool-card:active {
-            transform: scale(0.98);
-        }
+        .tool-card:active { transform: scale(0.98); }
 
-        .tool-card__top {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .tool-card__top { display: flex; align-items: center; gap: 12px; }
 
         .tool-card__icon {
             flex-shrink: 0;
@@ -595,21 +516,14 @@
             overflow: hidden;
         }
 
-        .tool-card__icon img {
-            width: 36px;
-            height: 36px;
-            object-fit: contain;
-        }
+        .tool-card__icon img { width: 36px; height: 36px; object-fit: contain; }
 
         .tool-card__icon .material-symbols-rounded {
             font-size: 26px;
             color: var(--md-sys-color-primary);
         }
 
-        .tool-card__top-info {
-            flex: 1;
-            min-width: 0;
-        }
+        .tool-card__top-info { flex: 1; min-width: 0; }
 
         .tool-card__name {
             font-weight: 600;
@@ -635,29 +549,7 @@
             overflow: hidden;
         }
 
-        .tool-card__footer {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 2px;
-        }
-
-        .tool-card__visit {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--md-sys-color-primary);
-            text-decoration: none;
-        }
-
-        .tool-card__visit .material-symbols-rounded {
-            font-size: 14px;
-        }
-
-        .category-section {
-            margin-bottom: 28px;
-        }
+        .category-section { margin-bottom: 28px; }
 
         .category-section__title {
             display: flex;
@@ -676,7 +568,6 @@
             color: var(--md-sys-color-on-surface-variant);
         }
 
-        /* ---------- Platform filter (All / Mobile / PC) ---------- */
         .platform-filter {
             display: flex;
             justify-content: center;
@@ -707,16 +598,13 @@
             transition: background 0.15s, color 0.15s;
         }
 
-        .platform-filter__btn .material-symbols-rounded {
-            font-size: 16px;
-        }
+        .platform-filter__btn .material-symbols-rounded { font-size: 16px; }
 
         .platform-filter__btn.is-active {
             background: var(--md-sys-color-primary);
             color: var(--md-sys-color-on-primary);
         }
 
-        /* ---------- Search Bar ---------- */
         .search-bar {
             display: flex;
             align-items: center;
@@ -737,9 +625,7 @@
             box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.25);
         }
 
-        .search-bar .material-symbols-rounded {
-            color: var(--md-sys-color-primary);
-        }
+        .search-bar .material-symbols-rounded { color: var(--md-sys-color-primary); }
 
         .search-bar input {
             border: none;
@@ -769,15 +655,9 @@
             transition: background 0.15s;
         }
 
-        .search-bar__clear:hover {
-            background: rgba(255, 255, 255, 0.06);
-        }
+        .search-bar__clear:hover { background: rgba(255, 255, 255, 0.06); }
 
-        /* ---------- Home hero ---------- */
-        .search-hero {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+        .search-hero { text-align: center; margin-bottom: 20px; }
 
         .search-hero__title {
             font-family: var(--md-font-brand);
@@ -786,9 +666,7 @@
             margin-bottom: 4px;
         }
 
-        .search-hero__title span {
-            color: var(--md-sys-color-primary);
-        }
+        .search-hero__title span { color: var(--md-sys-color-primary); }
 
         .search-hero__subtitle {
             font-size: 14px;
@@ -805,11 +683,8 @@
             box-shadow: var(--md-sys-elevation-1);
         }
 
-        .search-bar--hero input {
-            font-size: 16px;
-        }
+        .search-bar--hero input { font-size: 16px; }
 
-        /* ---------- Trending carousel (slideshow, 3 items w/ description) ---------- */
         .trending {
             position: relative;
             max-width: 640px;
@@ -829,14 +704,9 @@
             padding-left: 4px;
         }
 
-        .trending__label .material-symbols-rounded {
-            font-size: 16px;
-        }
+        .trending__label .material-symbols-rounded { font-size: 16px; }
 
-        .trending__track {
-            position: relative;
-            min-height: 132px;
-        }
+        .trending__track { position: relative; min-height: 132px; }
 
         .trending-card {
             display: none;
@@ -853,9 +723,7 @@
             animation: trending-in 0.35s ease;
         }
 
-        .trending-card.is-active {
-            display: flex;
-        }
+        .trending-card.is-active { display: flex; }
 
         @keyframes trending-in {
             from { opacity: 0; transform: translateY(6px); }
@@ -874,21 +742,14 @@
             overflow: hidden;
         }
 
-        .trending-card__icon img {
-            width: 46px;
-            height: 46px;
-            object-fit: contain;
-        }
+        .trending-card__icon img { width: 46px; height: 46px; object-fit: contain; }
 
         .trending-card__icon .material-symbols-rounded {
             font-size: 32px;
             color: var(--md-sys-color-primary);
         }
 
-        .trending-card__body {
-            flex: 1;
-            min-width: 0;
-        }
+        .trending-card__body { flex: 1; min-width: 0; }
 
         .trending-card__name {
             font-family: var(--md-font-brand);
@@ -903,10 +764,7 @@
             margin-top: 2px;
         }
 
-        .trending-card__cta {
-            flex-shrink: 0;
-            color: var(--md-sys-color-primary);
-        }
+        .trending-card__cta { flex-shrink: 0; color: var(--md-sys-color-primary); }
 
         .trending__dots {
             display: flex;
@@ -933,20 +791,13 @@
         }
 
         @media (max-width:480px) {
-            .trending-card {
-                padding: 14px 16px;
-                gap: 12px;
-            }
-            .trending-card__icon {
-                width: 48px;
-                height: 48px;
-            }
+            .trending-card { padding: 14px 16px; gap: 12px; }
+            .trending-card__icon { width: 48px; height: 48px; }
             .trending-card__icon img { width: 36px; height: 36px; }
             .trending-card__name { font-size: 14px; }
             .trending-card__desc { font-size: 12px; }
         }
 
-        /* ---------- Optimize CTA banner (home page) ---------- */
         .optimize-cta {
             display: flex;
             align-items: center;
@@ -979,14 +830,9 @@
             justify-content: center;
         }
 
-        .optimize-cta__icon .material-symbols-rounded {
-            font-size: 24px;
-        }
+        .optimize-cta__icon .material-symbols-rounded { font-size: 24px; }
 
-        .optimize-cta__body {
-            flex: 1;
-            min-width: 0;
-        }
+        .optimize-cta__body { flex: 1; min-width: 0; }
 
         .optimize-cta__title {
             font-family: var(--md-font-brand);
@@ -994,26 +840,13 @@
             font-size: 15px;
         }
 
-        .optimize-cta__desc {
-            font-size: 12px;
-            opacity: 0.85;
-            margin-top: 1px;
-        }
+        .optimize-cta__desc { font-size: 12px; opacity: 0.85; margin-top: 1px; }
 
-        .optimize-cta .material-symbols-rounded.chevron {
-            flex-shrink: 0;
-        }
+        .optimize-cta .material-symbols-rounded.chevron { flex-shrink: 0; }
 
-        /* Smaller, subdued treatment on phones — mobile optimize is limited for now */
         @media (max-width:600px) {
-            .optimize-cta {
-                padding: 10px 14px;
-                gap: 10px;
-            }
-            .optimize-cta__icon {
-                width: 36px;
-                height: 36px;
-            }
+            .optimize-cta { padding: 10px 14px; gap: 10px; }
+            .optimize-cta__icon { width: 36px; height: 36px; }
             .optimize-cta__icon .material-symbols-rounded { font-size: 18px; }
             .optimize-cta__title { font-size: 13px; }
             .optimize-cta__desc { font-size: 11px; }
@@ -1039,7 +872,6 @@
             background: var(--md-sys-color-outline-variant);
         }
 
-        /* ---------- Empty State ---------- */
         .empty-state {
             text-align: center;
             padding: 40px 20px;
@@ -1052,12 +884,134 @@
             margin-bottom: 12px;
         }
 
-        .empty-state p {
-            font-size: 15px;
-            margin: 0;
+        .empty-state p { font-size: 15px; margin: 0; }
+
+        .iso-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 12px;
+            margin-top: 4px;
         }
 
-        /* ---------- Footer ---------- */
+        .iso-card {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 16px;
+            border-radius: var(--md-shape-lg);
+            background: var(--md-sys-color-surface-container);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .iso-card:hover {
+            border-color: var(--md-sys-color-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--md-sys-elevation-1);
+        }
+
+        .iso-card__top { display: flex; align-items: center; gap: 12px; }
+
+        .iso-card__icon {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            border-radius: var(--md-shape-md);
+            background: var(--md-sys-color-surface-container-highest);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .iso-card__icon img { width: 38px; height: 38px; object-fit: contain; }
+
+        .iso-card__icon .material-symbols-rounded {
+            font-size: 28px;
+            color: var(--md-sys-color-primary);
+        }
+
+        .iso-card__name {
+            font-family: var(--md-font-brand);
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .iso-card__meta {
+            font-size: 11px;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-top: 2px;
+            line-height: 1.4;
+        }
+
+        .iso-card__desc {
+            font-size: 12px;
+            line-height: 1.5;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .iso-card__foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: auto;
+            padding-top: 4px;
+        }
+
+        .iso-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: var(--md-shape-full);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .iso-badge .material-symbols-rounded { font-size: 13px; }
+
+        .iso-badge--official {
+            background: var(--success-bg);
+            color: var(--success);
+            border: 1px solid rgba(60, 184, 120, 0.35);
+        }
+
+        .iso-badge--mirror {
+            background: var(--md-sys-color-surface-container-highest);
+            color: var(--md-sys-color-on-surface-variant);
+            border: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .iso-dl-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            height: 34px;
+            padding: 0 16px;
+            border-radius: var(--md-shape-full);
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: box-shadow 0.15s, transform 0.15s, background 0.15s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .iso-dl-btn:hover {
+            background: #3d9e40;
+            box-shadow: var(--md-sys-elevation-2);
+            transform: translateY(-1px);
+        }
+
+        .iso-dl-btn .material-symbols-rounded { font-size: 16px; }
+
         .site-footer {
             text-align: center;
             font-size: 0.7rem;
@@ -1065,47 +1019,24 @@
             margin-top: 0.5rem;
             padding-bottom: 1rem;
         }
-        .site-footer a {
-            color: var(--md-sys-color-primary);
-            text-decoration: none;
-        }
-        .site-footer a:hover {
-            text-decoration: underline;
-        }
+        .site-footer a { color: var(--md-sys-color-primary); text-decoration: none; }
+        .site-footer a:hover { text-decoration: underline; }
 
-        /* ---------- Responsive ---------- */
         @media (max-width:600px) {
-            .apps-grid {
-                grid-template-columns: 1fr;
-            }
-            .section-inner {
-                padding: 1.2rem 1rem;
-            }
-            .tools-grid {
-                grid-template-columns: 1fr;
-            }
-            .platform-filter {
-                max-width: 260px;
-            }
-            .platform-filter__btn {
-                font-size: 11px;
-                padding: 6px 8px;
-            }
+            .apps-grid { grid-template-columns: 1fr; }
+            .section-inner { padding: 1.2rem 1rem; }
+            .tools-grid { grid-template-columns: 1fr; }
+            .iso-grid { grid-template-columns: 1fr; }
+            .platform-filter { max-width: 260px; }
+            .platform-filter__btn { font-size: 11px; padding: 6px 8px; }
         }
 
-        @media (max-width:480px) {
-            .top-app-bar__title {
-                font-size: 17px;
-            }
-        }
+        @media (max-width:480px) { .top-app-bar__title { font-size: 17px; } }
 
         @media (min-width:600px) {
-            .tools-grid {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            }
+            .tools-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
         }
 
-        /* ---------- Mobile Bottom Navigation (Material 3) ---------- */
         .bottom-nav {
             display: none;
             position: fixed;
@@ -1149,23 +1080,13 @@
             justify-content: center;
             transition: background-color 0.2s ease;
         }
-        .bottom-nav__icon svg {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-        }
+        .bottom-nav__icon svg { width: 20px; height: 20px; fill: currentColor; }
         .bottom-nav__icon .material-symbols-rounded {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
             transition: font-variation-settings 0.2s ease;
         }
-        .bottom-nav__label {
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: 0.02em;
-        }
-        .bottom-nav__item.is-active {
-            color: var(--md-sys-color-on-surface);
-        }
+        .bottom-nav__label { font-size: 11px; font-weight: 500; letter-spacing: 0.02em; }
+        .bottom-nav__item.is-active { color: var(--md-sys-color-on-surface); }
         .bottom-nav__item.is-active .bottom-nav__icon {
             background: var(--md-sys-color-secondary-container);
         }
@@ -1177,7 +1098,6 @@
             background: var(--md-sys-color-surface-container-highest);
         }
 
-        /* ---------- Back to Top ---------- */
         .back-to-top-btn {
             position: fixed;
             bottom: 30px;
@@ -1206,14 +1126,8 @@
             visibility: visible;
             transform: scale(1);
         }
-        .back-to-top-btn .svgIcon {
-            width: 16px;
-            transition-duration: 0.3s;
-            flex-shrink: 0;
-        }
-        .back-to-top-btn .svgIcon path {
-            fill: white;
-        }
+        .back-to-top-btn .svgIcon { width: 16px; transition-duration: 0.3s; flex-shrink: 0; }
+        .back-to-top-btn .svgIcon path { fill: white; }
         .back-to-top-btn:hover {
             width: 140px;
             border-radius: 50px;
@@ -1243,18 +1157,10 @@
             transition-duration: 0.3s;
         }
         @media (max-width:600px) {
-            .back-to-top-btn {
-                bottom: 88px;
-                right: 16px;
-            }
+            .back-to-top-btn { bottom: 88px; right: 16px; }
         }
 
-        /* ---------- GitHub page action button ---------- */
-        .modal-card__actions {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+        .modal-card__actions { display: flex; flex-direction: column; gap: 10px; }
         .modal-btn {
             display: flex;
             align-items: center;
@@ -1274,39 +1180,23 @@
             background: var(--md-sys-color-primary);
             color: var(--md-sys-color-on-primary);
         }
-        .modal-btn--filled:hover {
-            box-shadow: var(--md-sys-elevation-2);
-        }
-        .modal-btn--filled svg {
-            width: 18px;
-            height: 18px;
-            fill: currentColor;
-        }
+        .modal-btn--filled:hover { box-shadow: var(--md-sys-elevation-2); }
+        .modal-btn--filled svg { width: 18px; height: 18px; fill: currentColor; }
         .modal-btn--text {
             background: transparent;
             color: var(--md-sys-color-on-surface-variant);
         }
-        .modal-btn--text:hover {
-            background: var(--md-sys-color-surface-container-highest);
-        }
+        .modal-btn--text:hover { background: var(--md-sys-color-surface-container-highest); }
 
-        .transition {
-            transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        .transition { transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1); }
 
-        /* ---------- Stepper (TaraTari OS Tool) ---------- */
         .stepper-container {
             position: relative;
             overflow: hidden;
             min-height: 300px;
         }
-        .stepper-slide {
-            display: none;
-            animation: slideIn 0.4s ease;
-        }
-        .stepper-slide.active {
-            display: block;
-        }
+        .stepper-slide { display: none; animation: slideIn 0.4s ease; }
+        .stepper-slide.active { display: block; }
         @keyframes slideIn {
             0% { opacity: 0; transform: translateX(30px); }
             100% { opacity: 1; transform: translateX(0); }
@@ -1320,10 +1210,7 @@
             border-top: 1px solid var(--md-sys-color-outline-variant);
             gap: 1rem;
         }
-        .stepper-nav .step-dots {
-            display: flex;
-            gap: 8px;
-        }
+        .stepper-nav .step-dots { display: flex; gap: 8px; }
         .stepper-nav .step-dot {
             width: 10px;
             height: 10px;
@@ -1337,12 +1224,8 @@
             width: 26px;
             border-radius: 14px;
         }
-        .stepper-nav .step-dot.done {
-            background: var(--success);
-        }
-        .stepper-nav.hidden {
-            display: none;
-        }
+        .stepper-nav .step-dot.done { background: var(--success); }
+        .stepper-nav.hidden { display: none; }
 
         .stepper-btn {
             background: #151d30;
@@ -1375,17 +1258,13 @@
             border: none;
             color: #000;
         }
-        .stepper-btn.primary:hover {
-            background: #3d9e40;
-        }
+        .stepper-btn.primary:hover { background: #3d9e40; }
         .stepper-btn.success {
             background: var(--success);
             border: none;
             color: #000;
         }
-        .stepper-btn.success:hover {
-            background: #2ea86a;
-        }
+        .stepper-btn.success:hover { background: #2ea86a; }
 
         .os-cards {
             display: flex;
@@ -1420,10 +1299,7 @@
             margin-bottom: 0.5rem;
             color: var(--md-sys-color-primary);
         }
-        .os-card h3 {
-            font-size: 1rem;
-            margin-bottom: 0.3rem;
-        }
+        .os-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
         .os-card p {
             font-size: 0.75rem;
             color: var(--md-sys-color-on-surface-variant);
@@ -1434,9 +1310,7 @@
             color: var(--md-sys-color-on-surface-variant);
             margin-bottom: 0.5rem;
         }
-        .os-label strong {
-            color: #fff;
-        }
+        .os-label strong { color: #fff; }
 
         .note-box {
             padding: 0.7rem 1rem;
@@ -1448,11 +1322,7 @@
             align-items: flex-start;
             line-height: 1.45;
         }
-        .note-box i {
-            flex-shrink: 0;
-            margin-top: 2px;
-            font-size: 0.85rem;
-        }
+        .note-box i { flex-shrink: 0; margin-top: 2px; font-size: 0.85rem; }
         .note-warn {
             background: var(--warning-bg);
             border-left: 3px solid var(--warning);
@@ -1505,14 +1375,8 @@
             color: #000;
         }
 
-        .success-animation {
-            display: none;
-            text-align: center;
-            padding: 1.5rem 0;
-        }
-        .success-animation.active {
-            display: block;
-        }
+        .success-animation { display: none; text-align: center; padding: 1.5rem 0; }
+        .success-animation.active { display: block; }
         .success-animation .checkmark {
             font-size: 4rem;
             color: var(--success);
@@ -1523,33 +1387,16 @@
             70% { transform: scale(1.2); }
             100% { transform: scale(1); opacity: 1; }
         }
-        .success-animation h3 {
-            color: #fff;
-            font-size: 1.3rem;
-            margin-top: 0.5rem;
-        }
+        .success-animation h3 { color: #fff; font-size: 1.3rem; margin-top: 0.5rem; }
         .success-animation p {
             color: var(--md-sys-color-on-surface-variant);
             font-size: 0.9rem;
         }
 
-        .installed-state {
-            display: none;
-            text-align: center;
-            padding: 1rem 0;
-        }
-        .installed-state.active {
-            display: block;
-        }
-        .installed-state .checkmark {
-            font-size: 3rem;
-            color: var(--success);
-        }
-        .installed-state h3 {
-            color: #fff;
-            font-size: 1.1rem;
-            margin-top: 0.3rem;
-        }
+        .installed-state { display: none; text-align: center; padding: 1rem 0; }
+        .installed-state.active { display: block; }
+        .installed-state .checkmark { font-size: 3rem; color: var(--success); }
+        .installed-state h3 { color: #fff; font-size: 1.1rem; margin-top: 0.3rem; }
         .installed-state p {
             color: var(--md-sys-color-on-surface-variant);
             font-size: 0.85rem;
@@ -1562,10 +1409,7 @@
             padding-top: 1.5rem;
             border-top: 1px solid var(--md-sys-color-outline-variant);
         }
-        .revios-section.active {
-            display: block;
-            animation: slideIn 0.4s ease;
-        }
+        .revios-section.active { display: block; animation: slideIn 0.4s ease; }
 
         .not-supported-link {
             color: var(--md-sys-color-primary);
@@ -1574,33 +1418,22 @@
             font-weight: 600;
             transition: color 0.2s;
         }
-        .not-supported-link:hover {
-            color: #a87cff;
-        }
+        .not-supported-link:hover { color: #a87cff; }
 
-        .stepper-hidden {
-            display: none !important;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-        .text-muted {
-            color: var(--md-sys-color-on-surface-variant);
-        }
+        .stepper-hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .text-muted { color: var(--md-sys-color-on-surface-variant); }
     </style>
 </head>
 
 <body>
 
-    <!-- ===== TOP APP BAR ===== -->
     <header class="top-app-bar">
         <a href="#" class="top-app-bar__logo" aria-label="TaraTari Tools home" data-target="home">
             <img src="https://raw.githubusercontent.com/tarataritools/tarataritools.github.io/main/images/TaraTariToolsLogo.png" alt="TaraTari Tools logo" onerror="this.style.display='none'" />
             <span class="logo-text">Tara<span>Tari</span></span>
         </a>
 
-        <!-- Desktop inline nav (mobile uses the bottom nav instead) -->
         <nav class="nav-tabs" id="desktopNavTabs" aria-label="Primary">
             <button class="nav-tabs__item is-active" data-target="home">
                 <span class="material-symbols-rounded">home</span> Home
@@ -1610,6 +1443,9 @@
             </button>
             <button class="nav-tabs__item" data-target="search">
                 <span class="material-symbols-rounded">search</span> Search
+            </button>
+            <button class="nav-tabs__item" data-target="isos">
+                <span class="material-symbols-rounded">album</span> Windows ISOs
             </button>
         </nav>
 
@@ -1628,7 +1464,6 @@
             <div class="section-card">
                 <div class="section-inner">
 
-                    <!-- Hero search -->
                     <div class="search-hero">
                         <h1 class="search-hero__title">Tara<span>Tari</span> Tools</h1>
                         <p class="search-hero__subtitle">Curated open‑source &amp; privacy‑first apps</p>
@@ -1641,7 +1476,6 @@
                         </div>
                     </div>
 
-                    <!-- Optimize CTA -->
                     <div class="optimize-cta" id="optimizeCtaBtn" role="button" tabindex="0">
                         <div class="optimize-cta__icon"><span class="material-symbols-rounded">bolt</span></div>
                         <div class="optimize-cta__body">
@@ -1651,7 +1485,6 @@
                         <span class="material-symbols-rounded chevron">chevron_right</span>
                     </div>
 
-                    <!-- Trending carousel -->
                     <div class="trending">
                         <div class="trending__label"><span class="material-symbols-rounded">local_fire_department</span>Trending now</div>
                         <div class="trending__track" id="trendingTrack"></div>
@@ -1672,10 +1505,8 @@
 
                     <div class="browse-divider" id="browseDivider">Browse all tools</div>
 
-                    <!-- Category sections -->
                     <div id="categorySections"></div>
 
-                    <!-- Flat search results (shown while home search box has a query) -->
                     <div class="tools-grid" id="homeGrid" hidden></div>
 
                 </div>
@@ -1687,12 +1518,8 @@
         <!-- ========================================================== -->
         <section class="page" id="page-optimize" hidden>
 
-        <!-- ---------- PC variant (full hub) ---------- -->
         <div class="optimize-pc">
 
-        <!-- ========================================================== -->
-        <!-- SECTION: TARATARI OS TOOL (flagship)                       -->
-        <!-- ========================================================== -->
         <div class="section-card" style="border-color: var(--md-sys-color-primary);">
             <div class="section-inner">
                 <div class="section-title">
@@ -1703,7 +1530,6 @@
 
                 <div class="stepper-container" id="stepperContainer">
 
-                    <!-- Step 0: OS selection -->
                     <div class="stepper-slide active" data-step="0">
                         <div class="os-cards">
                             <div class="os-card" data-os="win10" onclick="selectOS('win10')">
@@ -1722,7 +1548,6 @@
                         </p>
                     </div>
 
-                    <!-- Step 1: Playbook selection -->
                     <div class="stepper-slide" data-step="1">
                         <div class="os-label">Selected: <strong id="selectedOSLabel">Windows 10</strong></div>
                         <h4>Atlas OS — Optimize Windows Automatically</h4>
@@ -1790,7 +1615,6 @@
                         </div>
                     </div>
 
-                    <!-- Step 2: Confirmation & Success -->
                     <div class="stepper-slide" data-step="2">
                         <div style="text-align:center; padding:0.5rem 0;">
                             <p style="color:var(--md-sys-color-on-surface-variant); font-size:1rem; margin-bottom:0.5rem;">
@@ -1819,7 +1643,6 @@
                         </div>
                     </div>
 
-                    <!-- Stepper navigation -->
                     <div class="stepper-nav" id="stepperNav">
                         <div class="step-dots" id="stepDots">
                             <span class="step-dot active"></span>
@@ -1836,9 +1659,8 @@
                         </div>
                     </div>
 
-                </div><!-- /stepper-container -->
+                </div>
 
-                <!-- Installed state (shown after install) -->
                 <div class="installed-state" id="installedState">
                     <div class="checkmark"><i class="fas fa-check-circle"></i></div>
                     <h3>TaraTari OS is already installed</h3>
@@ -1851,9 +1673,6 @@
             </div>
         </div>
 
-        <!-- ========================================================== -->
-        <!-- SECTION: QUICK POWERSHELL TWEAKS + WINGET INSTALL          -->
-        <!-- ========================================================== -->
         <div class="section-card" style="border-color: var(--md-sys-color-secondary);">
             <div class="section-inner">
                 <div class="section-title">
@@ -1863,7 +1682,6 @@
                 </div>
                 <p class="section-subtitle">Not ready for the full TaraTari OS Tool above? Paste one of these into an <strong>elevated PowerShell</strong> terminal for a quick debloat instead.</p>
 
-                <!-- Commands -->
                 <div class="commands-grid">
                     <div class="command-card">
                         <div class="cmd-header">
@@ -1911,7 +1729,6 @@
                     </div>
                 </div>
 
-                <!-- ===== WINGET INSTALL TUTORIAL ===== -->
                 <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--md-sys-color-outline-variant);">
                     <div class="cmd-header" style="margin-bottom:0.5rem;">
                         <i class="fas fa-graduation-cap" style="color:var(--md-sys-color-primary); font-size:1.2rem;"></i>
@@ -1945,15 +1762,12 @@
         </div>
 
         <div class="site-footer">
-            <i class="fas fa-shield-haltered"></i> TaraTari Tools — Curated software &amp; Windows optimization &nbsp;|&nbsp;
+            <i class="fas fa-shield-halved"></i> TaraTari Tools — Curated software &amp; Windows optimization &nbsp;|&nbsp;
             <a href="#" target="_blank">Back to Top</a>
         </div>
 
-        </div><!-- /optimize-pc -->
+        </div>
 
-        <!-- ========================================================== -->
-        <!-- SECTION: PACKAGE MANAGERS + OPTIMIZERS                     -->
-        <!-- ========================================================== -->
         <div class="optimize-pc">
         <div class="section-card">
             <div class="section-inner">
@@ -1979,9 +1793,8 @@
                 </div>
             </div>
         </div>
-        </div><!-- /optimize-pc section 4 -->
+        </div>
 
-        <!-- ---------- Mobile variant (limited, coming soon) ---------- -->
         <div class="optimize-mobile">
             <div class="section-card" style="border-color: var(--md-sys-color-secondary);">
                 <div class="section-inner">
@@ -2040,6 +1853,27 @@
         </section>
 
         <!-- ========================================================== -->
+        <!-- PAGE: WINDOWS ISOs                                          -->
+        <!-- ========================================================== -->
+        <section class="page" id="page-isos" hidden>
+            <div class="section-card">
+                <div class="section-inner">
+                    <div class="section-title">
+                        <span class="material-symbols-rounded" style="font-size:1.4rem;">album</span> Windows ISOs
+                    </div>
+                    <p class="section-subtitle">Clean installation images for Windows 11, Windows 10, LTSC and legacy builds. Official images are served directly by Microsoft; mirrors are community-hosted.</p>
+
+                    <div class="iso-grid" id="isoGrid"></div>
+
+                    <div class="coming-soon-note">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Always verify the SHA‑256 hash of an ISO before installing. Community mirrors are provided as‑is and are not affiliated with Microsoft.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================== -->
         <!-- PAGE: GITHUB                                                -->
         <!-- ========================================================== -->
         <section class="page" id="page-github" hidden>
@@ -2064,7 +1898,6 @@
 
     </div>
 
-    <!-- ===== MOBILE BOTTOM NAVIGATION (Material 3) ===== -->
     <nav class="bottom-nav" id="mobileBottomNav" aria-label="Primary">
         <button class="bottom-nav__item is-active" data-target="home">
             <span class="bottom-nav__icon"><span class="material-symbols-rounded">home</span></span>
@@ -2086,7 +1919,6 @@
         </button>
     </nav>
 
-    <!-- ===== BACK TO TOP BUTTON ===== -->
     <button class="back-to-top-btn" id="backToTopBtn" aria-label="Back to Top">
         <svg class="svgIcon" viewBox="0 0 384 512">
             <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/>
@@ -2096,6 +1928,9 @@
     <script>
         // ================================================================
         //  TOOLS DATABASE (full catalog)
+        //  NOTE: id 34 = the original Windows 10 ISO link (Google Drive).
+        //  Also includes the newer ISOs so they show in the catalog under
+        //  the "Operating Systems" category.
         // ================================================================
         const toolsDatabase = [
             // Archive / Compression
@@ -2256,15 +2091,6 @@
             { id: 39, name: "UniGetUI", url: "https://devolutions.net/download-center/#unigetui",
                 icon: "https://devolutions.net/favicon.ico", category: "Package Managers",
                 platforms: ["Windows"], desc: "Modern GUI for winget, chocolatey, scoop, and more. Manage all your packages." },
-
-            // Operating Systems (no OS badges)
-            { id: 34, name: "Windows 10 ISO",
-                url: "https://drive.google.com/file/d/1zl7Uv5VGzRsu0P5fFEcHyx-vmBkzc4S0/view?usp=sharing",
-                icon: "https://img.icons8.com/color/48/000000/windows-10.png",
-                category: "Operating Systems", platforms: [], isOS: true,
-                desc: "Official Windows 10 installation image." },
-
-            // Package Managers (added)
             { id: 40, name: "WinGet", url: "https://learn.microsoft.com/en-us/windows/package-manager/winget/",
                 iconSymbol: "terminal", category: "Package Managers",
                 platforms: ["Windows"], desc: "Official Windows CLI package manager." },
@@ -2280,22 +2106,96 @@
                 desc: "Grants apps root-like API access, no root needed." },
             { id: 43, name: "Canta", url: "https://samolego.github.io/Canta/",
                 iconSymbol: "cleaning_services", category: "System / Android Tools",
-                platforms: ["Android"], desc: "Uninstall bloatware without root, via Shizuku." }
+                platforms: ["Android"], desc: "Uninstall bloatware without root, via Shizuku." },
+
+            // ============ OPERATING SYSTEMS (ISOs) ============
+            // ⭐ Your original Windows 10 ISO link (id 34) — RESTORED
+            { id: 34, name: "Windows 10 ISO",
+                url: "https://drive.google.com/file/d/1zl7Uv5VGzRsu0P5fFEcHyx-vmBkzc4S0/view?usp=sharing",
+                icon: "https://img.icons8.com/color/48/000000/windows-10.png",
+                category: "Operating Systems", platforms: [], isOS: true,
+                desc: "Official Windows 10 installation image." },
+
+            // New ISOs — also surfaced in the catalog
+            { id: 44, name: "Windows 11 25H2",
+                url: "https://software-static.download.prss.microsoft.com/dbazure/888969d5-f34g-4e03-ac9d-1f9786c66749/26200.6584.250915-1905.25h2_ge_release_svc_refresh_CLIENT_CONSUMER_x64FRE_en-us.iso",
+                icon: "https://img.icons8.com/color/48/000000/windows-11.png",
+                category: "Operating Systems", platforms: [], isOS: true,
+                desc: "Windows 11 25H2 · Build 26200.6584 · x64 · English (US)." },
+            { id: 45, name: "Windows 11 LTSC",
+                url: "https://oemsoc.download.prss.microsoft.com/dbazure/X23-81951_26100.1742.240906-0331.ge_release_svc_refresh_CLIENT_ENTERPRISES_OEM_x64FRE_en-us.iso_640de540-87c4-427f-be87-e6d53a3a60b4?t=2c3b664b-b119-4088-9db1-ccff72c6d22e&P1=102816950270&P2=601&P3=2&P4=OC448onxqdmdUsBUApAiE8pj1FZ%2bEPTU3%2bC6Quq29MVwMyyDUtR%2fsbiy7RdVoZOHaZRndvzeOOnIwJZ2x3%2bmP6YK9cjJSP41Lvs0SulF4SVyL5C0DdDmiWqh2QW%2bcDPj2Xp%2bMrI9NOeElSBS5kkOWP8Eiyf2VkkQFM3g5vIk3HJVvu5sWo6pFKpFv4lML%2bHaIiTSuwbPMs5xwEQTfScuTKfigNlUZPdHRMp1B3uKLgIA3r0IbRpZgHYMXEwXQ%2fSLMdDNQthpqQvz1PThVkx7ObD55CXgt0GNSAWRfjdURWb8ywWk1gT7ozAgpP%2fKNm56U5nh33WZSuMZIuO1SBM2vw%3d%3d",
+                icon: "https://img.icons8.com/color/48/000000/windows-11.png",
+                category: "Operating Systems", platforms: [], isOS: true,
+                desc: "Windows 11 Enterprise LTSC · Build 26100.1742 · x64 · English (US)." },
+            { id: 46, name: "Windows 10 LTSC",
+                url: "https://buzzheavier.com/yhggy3l1e5oq",
+                icon: "https://img.icons8.com/color/48/000000/windows-10.png",
+                category: "Operating Systems", platforms: [], isOS: true,
+                desc: "Windows 10 Enterprise LTSC · x64 · English." },
+            { id: 47, name: "Windows 7 SP1",
+                url: "https://buzzheavier.com/wru8ac6nwk17",
+                iconSymbol: "desktop_windows",
+                category: "Operating Systems", platforms: [], isOS: true,
+                desc: "Windows 7 Service Pack 1 · x64 / x86 · English." }
         ];
 
         // ================================================================
-        //  CATEGORY ORDER
+        //  WINDOWS ISO DATABASE (dedicated "Windows ISOs" tab)
+        // ================================================================
+        const windowsIsoDatabase = [
+            {
+                name: "Windows 11 25H2",
+                meta: "Build 26200.6584 · x64 · English (US)",
+                desc: "Latest Windows 11 feature update (25H2) — consumer editions (Home / Pro). Served straight from Microsoft.",
+                url: "https://software-static.download.prss.microsoft.com/dbazure/888969d5-f34g-4e03-ac9d-1f9786c66749/26200.6584.250915-1905.25h2_ge_release_svc_refresh_CLIENT_CONSUMER_x64FRE_en-us.iso",
+                official: true,
+                icon: "https://img.icons8.com/color/48/000000/windows-11.png"
+            },
+            {
+                name: "Windows 11 LTSC",
+                meta: "Build 26100.1742 · Enterprise LTSC · x64 · English (US)",
+                desc: "Long-Term Servicing Channel build — no Store, no Copilot, minimal background services. Ideal for a clean, stable install.",
+                url: "https://oemsoc.download.prss.microsoft.com/dbazure/X23-81951_26100.1742.240906-0331.ge_release_svc_refresh_CLIENT_ENTERPRISES_OEM_x64FRE_en-us.iso_640de540-87c4-427f-be87-e6d53a3a60b4?t=2c3b664b-b119-4088-9db1-ccff72c6d22e&P1=102816950270&P2=601&P3=2&P4=OC448onxqdmdUsBUApAiE8pj1FZ%2bEPTU3%2bC6Quq29MVwMyyDUtR%2fsbiy7RdVoZOHaZRndvzeOOnIwJZ2x3%2bmP6YK9cjJSP41Lvs0SulF4SVyL5C0DdDmiWqh2QW%2bcDPj2Xp%2bMrI9NOeElSBS5kkOWP8Eiyf2VkkQFM3g5vIk3HJVvu5sWo6pFKpFv4lML%2bHaIiTSuwbPMs5xwEQTfScuTKfigNlUZPdHRMp1B3uKLgIA3r0IbRpZgHYMXEwXQ%2fSLMdDNQthpqQvz1PThVkx7ObD55CXgt0GNSAWRfjdURWb8ywWk1gT7ozAgpP%2fKNm56U5nh33WZSuMZIuO1SBM2vw%3d%3d",
+                official: true,
+                icon: "https://img.icons8.com/color/48/000000/windows-11.png"
+            },
+            {
+                name: "Windows 10 ISO",
+                meta: "Consumer editions · x64 · English",
+                desc: "Official Windows 10 installation image — the original Google Drive link you shared. Consumer editions (Home / Pro).",
+                url: "https://drive.google.com/file/d/1zl7Uv5VGzRsu0P5fFEcHyx-vmBkzc4S0/view?usp=sharing",
+                official: false,
+                icon: "https://img.icons8.com/color/48/000000/windows-10.png"
+            },
+            {
+                name: "Windows 10 LTSC",
+                meta: "Enterprise LTSC · x64 · English",
+                desc: "Legacy LTSC image — the go-to choice for a lean, telemetry-light Windows 10 install that stays stable for years.",
+                url: "https://buzzheavier.com/yhggy3l1e5oq",
+                official: false,
+                icon: "https://img.icons8.com/color/48/000000/windows-10.png"
+            },
+            {
+                name: "Windows 7 SP1",
+                meta: "Service Pack 1 · x64 / x86 · English",
+                desc: "Archived Windows 7 image for legacy machines and testing. No longer receives security updates.",
+                url: "https://buzzheavier.com/wru8ac6nwk17",
+                official: false,
+                iconSymbol: "desktop_windows"
+            }
+        ];
+
+        // ================================================================
+        //  CATEGORY ORDER — "Operating Systems" restored at the end
         // ================================================================
         const CATEGORY_ORDER = [
             "Archive / Compression", "Video / Media", "Display / Utilities", "Office / Productivity",
             "Browsers", "Download Managers", "Torrent", "PDF", "Password Managers", "Screenshots",
             "File Sharing", "Communication", "Gaming", "Controller / Phone Tools", "Online Tools",
-            "System / Android Tools", "System / Utilities", "Package Managers", "Operating Systems"
+            "System / Android Tools", "System / Utilities", "Package Managers",
+            "Operating Systems"
         ];
 
-        // ================================================================
-        //  OS BADGE META
-        // ================================================================
         const PLATFORM_META = {
             Windows: { label: "Windows", icon: "https://cdn.simpleicons.org/windows/e8eaed", type: "img" },
             Linux: { label: "Linux", icon: "https://cdn.simpleicons.org/linux/e8eaed", type: "img" },
@@ -2327,11 +2227,8 @@
             }).join('')}</div>`;
         }
 
-        // ================================================================
-        //  HELPERS
-        // ================================================================
         function escapeHtml(str) {
-            return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[m]);
+            return String(str).replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[m]);
         }
 
         function renderToolCard(tool) {
@@ -2345,7 +2242,7 @@
                 osBadgesHtml;
 
             return `
-            <div class="tool-card" data-url="${escapeHtml(tool.url)}">
+            <div class="tool-card" data-url="${escapeHtml(tool.url)}" title="Open ${escapeHtml(tool.name)}">
               <div class="tool-card__top">
                 <div class="tool-card__icon">${iconHtml}</div>
                 <div class="tool-card__top-info">
@@ -2355,11 +2252,6 @@
               </div>
               <div class="tool-card__desc">${escapeHtml(tool.desc)}</div>
               ${osTag}
-              <div class="tool-card__footer">
-                <a class="tool-card__visit" href="${escapeHtml(tool.url)}" target="_blank" rel="noopener" onclick="event.stopPropagation();">
-                  Official site <span class="material-symbols-rounded">open_in_new</span>
-                </a>
-              </div>
             </div>
           `;
         }
@@ -2420,9 +2312,6 @@
             };
         }
 
-        // ================================================================
-        //  STATE & RENDER
-        // ================================================================
         let platformFilter = 'all';
         let searchQuery = '';
         let searchPageQuery = '';
@@ -2499,9 +2388,48 @@
             renderTools('searchPageGrid', results);
         }
 
-        // ================================================================
-        //  PLATFORM FILTER — Home page
-        // ================================================================
+        function renderIsoCard(iso) {
+            const iconHtml = iso.icon
+                ? `<img src="${escapeHtml(iso.icon)}" alt="${escapeHtml(iso.name)} icon" onerror="this.style.display='none'" />`
+                : `<span class="material-symbols-rounded">${iso.iconSymbol || 'album'}</span>`;
+
+            const badge = iso.official
+                ? `<span class="iso-badge iso-badge--official"><span class="material-symbols-rounded">verified</span>Official ISO</span>`
+                : `<span class="iso-badge iso-badge--mirror"><span class="material-symbols-rounded">cloud_download</span>Community Mirror</span>`;
+
+            return `
+            <div class="iso-card">
+              <div class="iso-card__top">
+                <div class="iso-card__icon">${iconHtml}</div>
+                <div style="min-width:0;">
+                  <div class="iso-card__name">${escapeHtml(iso.name)}</div>
+                  <div class="iso-card__meta">${escapeHtml(iso.meta)}</div>
+                </div>
+              </div>
+              <div class="iso-card__desc">${escapeHtml(iso.desc)}</div>
+              <div class="iso-card__foot">
+                ${badge}
+                <a class="iso-dl-btn" href="${escapeHtml(iso.url)}" target="_blank" rel="noopener">
+                  <span class="material-symbols-rounded">download</span>Download
+                </a>
+              </div>
+            </div>`;
+        }
+
+        function renderIsoGrid() {
+            const grid = document.getElementById('isoGrid');
+            if (!grid) return;
+            if (!windowsIsoDatabase.length) {
+                grid.innerHTML = `
+              <div class="empty-state">
+                <span class="material-symbols-rounded">album</span>
+                <p>No ISOs available right now</p>
+              </div>`;
+                return;
+            }
+            grid.innerHTML = windowsIsoDatabase.map(renderIsoCard).join('');
+        }
+
         document.querySelectorAll('#platformFilter .platform-filter__btn[data-platform]').forEach(btn => {
             btn.addEventListener('click', function() {
                 platformFilter = this.dataset.platform;
@@ -2512,9 +2440,6 @@
             });
         });
 
-        // ================================================================
-        //  PLATFORM FILTER — Search page
-        // ================================================================
         document.querySelectorAll('#searchPlatformFilter .platform-filter__btn[data-platform]').forEach(btn => {
             btn.addEventListener('click', function() {
                 searchPagePlatformFilter = this.dataset.platform;
@@ -2524,9 +2449,6 @@
             });
         });
 
-        // ================================================================
-        //  SEARCH — Home page
-        // ================================================================
         const searchInput = document.getElementById('searchInput');
         const searchClear = document.getElementById('searchClear');
         const debouncedRender = debounce(renderHome, 120);
@@ -2542,9 +2464,6 @@
             searchInput.focus();
         });
 
-        // ================================================================
-        //  SEARCH — dedicated Search page
-        // ================================================================
         const searchPageInput = document.getElementById('searchPageInput');
         const searchPageClear = document.getElementById('searchPageClear');
         const debouncedRenderSearchPage = debounce(renderSearchPage, 120);
@@ -2560,10 +2479,7 @@
             searchPageInput.focus();
         });
 
-        // ================================================================
-        //  TRENDING CAROUSEL (Kudu, WinGet, Monect — auto slideshow)
-        // ================================================================
-        const TRENDING_IDS = [36, 40, 31]; // Kudu, WinGet, Monect
+        const TRENDING_IDS = [36, 40, 31];
         let trendingIndex = 0;
         let trendingTimer = null;
 
@@ -2622,14 +2538,9 @@
             trendingTimer = setInterval(() => showTrendingSlide(trendingIndex + 1), 5000);
         }
 
-        // ================================================================
-        //  OPTIMIZE PAGE — subsections (App Store / Optimization / Starter Pack)
-        // ================================================================
         function renderOptimizeSubsections() {
-            // App Store: Winstall (38) + UniGetUI (39)
             renderTools('appStoreGrid', [38, 39].map(id => toolsDatabase.find(t => t.id === id)).filter(Boolean));
             renderTools('optimizationToolsGrid', [36, 37].map(id => toolsDatabase.find(t => t.id === id)).filter(Boolean));
-            // Starter Pack: Winstall (38) + Ninite (41)
             renderTools('starterPackGrid', [38, 41].map(id => toolsDatabase.find(t => t.id === id)).filter(Boolean));
         }
 
@@ -2637,13 +2548,11 @@
             renderTools('mobileOptimizeGrid', [42, 43].map(id => toolsDatabase.find(t => t.id === id)).filter(Boolean));
         }
 
-        // ================================================================
-        //  PAGE NAVIGATION (Home / Optimize / Search / GitHub)
-        // ================================================================
         const pages = {
             home: document.getElementById('page-home'),
             optimize: document.getElementById('page-optimize'),
             search: document.getElementById('page-search'),
+            isos: document.getElementById('page-isos'),
             github: document.getElementById('page-github'),
         };
 
@@ -2663,6 +2572,9 @@
             if (tabId === 'search') {
                 searchPageInput.focus();
             }
+            if (tabId === 'isos') {
+                renderIsoGrid();
+            }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -2681,9 +2593,6 @@
             if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); switchTab('optimize'); }
         });
 
-        // ================================================================
-        //  TARATARI OS TOOL — STEPPER LOGIC
-        // ================================================================
         let currentStep = 0;
         const totalSteps = 3;
         let selectedOS = null;
@@ -2699,7 +2608,6 @@
         const stepperContainer = document.getElementById('stepperContainer');
         const installedState = document.getElementById('installedState');
 
-        // Check localStorage
         function checkInstalled() {
             try {
                 var saved = localStorage.getItem('taratari_os_installed');
@@ -2909,7 +2817,6 @@
             goToStep(0);
         }
 
-        // Initialize stepper
         var hasSaved = checkInstalled();
         if (!hasSaved) {
             loadSavedSelections();
@@ -2921,9 +2828,6 @@
             }
         }
 
-        // ================================================================
-        //  COPY BUTTONS
-        // ================================================================
         function setupCopyButtons() {
             document.querySelectorAll('.btn-copy-sm[data-copy-text]').forEach(function(btn) {
                 btn.addEventListener('click', function(e) {
@@ -2977,12 +2881,10 @@
             }, 2000);
         }
 
-        // ================================================================
-        //  INIT
-        // ================================================================
         function initApp() {
             renderTrendingCarousel();
             renderHome();
+            renderIsoGrid();
             setupCopyButtons();
         }
         if (document.readyState === 'loading') {
