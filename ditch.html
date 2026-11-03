@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<script>
+(function() {
+  try {
+    if (localStorage.getItem('taratan_theme') === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  } catch (e) {}
+})();
+</script>
+
+<title>TaraTariDitch — Ditch Big Tech, Find Open Source Alternatives | TaraTariTools</title>
+<meta name="description" content="TaraTariDitch helps you leave big tech apps behind. Pick Adobe Acrobat, Microsoft Office, Photoshop, Chrome, Discord, Notion or CapCut and get real open source alternatives.">
+<meta name="keywords" content="taratariditch, ditch big tech, open source alternatives, adobe alternatives, microsoft office alternative, chrome alternative, capcut alternative">
+<link rel="canonical" href="https://tarataritools.github.io/ditch/">
+
+<meta property="og:title" content="TaraTariDitch — Ditch Big Tech, Find Open Source Alternatives">
+<meta property="og:description" content="Pick a big tech app. Get a real, working open source alternative. No trackers, no subscriptions.">
+<meta property="og:url" content="https://tarataritools.github.io/ditch/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#09090b">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #09090b;
+  --surface: #131316;
+  --surface-2: #1c1c20;
+  --surface-3: #26262b;
+  --border: #27272a;
+  --border-hover: #3f3f46;
+  --text: #e4e4e7;
+  --text-muted: #a1a1aa;
+  --text-dim: #71717a;
+  --accent: #4ade80;
+  --accent-hover: #22c55e;
+  --accent-bright: #66ff66;
+  --accent-bright-hover: #85ff85;
+  --accent-soft: rgba(74, 222, 128, 0.12);
+  --on-accent: #052e16;
+  --warn: #f59e0b;
+  --warn-soft: rgba(245, 158, 11, 0.10);
+  --warn-text: #fcd34d;
+  --header-bg: rgba(9, 9, 11, 0.85);
+  --bottom-nav-bg: rgba(9, 9, 11, 0.95);
+  --modal-bg: rgba(9, 9, 11, 0.75);
+  --radius: 10px;
+  --radius-lg: 14px;
+  --radius-full: 999px;
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+:root[data-theme="light"] {
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --surface-2: #f4f4f5;
+  --surface-3: #e4e4e7;
+  --border: #e4e4e7;
+  --border-hover: #d4d4d8;
+  --text: #18181b;
+  --text-muted: #52525b;
+  --text-dim: #71717a;
+  --accent: #16a34a;
+  --accent-hover: #15803d;
+  --accent-bright: #4ade80;
+  --accent-bright-hover: #86efac;
+  --accent-soft: rgba(22, 163, 74, 0.10);
+  --on-accent: #052e16;
+  --warn: #d97706;
+  --warn-soft: rgba(217, 119, 6, 0.10);
+  --warn-text: #92400e;
+  --header-bg: rgba(250, 250, 250, 0.88);
+  --bottom-nav-bg: rgba(250, 250, 250, 0.96);
+  --modal-bg: rgba(24, 24, 27, 0.55);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.container { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+
+.material-symbols-rounded {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-size: 20px;
+  line-height: 1;
+  user-select: none;
+  vertical-align: middle;
+}
+
+/* =========================================================
+   PAGE LOADER (same triangle tips)
+   ========================================================= */
+.page-loader {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.45s ease, visibility 0.45s ease;
+}
+.page-loader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+.ld-stage { display: flex; align-items: center; justify-content: center; }
+.ld-grid { display: flex; flex-direction: column; align-items: center; }
+.ld-strip { display: flex; }
+.ld-tip {
+  width: 0; height: 0; margin: 0 -6px;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 22px solid var(--accent-bright);
+  filter: drop-shadow(0 0 18px #65fc0d);
+  animation: ld-pulse 1s infinite;
+}
+:root[data-theme="light"] .ld-tip { filter: drop-shadow(0 0 12px rgba(34, 197, 94, 0.55)); }
+.ld-tip.reverse { transform: rotate(180deg); }
+.ld-tip.delay-01 { animation-delay: -0.05s; }
+.ld-tip.delay-02 { animation-delay: -0.10s; }
+.ld-tip.delay-03 { animation-delay: -0.15s; }
+.ld-tip.delay-04 { animation-delay: -0.20s; }
+.ld-tip.delay-05 { animation-delay: -0.25s; }
+.ld-tip.delay-06 { animation-delay: -0.30s; }
+.ld-tip.delay-07 { animation-delay: -0.35s; }
+.ld-tip.delay-08 { animation-delay: -0.40s; }
+.ld-tip.delay-09 { animation-delay: -0.45s; }
+.ld-tip.delay-10 { animation-delay: -0.50s; }
+.ld-tip.delay-11 { animation-delay: -0.55s; }
+.ld-tip.delay-12 { animation-delay: -0.60s; }
+.ld-tip.delay-13 { animation-delay: -0.65s; }
+.ld-tip.delay-14 { animation-delay: -0.70s; }
+.ld-tip.delay-15 { animation-delay: -0.75s; }
+.ld-tip.delay-16 { animation-delay: -0.80s; }
+.ld-tip.delay-17 { animation-delay: -0.85s; }
+.ld-tip.delay-18 { animation-delay: -0.90s; }
+.ld-tip.delay-19 { animation-delay: -0.95s; }
+.ld-tip.delay-20 { animation-delay: -1.00s; }
+
+@keyframes ld-pulse {
+  0%   { opacity: 0.1; }
+  30%  { opacity: 1;   }
+  100% { opacity: 0.1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ld-tip { animation: none; opacity: 0.7; }
+}
+
+/* =========================================================
+   CTA BUTTON — green + black text, sweep on click
+   ========================================================= */
+.cta-btn {
+  outline: none; cursor: pointer; border: none;
+  padding: 0.85rem 1.8rem; margin: 0;
+  font-family: var(--font);
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center;
+  letter-spacing: 0.03em; font-weight: 700; font-size: 14px;
+  border-radius: 500px; overflow: hidden;
+  background: var(--accent-bright); color: var(--on-accent);
+  text-decoration: none; gap: 8px;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+  isolation: isolate;
+}
+.cta-btn > span {
+  position: relative; z-index: 10;
+  display: inline-flex; align-items: center; gap: 8px;
+  color: inherit;
+}
+.cta-btn::before {
+  content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 0; background: #000; transform: skew(30deg) translateX(-250%);
+  pointer-events: none;
+}
+.cta-btn.cta-pressed::before { animation: cta-sweep 0.45s cubic-bezier(0.3, 1, 0.8, 1) forwards; }
+@keyframes cta-sweep {
+  from { transform: skew(30deg) translateX(-250%); }
+  to   { transform: skew(30deg) translateX(250%); }
+}
+@keyframes cta-text-flash {
+  0%, 30%   { color: var(--on-accent); }
+  50%       { color: #ffffff; }
+  70%, 100% { color: var(--on-accent); }
+}
+.cta-btn.cta-pressed > span { animation: cta-text-flash 0.45s ease forwards; }
+.cta-btn:hover { background: var(--accent-bright-hover); box-shadow: 0 0 22px rgba(102, 255, 102, 0.4); text-decoration: none; }
+.cta-btn:active { transform: scale(0.98); }
+.cta-btn:focus-visible { box-shadow: 0 0 0 3px rgba(102, 255, 102, 0.55); }
+.cta-btn .material-symbols-rounded { font-size: 19px; color: inherit; }
+
+/* ---------- Header ---------- */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--header-bg);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.25s ease;
+}
+.header__inner { display: flex; align-items: center; gap: 12px; height: 60px; }
+.logo {
+  display: flex; align-items: center; gap: 10px;
+  color: var(--text); font-weight: 700; font-size: 17px;
+  letter-spacing: -0.01em; text-decoration: none; flex-shrink: 0;
+}
+.logo:hover { text-decoration: none; }
+.logo img { height: 28px; width: auto; border-radius: 6px; }
+.logo__spacer { flex: 1; }
+
+.nav { display: flex; align-items: center; gap: 2px; }
+.nav__item {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 12px; background: transparent; border: none;
+  color: var(--text-muted); font-family: var(--font); font-size: 14px; font-weight: 500;
+  border-radius: var(--radius); cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+  text-decoration: none; position: relative;
+}
+.nav__item:hover { color: var(--text); background: var(--surface-2); text-decoration: none; }
+.nav__item.active { color: var(--text); background: var(--surface-2); }
+.nav__item .material-symbols-rounded { font-size: 18px; }
+
+.new-badge {
+  display: inline-flex; align-items: center;
+  padding: 2px 6px; margin-left: 2px;
+  background: var(--accent-bright); color: var(--on-accent);
+  font-size: 9px; font-weight: 800; border-radius: 999px;
+  letter-spacing: 0.06em; line-height: 1.2; text-transform: uppercase;
+}
+
+.icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--surface-2); border: 1px solid var(--border);
+  color: var(--text); cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.icon-btn:hover { background: var(--surface-3); border-color: var(--border-hover); }
+.icon-btn svg { width: 18px; height: 18px; fill: currentColor; }
+.icon-btn .material-symbols-rounded { font-size: 20px; }
+
+/* ---------- Ditch hero ---------- */
+.ditch-hero {
+  padding: 64px 0 32px;
+  text-align: center;
+  position: relative;
+}
+.ditch-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at 50% 0%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 30%, transparent 75%);
+  pointer-events: none;
+  z-index: 0;
+}
+:root[data-theme="light"] .ditch-hero::before {
+  background-image:
+    linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+}
+.ditch-hero > * { position: relative; z-index: 1; }
+
+.ditch-hero h1 {
+  font-size: clamp(32px, 6vw, 56px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  margin-bottom: 14px;
+  color: var(--text);
+}
+.ditch-hero__sub {
+  font-size: clamp(14px, 2vw, 17px);
+  color: var(--text-muted);
+  max-width: 560px;
+  margin: 0 auto 28px;
+  line-height: 1.55;
+}
+.search {
+  display: flex; align-items: center; gap: 10px;
+  max-width: 520px; margin: 0 auto;
+  padding: 0 16px; height: 52px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.25s;
+}
+.search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.search .material-symbols-rounded { color: var(--text-dim); font-size: 20px; }
+.search input {
+  flex: 1; background: transparent; border: none; outline: none;
+  color: var(--text); font-family: var(--font); font-size: 15px; min-width: 0;
+}
+.search input::placeholder { color: var(--text-dim); }
+.search__clear {
+  background: none; border: none; color: var(--text-dim);
+  cursor: pointer; padding: 4px; display: flex; align-items: center;
+  border-radius: 4px; transition: color 0.15s;
+}
+.search__clear:hover { color: var(--text); }
+
+.hero-stats {
+  display: flex; justify-content: center; gap: 18px;
+  margin-top: 20px;
+  font-size: 12px; color: var(--text-dim);
+  flex-wrap: wrap;
+}
+.hero-stats span { display: inline-flex; align-items: center; gap: 5px; }
+.hero-stats .material-symbols-rounded { font-size: 14px; color: var(--accent); }
+
+/* ---------- Category chips ---------- */
+.chips-wrap {
+  position: sticky;
+  top: 60px;
+  z-index: 40;
+  background: var(--bg);
+  padding: 10px 0 14px;
+  margin-bottom: 8px;
+  transition: background-color 0.25s ease;
+}
+.chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 2px 4px;
+}
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: var(--font); font-size: 13px; font-weight: 500;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+.chip:hover { color: var(--text); border-color: var(--border-hover); }
+.chip.active {
+  background: var(--accent-bright);
+  color: var(--on-accent);
+  border-color: var(--accent-bright);
+  font-weight: 600;
+}
+.chip .count {
+  font-size: 11px;
+  opacity: 0.65;
+  font-weight: 600;
+}
+
+/* ---------- Ditch grid ---------- */
+.ditch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+  padding-bottom: 40px;
+}
+
+.ditch-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font);
+  color: var(--text);
+  transition: border-color 0.18s, background 0.18s, transform 0.12s;
+  overflow: hidden;
+}
+.ditch-card:hover {
+  border-color: var(--border-hover);
+  background: var(--surface-2);
+  transform: translateY(-2px);
+}
+.ditch-card:active { transform: translateY(0) scale(0.995); }
+.ditch-card:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.ditch-card__top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ditch-card__icon {
+  flex-shrink: 0;
+  width: 48px; height: 48px;
+  border-radius: 10px;
+  background: var(--surface-3);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.ditch-card__icon img { width: 34px; height: 34px; object-fit: contain; }
+.ditch-card__title { flex: 1; min-width: 0; }
+.ditch-card__name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.25;
+  margin-bottom: 2px;
+}
+.ditch-card__company {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+.ditch-card__reason {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.ditch-card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+.ditch-card__preview {
+  display: flex;
+  align-items: center;
+}
+.ditch-card__preview img {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--surface-3);
+  border: 2px solid var(--surface);
+  object-fit: contain;
+  padding: 2px;
+  margin-left: -6px;
+}
+.ditch-card__preview img:first-child { margin-left: 0; }
+.ditch-card__more {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin-left: 8px;
+}
+.ditch-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.ditch-card__cta .material-symbols-rounded { font-size: 15px; }
+
+/* ---------- Empty ---------- */
+.empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-dim);
+}
+.empty .material-symbols-rounded { font-size: 44px; margin-bottom: 12px; display: block; color: var(--text-dim); }
+.empty p { font-size: 14px; }
+
+/* ---------- Modal ---------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.22s ease, visibility 0.22s ease;
+}
+.modal.open { opacity: 1; visibility: visible; }
+
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--modal-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.modal__panel {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  max-height: 86vh;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateY(16px) scale(0.98);
+  opacity: 0;
+  transition: transform 0.25s cubic-bezier(0.34, 1.3, 0.64, 1), opacity 0.2s ease;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+.modal.open .modal__panel { transform: translateY(0) scale(1); opacity: 1; }
+
+.modal__head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  background: var(--surface);
+}
+.modal__icon {
+  flex-shrink: 0;
+  width: 52px; height: 52px;
+  border-radius: 12px;
+  background: var(--surface-3);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.modal__icon img { width: 38px; height: 38px; object-fit: contain; }
+.modal__titles { flex: 1; min-width: 0; }
+.modal__titles h2 {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 3px;
+  letter-spacing: -0.01em;
+}
+.modal__titles p {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+.modal__close {
+  flex-shrink: 0;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.modal__close:hover { background: var(--surface-3); color: var(--text); border-color: var(--border-hover); }
+.modal__close .material-symbols-rounded { font-size: 20px; }
+
+.modal__body {
+  padding: 20px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.modal__reason {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  padding: 14px 16px;
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  border-left: 3px solid var(--border-hover);
+  margin-bottom: 20px;
+}
+
+.alt-group { margin-bottom: 22px; }
+.alt-group:last-child { margin-bottom: 0; }
+.alt-group__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+.alt-group__label .material-symbols-rounded { font-size: 16px; color: var(--accent); }
+.alt-group__label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.alt-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+}
+.alt-row:hover {
+  border-color: var(--accent);
+  background: var(--surface-3);
+  text-decoration: none;
+  transform: translateX(2px);
+}
+.alt-row:active { transform: translateX(2px) scale(0.995); }
+.alt-row:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.alt-row__icon {
+  flex-shrink: 0;
+  width: 38px; height: 38px;
+  border-radius: 8px;
+  background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.alt-row__icon img { width: 28px; height: 28px; object-fit: contain; }
+.alt-row__body { flex: 1; min-width: 0; }
+.alt-row__top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 2px;
+}
+.alt-row__name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.2;
+}
+.alt-row__note {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+.alt-row__go {
+  flex-shrink: 0;
+  color: var(--text-dim);
+  transition: color 0.15s, transform 0.15s;
+}
+.alt-row:hover .alt-row__go { color: var(--accent); transform: translateX(2px); }
+.alt-row__go .material-symbols-rounded { font-size: 18px; }
+
+/* Tags */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.tag--rec {
+  background: var(--accent-bright);
+  color: var(--on-accent);
+}
+.tag--oss {
+  background: rgba(96, 165, 250, 0.14);
+  color: #93c5fd;
+}
+:root[data-theme="light"] .tag--oss {
+  background: rgba(37, 99, 235, 0.10);
+  color: #1d4ed8;
+}
+.tag--closed {
+  background: var(--surface-3);
+  color: var(--text-muted);
+}
+.tag--og {
+  background: rgba(245, 158, 11, 0.14);
+  color: #fcd34d;
+}
+:root[data-theme="light"] .tag--og {
+  background: rgba(217, 119, 6, 0.10);
+  color: #b45309;
+}
+.tag .material-symbols-rounded { font-size: 11px; }
+
+/* Warning box */
+.warning-box {
+  display: flex;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--warn-soft);
+  border-left: 3px solid var(--warn);
+  border-radius: var(--radius);
+  margin-top: 8px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--warn-text);
+}
+.warning-box .material-symbols-rounded { flex-shrink: 0; font-size: 18px; color: var(--warn); margin-top: 1px; }
+.warning-box strong { font-weight: 700; }
+
+/* ---------- Footer ---------- */
+.footer {
+  margin-top: 40px;
+  padding: 32px 0 calc(32px + env(safe-area-inset-bottom, 0));
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.footer p { font-size: 13px; color: var(--text-dim); margin-bottom: 6px; }
+.footer a { color: var(--accent); }
+.footer__links {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.footer__links a {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.footer__links a:hover { color: var(--accent); }
+.footer__links .material-symbols-rounded { font-size: 14px; }
+
+/* ---------- Bottom nav ---------- */
+.bottom-nav {
+  display: none;
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 100;
+  background: var(--bottom-nav-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid var(--border);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.bottom-nav__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 0 10px;
+  background: none; border: none;
+  color: var(--text-dim);
+  font-family: var(--font); font-size: 10px; font-weight: 500;
+  cursor: pointer;
+  transition: color 0.15s;
+  text-decoration: none;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+.bottom-nav__item:hover { text-decoration: none; color: var(--text-muted); }
+.bottom-nav__icon {
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 52px; height: 28px;
+  border-radius: 999px;
+  transition: background 0.2s;
+}
+.bottom-nav__icon .material-symbols-rounded { font-size: 22px; }
+.bottom-nav__icon svg { width: 20px; height: 20px; fill: currentColor; }
+.bottom-nav__label { line-height: 1.2; }
+.bottom-nav__item.active { color: var(--accent); }
+.bottom-nav__item.active .bottom-nav__icon { background: var(--accent-soft); }
+.bottom-nav__item.active .bottom-nav__icon .material-symbols-rounded {
+  font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+}
+
+/* ---------- Back to top ---------- */
+.back-top {
+  position: fixed;
+  bottom: 24px; right: 20px;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s, background 0.15s;
+  z-index: 90;
+}
+.back-top.visible { opacity: 1; visibility: visible; }
+.back-top:hover { background: var(--surface-3); }
+.back-top .material-symbols-rounded { font-size: 22px; }
+
+/* ---------- Mobile ---------- */
+@media (max-width: 768px) {
+  .nav { display: none; }
+  .header__inner { height: 56px; gap: 8px; }
+  .logo { font-size: 16px; }
+  .logo img { height: 26px; }
+  .bottom-nav { display: flex; }
+  main { padding-bottom: 84px; }
+
+  .ditch-hero { padding: 40px 0 24px; }
+  .ditch-hero h1 { font-size: clamp(28px, 9vw, 40px); letter-spacing: -0.03em; }
+  .ditch-hero__sub { font-size: 14px; margin-bottom: 22px; }
+  .search { height: 48px; padding: 0 14px; }
+  .search input { font-size: 14px; }
+
+  .chips-wrap { top: 56px; padding: 8px 0 12px; margin: 0 -20px 6px; padding-left: 20px; padding-right: 20px; }
+  .chip { padding: 7px 12px; font-size: 12px; min-height: 34px; }
+
+  .ditch-grid { grid-template-columns: 1fr; gap: 10px; }
+  .ditch-card { padding: 16px; }
+  .ditch-card:hover { transform: none; }
+
+  .modal { padding: 0; align-items: flex-end; }
+  .modal__panel {
+    max-width: 100%;
+    max-height: 92vh;
+    border-radius: 18px 18px 0 0;
+    border-bottom: none;
+    transform: translateY(100%);
+  }
+  .modal.open .modal__panel { transform: translateY(0); }
+  .modal__head { padding: 16px 16px 14px; }
+  .modal__icon { width: 46px; height: 46px; }
+  .modal__icon img { width: 34px; height: 34px; }
+  .modal__titles h2 { font-size: 16px; }
+  .modal__body { padding: 16px; }
+
+  .alt-row { padding: 11px 12px; gap: 10px; }
+  .alt-row__icon { width: 34px; height: 34px; }
+  .alt-row__icon img { width: 24px; height: 24px; }
+
+  .back-top { bottom: 88px; }
+}
+
+@media (max-width: 420px) {
+  .ditch-grid { grid-template-columns: 1fr; }
+  .ditch-card__preview img:nth-child(n+4) { display: none; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Loader -->
+<div class="page-loader" id="pageLoader" aria-hidden="true">
+  <div class="ld-stage">
+    <div class="ld-grid">
+      <div class="ld-strip">
+        <div class="ld-tip delay-01"></div>
+        <div class="ld-tip delay-02"></div>
+        <div class="ld-tip delay-03"></div>
+        <div class="ld-tip delay-04"></div>
+        <div class="ld-tip delay-05"></div>
+      </div>
+      <div class="ld-strip">
+        <div class="ld-tip reverse delay-06"></div>
+        <div class="ld-tip reverse delay-07"></div>
+        <div class="ld-tip reverse delay-08"></div>
+        <div class="ld-tip reverse delay-09"></div>
+        <div class="ld-tip reverse delay-10"></div>
+      </div>
+      <div class="ld-strip">
+        <div class="ld-tip delay-11"></div>
+        <div class="ld-tip delay-12"></div>
+        <div class="ld-tip delay-13"></div>
+        <div class="ld-tip delay-14"></div>
+        <div class="ld-tip delay-15"></div>
+      </div>
+      <div class="ld-strip">
+        <div class="ld-tip reverse delay-16"></div>
+        <div class="ld-tip reverse delay-17"></div>
+        <div class="ld-tip reverse delay-18"></div>
+        <div class="ld-tip reverse delay-19"></div>
+        <div class="ld-tip reverse delay-20"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="container header__inner">
+    <a href="/" class="logo" aria-label="TaraTariTools home">
+      <img src="https://raw.githubusercontent.com/tarataritools/tarataritools.github.io/main/images/TaraTariToolsLogo.png" alt="TaraTariTools logo" onerror="this.remove()">
+      <span>TaraTariTools</span>
+    </a>
+    <span class="logo__spacer"></span>
+    <nav class="nav" aria-label="Primary">
+      <a href="/" class="nav__item">
+        <span class="material-symbols-rounded">home</span> Home
+      </a>
+      <a href="/#optimize" class="nav__item">
+        <span class="material-symbols-rounded">bolt</span> Optimize
+      </a>
+      <a href="/ditch/" class="nav__item active">
+        <span class="material-symbols-rounded">swap_horiz</span> TaraTariDitch
+        <span class="new-badge">NEW</span>
+      </a>
+      <a href="/#isos" class="nav__item">
+        <span class="material-symbols-rounded">album</span> ISOs
+      </a>
+    </nav>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+      <span class="material-symbols-rounded" id="themeIcon">dark_mode</span>
+    </button>
+    <a class="icon-btn" href="https://github.com/tarataritools/tarataritools.github.io" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+    </a>
+  </div>
+</header>
+
+<main>
+  <section class="ditch-hero">
+    <div class="container">
+      <h1>What do you want to ditch bro?</h1>
+      <p class="ditch__sub ditch-hero__sub">Pick a big tech app. Get a real open source alternative that actually works. No subscriptions, no trackers, no nonsense.</p>
+      <div class="search">
+        <span class="material-symbols-rounded">search</span>
+        <input type="text" id="ditchSearch" placeholder="Search apps or alternatives…" aria-label="Search apps and alternatives">
+        <button class="search__clear" id="ditchSearchClear" aria-label="Clear search" hidden>
+          <span class="material-symbols-rounded" style="font-size:18px;">close</span>
+        </button>
+      </div>
+      <div class="hero-stats">
+        <span><span class="material-symbols-rounded">apps</span><span id="statApps">14</span> apps</span>
+        <span><span class="material-symbols-rounded">swap_horiz</span><span id="statAlts">0</span> alternatives</span>
+        <span><span class="material-symbols-rounded">verified_user</span>0 trackers</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="chips-wrap">
+    <div class="container" style="padding:0 20px;">
+      <div class="chips" id="chips" role="tablist" aria-label="Filter by category"></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="ditch-grid" id="ditchGrid"></div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>Part of <a href="/">TaraTariTools</a> · hand-picked open source, no affiliates.</p>
+    <div class="footer__links">
+      <a href="/"><span class="material-symbols-rounded">arrow_back</span> Back to TaraTariTools</a>
+      <a href="https://github.com/tarataritools/tarataritools.github.io" target="_blank" rel="noopener">
+        <span class="material-symbols-rounded">code</span> GitHub
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- Mobile bottom nav -->
+<nav class="bottom-nav" aria-label="Primary mobile">
+  <a href="/" class="bottom-nav__item">
+    <span class="bottom-nav__icon"><span class="material-symbols-rounded">home</span></span>
+    <span class="bottom-nav__label">Home</span>
+  </a>
+  <a href="/#optimize" class="bottom-nav__item">
+    <span class="bottom-nav__icon"><span class="material-symbols-rounded">bolt</span></span>
+    <span class="bottom-nav__label">Optimize</span>
+  </a>
+  <a href="/ditch/" class="bottom-nav__item active">
+    <span class="bottom-nav__icon"><span class="material-symbols-rounded">swap_horiz</span></span>
+    <span class="bottom-nav__label">Ditch</span>
+  </a>
+  <a href="/#isos" class="bottom-nav__item">
+    <span class="bottom-nav__icon"><span class="material-symbols-rounded">album</span></span>
+    <span class="bottom-nav__label">ISOs</span>
+  </a>
+  <a href="https://github.com/tarataritools/tarataritools.github.io" target="_blank" rel="noopener" class="bottom-nav__item">
+    <span class="bottom-nav__icon">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+    </span>
+    <span class="bottom-nav__label">GitHub</span>
+  </a>
+</nav>
+
+<button class="back-top" id="backTop" aria-label="Back to top">
+  <span class="material-symbols-rounded">arrow_upward</span>
+</button>
+
+<!-- Modal -->
+<div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal__backdrop" data-close></div>
+  <div class="modal__panel">
+    <div class="modal__head">
+      <div class="modal__icon"><img id="modalIcon" alt="" onerror="this.style.display='none'"></div>
+      <div class="modal__titles">
+        <h2 id="modalTitle"></h2>
+        <p id="modalCompany"></p>
+      </div>
+      <button class="modal__close" data-close aria-label="Close">
+        <span class="material-symbols-rounded">close</span>
+      </button>
+    </div>
+    <div class="modal__body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   THEME TOGGLE
+   ========================================================= */
+(function initTheme() {
+  const root = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  const icon = document.getElementById('themeIcon');
+  function setTheme(t) {
+    if (t === 'light') {
+      root.setAttribute('data-theme', 'light');
+      icon.textContent = 'light_mode';
+    } else {
+      root.removeAttribute('data-theme');
+      icon.textContent = 'dark_mode';
+    }
+    try { localStorage.setItem('taratan_theme', t); } catch(e) {}
+  }
+  const current = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  icon.textContent = current === 'light' ? 'light_mode' : 'dark_mode';
+  btn.addEventListener('click', () => {
+    const now = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    setTheme(now === 'light' ? 'dark' : 'light');
+  });
+})();
+
+/* =========================================================
+   DITCH DATABASE
+   ========================================================= */
+const ditchDB = [
+  /* ---------- 1. ADOBE ACROBAT ---------- */
+  {
+    id: "acrobat",
+    name: "Adobe Acrobat",
+    company: "Adobe",
+    icon: "https://img.alternativeto.net/icons/140/adobe-reader_246134.svg",
+    category: "PDF",
+    reason: "Reading PDFs is free. Editing, signing, OCR and combining sit behind a monthly subscription. The desktop installer is also huge.",
+    groups: [
+      {
+        label: "Viewers",
+        icon: "visibility",
+        alternatives: [
+          { name: "Koodo Reader", url: "https://www.koodoreader.com/en", icon: "https://github.com/koodo-reader.png", tag: "rec", note: "Modern PDF and ebook reader. Highlights, sync, dark mode, cross-platform." },
+          { name: "SumatraPDF", url: "https://www.sumatrapdfreader.org/free-pdf-reader", icon: "https://img.alternativeto.net/icons/140/avif/sumatra-pdf_205324.png", tag: "og", note: "Tiny, instant, no bloat. The classic. Loads a 500-page PDF in a blink." },
+          { name: "Firefox", url: "https://www.mozilla.org/firefox/new/", icon: "https://img.alternativeto.net/icons/280/firefox_232783.svg", note: "Firefox opens PDFs natively. No extra app needed." }
+        ]
+      },
+      {
+        label: "Editors",
+        icon: "edit_document",
+        alternatives: [
+          { name: "PdfCraft", url: "https://getartcraft.com/apps/pdfcraft", icon: "https://getartcraft.com/images/apps/pdfcraft/icon.webp", tag: "oss", note: "Full PDF workbench. Read, organize, merge, split and secure." },
+          { name: "PDF24", url: "https://www.pdf24.org/", icon: "https://img.alternativeto.net/icons/140/avif/pdf24-creator_96417.png", tag: "closed", note: "Free desktop PDF suite. Merge, split, compress and OCR." }
+        ]
+      },
+      {
+        label: "Online editors",
+        icon: "cloud",
+        alternatives: [
+          { name: "iLovePDF", url: "https://www.ilovepdf.com/", icon: "https://www.ilovepdf.com/img/ilovepdf.svg", note: "Browser-based merge, split, compress and convert. No install." }
+        ]
+      }
+    ],
+    warning: "Avoid Foxit Reader. The installer tries to bundle McAfee WebAdvisor and PhantomPDF Business. Both can be declined, but the dark pattern is real."
+  },
+
+  /* ---------- 2. MICROSOFT OFFICE ---------- */
+  {
+    id: "office",
+    name: "Microsoft Office",
+    company: "Microsoft",
+    icon: "https://img.icons8.com/color/96/office-365.png",
+    category: "Office",
+    reason: "Word, Excel and PowerPoint want a Microsoft 365 subscription. The free web versions are cut down. You never own the software.",
+    childApps: [
+      { name: "Word", icon: "https://img.icons8.com/fluency/96/ms-word.png" },
+      { name: "Excel", icon: "https://img.icons8.com/color/96/ms-excel.png" },
+      { name: "PowerPoint", icon: "https://img.icons8.com/color/96/ms-powerpoint--v1.png" }
+    ],
+    groups: [
+      {
+        label: "Full office suites",
+        icon: "work",
+        alternatives: [
+          { name: "ONLYOFFICE", url: "https://www.onlyoffice.com/desktop", icon: "https://img.alternativeto.net/icons/140/onlyoffice_245488.svg", tag: "rec", note: "Closest to Microsoft Office. Opens .docx, .xlsx and .pptx with almost no formatting loss. Free, no activation." },
+          { name: "LibreOffice", url: "https://www.libreoffice.org/", icon: "https://img.alternativeto.net/icons/140/libreoffice_233404.svg", tag: "oss", note: "The classic open source office suite. Writer, Calc and Impress. Fully offline, fully free." }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- 3. ADOBE PHOTOSHOP ---------- */
+  {
+    id: "photoshop",
+    name: "Adobe Photoshop",
+    company: "Adobe",
+    icon: "https://img.alternativeto.net/icons/40/adobe-photoshop_244565.svg",
+    category: "Creative",
+    reason: "Creative Cloud costs more every year. The installer is huge, the subscription is mandatory, and you never own the software.",
+    groups: [
+      {
+        label: "Image editors",
+        icon: "image",
+        alternatives: [
+          { name: "PhotoCraft", url: "https://getartcraft.com/apps/photocraft", icon: "https://getartcraft.com/images/apps/photocraft/icon.webp", tag: "rec", note: "Layered image editor with masks, adjustment layers and PSD support. Free and private." },
+          { name: "PhotoSplice", url: "https://photosplice.com/", icon: "https://photosplice.com/images/logo.png", note: "Browser-based photo editor. Layers, masks and filters. No install." }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- 4. ADOBE ILLUSTRATOR ---------- */
+  {
+    id: "illustrator",
+    name: "Adobe Illustrator",
+    company: "Adobe",
+    icon: "https://img.icons8.com/color/96/adobe-illustrator.png",
+    category: "Creative",
+    reason: "Same Creative Cloud subscription. Vector work gets expensive fast, and the file format lock-in is real.",
+    groups: [
+      {
+        label: "Vector and illustration",
+        icon: "draw",
+        alternatives: [
+          { name: "Krita", url: "https://krita.org/", icon: "https://krita.org/favicon.ico", tag: "rec", note: "Free and open source. Brilliant for digital painting and illustration, with vector layers." },
+          { name: "VectorCraft", url: "https://getartcraft.com/apps/vectorcraft", icon: "https://getartcraft.com/images/apps/vectorcraft/icon.webp", tag: "oss", note: "Purpose-built Illustrator alternative. Pen tools, image tracing, SVG export." },
+          { name: "Inkscape", url: "https://inkscape.org/", icon: "https://img.icons8.com/color/96/inkscape.png", tag: "oss", note: "The long-standing open source SVG editor. Powerful, a little quirky, full of features." }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- 5. ADOBE PREMIERE PRO ---------- */
+  {
+    id: "premiere",
+    name: "Adobe Premiere Pro",
+    company: "Adobe",
+    icon: "https://img.icons8.com/color/96/adobe-premiere-pro.png",
+    category: "Video",
+    reason: "Subscription-only. Heavy install, heavy RAM, heavy price. The free alternatives are genuinely good now.",
+    groups: [
+      {
+        label: "Video editors",
+        icon: "movie",
+        alternatives: [
+          { name: "DaVinci Resolve", url: "https://www.blackmagicdesign.com/products/davinciresolve", icon: "https://img.alternativeto.net/icons/140/avif/davinci-resolve_121866.png", tag: "closed", note: "Hollywood-grade color grading and editing. The free version is genuinely free, not a trial." },
+          { name: "Kdenlive", url: "https://kdenlive.org/", icon: "https://kdenlive.org/favicon.ico", tag: "oss", note: "Mature open source NLE. Multi-track timeline, effects, proxy editing." }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- 6. WINRAR ---------- */
+  {
+    id: "winrar",
+    name: "WinRAR",
+    company: "RARLAB",
+    icon: "https://img.icons8.com/color/96/winrar.png",
+    category: "Utilities",
+    reason: "The free trial never ends, but the nag screen does. It's also closed source, and you can't inspect what it does with your files.",
+    groups: [
+      {
+        label: "Archive managers",
+        icon: "folder_zip",
+        alternatives: [
+          { name: "7-Zip", url: "https://www.7-zip.org/", icon: "https://7-zip.org/7ziplogo.png", tag: "rec", note: "Free, open source, better compression. Handles RAR, ZIP, 7z and dozens more." }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- 7. GOOGLE CHROME ---------- */
+  {
+    id: "chrome",
+    name: "Google Chrome",
+    company: "Google",
+    icon: "https://img.icons8.com/color/96/chrome.png",
+    category: "Browser",
+    reason: "Google's browser feeds Google's ad business. Heavy RAM use, limited privacy controls, and it's closed source.",
+    groups: [
+      {
+        label: "Browsers",
+        icon: "public",
+        alternatives: [
+          { name: "Firefox", url: "https://www.mozilla.org/firefox/new/", icon: "https://img.alternativeto.net/icons/280/firefox_232783.svg", tag: "rec", note: "Independent, open source, strong privacy defaults. The cleanest direct switch." },
+          { name: "Brave", url: "https://brave.com/download/", icon: "https://brave.com/static-assets/images/brave-logo-sans-text.svg", tag: "oss", note: "Chromium with built-in ad blocking. Familiar if you're leaving Chrome." },
+          { name: "Helium", url: "https://helium.computer/", icon: "https://helium.computer/favicon.ico", tag: "oss", note: "Lightweight Chromium fork. No bloat, no noise, ad blocker built in." }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- 8. MOZILLA FIREFOX ---------- */
+  {
+    id: "firefox",
+    name: "Mozilla Firefox",
+    company: "Mozilla",
+    icon: "https://img.alternativeto.net/icons/280/firefox_232783.svg",
+    category: "Browser",
+    reason: "Firefox ships Pocket, sponsored tiles, telemetry and now AI features. Still good, but not as clean as it used to be.",
+    groups: [
+      {
+        label: "Firefox forks and Chromium options",
+        icon: "public",
+        alternatives: [
+          { name: "Waterfox", url: "https://www.waterfox.com/", icon: "https://www.waterfox.com/favicon.ico", tag: "rec", note: "Firefox with telemetry stripped out. Same engine, same extensions, zero AI." },
+          { name: "LibreWolf", url: "https://librewolf.net/", icon: "https://librewolf.net/favicon.ico", tag: "oss", note: "Hardened Firefox fork. Maximum privacy out of the box, no sponsored content." },
+          { name: "Helium", url: "https://helium.computer/", icon: "https://helium.computer/favicon.ico", tag: "oss", note: "Chromium-based. For when you want to leave Gecko entirely without going back to Chrome." }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- 9. INTERNET DOWNLOAD MANAGER ---------- */
+  {
+    id: "idm",
+    name: "Internet Download Manager",
+    company: "Tonec",
+    icon: "https://www.internetdownloadmanager.com/favicon.ico",
+    category: "Downloads",
+    reason: "Paid, closed source, and the trial is 30 days. The 'cracked' versions floating around are almost always malware.",
+    groups: [
+      {
+        label: "Download managers",
+        icon: "download",
+        alternatives: [
+          { name: "Free Download Manager", url: "https://www.freedownloadmanager.org/", icon: "https://www.freedownloadmanager.org/favicon.ico", tag: "rec", note: "Free download accelerator. Windows, macOS, Linux and Android." },
+          { name: "AB Download Manager", url: "https://abdownloadmanager.com/", icon: "https://abdownloadmanager.com/favicon.ico", tag: "oss", note: "Fast, open source, cross-platform. Queues, schedulers and browser extensions." }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- 10. SNIPPING TOOL ---------- */
+  {
+    id: "snipping",
+    name: "Snipping Tool",
+    company: "Microsoft",
+    icon: "https://img.icons8.com/color/96/snipping-tool.png",
+    category: "Screenshots",
+    reason: "Basic capture with few annotation tools. Windows-only, closed source, and the workflow is slow.",
+    groups: [
+      {
+        label: "Screenshot tools",
+        icon: "photo_camera",
+        alternatives: [
+          { name: "Greenshot", url: "https://getgreenshot.org/", icon: "https://getgreenshot.org/favicon.ico", tag: "rec", note: "Lightweight Windows screenshot tool. Print Screen to capture, annotate and upload." },
+          { name: "ShareX", url: "https://getsharex.com/", icon: "https://getsharex.com/favicon.ico", tag: "oss", note: "The power-user option. 80+ capture modes, auto-upload and workflows." },
+          { name: "Flameshot", url: "https://flameshot.org/", icon: "https://flameshot.org/favicon.ico", tag: "oss", note: "Cross-platform screenshot tool. Great annotation, works on Linux too." }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- 11. DISCORD ---------- */
+  {
+    id: "discord",
+    name: "Discord",
+    company: "Discord Inc.",
+    icon: "https://img.icons8.com/color/96/discord--v2.png",
+    category: "Chat",
+    reason: "Closed source, tracks a lot, and the Nitro upsell is everywhere. Your messages live on their servers.",
+    groups: [
+      {
+        label: "Chat platforms",
+        icon: "forum",
+        alternatives: [
+          { name: "Revolt", url: "https://revolt.chat/", icon: "https://revolt.chat/favicon.ico", tag: "rec", note: "Open source, self-hostable Discord alternative. Text, voice and servers." }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- 12. GOOGLE KEEP ---------- */
+  {
+    id: "keep",
+    name: "Google Keep",
+    company: "Google",
+    icon: "https://img.icons8.com/color/96/google-keep.png",
+    category: "Notes",
+    reason: "Your notes live on Google's servers, tied to your Google account. There is no real escape from the lock-in.",
+    groups: [
+      {
+        label: "Note apps",
+        icon: "sticky_note_2",
+        alternatives: [
+          { name: "OpenKeep", url: "https://openkeep.net/", icon: "https://openkeep.net/favicon.ico", tag: "rec", note: "Privacy-first Keep alternative. No Google account, no tracking, encrypted sync." }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- 13. NOTION ---------- */
+  {
+    id: "notion",
+    name: "Notion",
+    company: "Notion Labs",
+    icon: "https://img.icons8.com/color/96/notion--v1.png",
+    category: "Notes",
+    reason: "Notion is cloud-only. Your workspace lives on their servers, and the free plan is limited.",
+    groups: [
+      {
+        label: "Workspaces",
+        icon: "workspaces",
+        alternatives: [
+          { name: "Anytype", url: "https://anytype.io/", icon: "https://anytype.io/favicon.ico", tag: "rec", note: "Encrypted, local-first workspace. You own the encryption keys." },
+          { name: "AppFlowy", url: "https://appflowy.io/", icon: "https://appflowy.io/favicon.ico", tag: "oss", note: "Local-first Notion clone. Projects, wikis, databases and AI, all on your device." }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- 14. CAPCUT ---------- */
+  {
+    id: "capcut",
+    name: "CapCut",
+    company: "ByteDance",
+    icon: "https://www.capcut.com/favicon.ico",
+    category: "Video",
+    reason: "ByteDance-owned, watermarks on export, and most features are now paywalled.",
+    groups: [
+      {
+        label: "Video editors",
+        icon: "movie_edit",
+        alternatives: [
+          { name: "ConCat", url: "https://github.com/jub0t/Concat", icon: "https://github.com/jub0t.png", tag: "rec", note: "Free, open source, local-first. AI subtitles, background removal, 4K export, no watermark." },
+          { name: "OpenCut", url: "https://opencut.app/", icon: "https://opencut.app/favicon.ico", tag: "oss", note: "Web, desktop and mobile. Timeline editing, no watermark, no subscription." }
+        ]
+      }
+    ]
+  }
+];
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+const CATEGORY_ORDER = ["PDF", "Office", "Creative", "Video", "Browser", "Downloads", "Screenshots", "Chat", "Notes", "Utilities"];
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]);
+}
+
+function countAlts(app) {
+  return app.groups.reduce((n, g) => n + g.alternatives.length, 0);
+}
+
+function tagHTML(tag) {
+  if (!tag) return '';
+  if (tag === 'rec') return '<span class="tag tag--rec"><span class="material-symbols-rounded">star</span>TaraTari Recommended</span>';
+  if (tag === 'oss') return '<span class="tag tag--oss">Open source</span>';
+  if (tag === 'closed') return '<span class="tag tag--closed">Not open source</span>';
+  if (tag === 'og') return '<span class="tag tag--og">OG</span>';
+  return '';
+}
+
+/* =========================================================
+   STATE
+   ========================================================= */
+let activeCategory = 'all';
+let query = '';
+
+/* =========================================================
+   RENDER CHIPS
+   ========================================================= */
+function renderChips() {
+  const container = document.getElementById('chips');
+  const counts = { all: ditchDB.length };
+  ditchDB.forEach(app => { counts[app.category] = (counts[app.category] || 0) + 1; });
+
+  const chips = [{ key: 'all', label: 'All', icon: 'apps' }].concat(
+    CATEGORY_ORDER.filter(c => counts[c]).map(c => {
+      const iconMap = {
+        PDF: 'picture_as_pdf', Office: 'work', Creative: 'palette', Video: 'movie',
+        Browser: 'public', Downloads: 'download', Screenshots: 'photo_camera',
+        Chat: 'forum', Notes: 'sticky_note_2', Utilities: 'build'
+      };
+      return { key: c, label: c, icon: iconMap[c] || 'folder' };
+    })
+  );
+
+  container.innerHTML = chips.map(c => `
+    <button class="chip${activeCategory === c.key ? ' active' : ''}" data-cat="${c.key}" role="tab" aria-selected="${activeCategory === c.key}">
+      <span class="material-symbols-rounded" style="font-size:15px;">${c.icon}</span>
+      ${escapeHtml(c.label)}
+      <span class="count">${counts[c.key] || 0}</span>
+    </button>
+  `).join('');
+
+  container.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', function() {
+      activeCategory = this.dataset.cat;
+      renderChips();
+      renderGrid();
+    });
+  });
+}
+
+/* =========================================================
+   FILTER
+   ========================================================= */
+function filterApps() {
+  const q = query.trim().toLowerCase();
+  return ditchDB.filter(app => {
+    if (activeCategory !== 'all' && app.category !== activeCategory) return false;
+    if (!q) return true;
+    const haystack = [
+      app.name, app.company, app.category, app.reason,
+      ...app.groups.flatMap(g => [g.label, ...g.alternatives.map(a => a.name + ' ' + (a.note || ''))])
+    ].join(' ').toLowerCase();
+    return haystack.includes(q);
+  });
+}
+
+/* =========================================================
+   RENDER GRID
+   ========================================================= */
+function renderGrid() {
+  const grid = document.getElementById('ditchGrid');
+  const list = filterApps();
+
+  if (list.length === 0) {
+    grid.innerHTML = `
+      <div class="empty">
+        <span class="material-symbols-rounded">search_off</span>
+        <p>Nothing matches "${escapeHtml(query)}". Try a different app or clear the filter.</p>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(app => {
+    const alts = app.groups.flatMap(g => g.alternatives);
+    const preview = alts.slice(0, 4).map(a =>
+      `<img src="${escapeHtml(a.icon)}" alt="" loading="lazy" onerror="this.style.display='none'">`
+    ).join('');
+    const more = alts.length > 4 ? `<span class="ditch-card__more">+${alts.length - 4}</span>` : '';
+
+    return `
+      <button class="ditch-card" data-ditch="${app.id}" aria-label="See alternatives for ${escapeHtml(app.name)}">
+        <div class="ditch-card__top">
+          <div class="ditch-card__icon">
+            <img src="${escapeHtml(app.icon)}" alt="" loading="lazy" onerror="this.style.display='none'">
+          </div>
+          <div class="ditch-card__title">
+            <div class="ditch-card__name">${escapeHtml(app.name)}</div>
+            <div class="ditch-card__company">${escapeHtml(app.company)} · ${escapeHtml(app.category)}</div>
+          </div>
+        </div>
+        <div class="ditch-card__reason">${escapeHtml(app.reason)}</div>
+        <div class="ditch-card__foot">
+          <div class="ditch-card__preview">${preview}${more}</div>
+          <span class="ditch-card__cta">
+            Ditch it
+            <span class="material-symbols-rounded">arrow_forward</span>
+          </span>
+        </div>
+      </button>`;
+  }).join('');
+
+  grid.querySelectorAll('.ditch-card').forEach(card => {
+    card.addEventListener('click', function() {
+      openModal(this.dataset.ditch);
+    });
+  });
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+const modal = document.getElementById('modal');
+const modalIcon = document.getElementById('modalIcon');
+const modalTitle = document.getElementById('modalTitle');
+const modalCompany = document.getElementById('modalCompany');
+const modalBody = document.getElementById('modalBody');
+let lastFocused = null;
+
+function openModal(id) {
+  const app = ditchDB.find(a => a.id === id);
+  if (!app) return;
+  lastFocused = document.activeElement;
+
+  modalIcon.src = app.icon;
+  modalIcon.alt = app.name;
+  modalIcon.style.display = '';
+  modalTitle.textContent = app.name;
+  modalCompany.textContent = app.company + ' · ' + app.category;
+
+  let html = '';
+
+  if (app.childApps && app.childApps.length) {
+    html += `<div class="alt-group">
+      <div class="alt-group__label"><span class="material-symbols-rounded">family_restroom</span>Inside ${escapeHtml(app.name)}</div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:6px;">
+        ${app.childApps.map(c => `
+          <div style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius); font-size:13px; font-weight:600; color:var(--text);">
+            <img src="${escapeHtml(c.icon)}" alt="" width="20" height="20" style="object-fit:contain;" onerror="this.style.display='none'">
+            ${escapeHtml(c.name)}
+          </div>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  html += `<div class="modal__reason">${escapeHtml(app.reason)}</div>`;
+
+  app.groups.forEach(group => {
+    html += `
+      <div class="alt-group">
+        <div class="alt-group__label">
+          <span class="material-symbols-rounded">${group.icon || 'swap_horiz'}</span>
+          ${escapeHtml(group.label)}
+        </div>
+        ${group.alternatives.map(alt => `
+          <a class="alt-row" href="${escapeHtml(alt.url)}" target="_blank" rel="noopener noreferrer">
+            <div class="alt-row__icon">
+              <img src="${escapeHtml(alt.icon)}" alt="" loading="lazy" onerror="this.style.display='none'">
+            </div>
+            <div class="alt-row__body">
+              <div class="alt-row__top">
+                <span class="alt-row__name">${escapeHtml(alt.name)}</span>
+                ${tagHTML(alt.tag)}
+              </div>
+              ${alt.note ? `<div class="alt-row__note">${escapeHtml(alt.note)}</div>` : ''}
+            </div>
+            <span class="alt-row__go"><span class="material-symbols-rounded">open_in_new</span></span>
+          </a>`).join('')}
+      </div>`;
+  });
+
+  if (app.warning) {
+    html += `<div class="warning-box">
+      <span class="material-symbols-rounded">warning</span>
+      <div><strong>Heads up.</strong> ${escapeHtml(app.warning)}</div>
+    </div>`;
+  }
+
+  modalBody.innerHTML = html;
+  modalBody.scrollTop = 0;
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+
+  setTimeout(() => {
+    const closeBtn = modal.querySelector('.modal__close');
+    if (closeBtn) closeBtn.focus();
+  }, 50);
+}
+
+function closeModal() {
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+  if (lastFocused && lastFocused.focus) lastFocused.focus();
+}
+
+modal.querySelectorAll('[data-close]').forEach(el => {
+  el.addEventListener('click', closeModal);
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+});
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+function debounce(fn, wait) {
+  let timer;
+  return function(...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), wait);
+  };
+}
+
+const searchInput = document.getElementById('ditchSearch');
+const searchClear = document.getElementById('ditchSearchClear');
+
+searchInput.addEventListener('input', debounce(function() {
+  query = this.value;
+  searchClear.hidden = !this.value;
+  renderGrid();
+}, 100));
+
+searchClear.addEventListener('click', function() {
+  searchInput.value = '';
+  query = '';
+  searchClear.hidden = true;
+  renderGrid();
+  searchInput.focus();
+});
+
+/* =========================================================
+   BACK TO TOP
+   ========================================================= */
+const backTop = document.getElementById('backTop');
+window.addEventListener('scroll', function() {
+  backTop.classList.toggle('visible', window.scrollY > 400);
+}, { passive: true });
+backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+/* =========================================================
+   STATS
+   ========================================================= */
+function renderStats() {
+  const totalAlts = ditchDB.reduce((sum, app) => sum + countAlts(app), 0);
+  document.getElementById('statApps').textContent = ditchDB.length;
+  document.getElementById('statAlts').textContent = totalAlts;
+}
+
+/* =========================================================
+   INIT
+   ========================================================= */
+function init() {
+  renderChips();
+  renderGrid();
+  renderStats();
+
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('pageLoader').classList.add('done');
+    }, 900);
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+</script>
+
+</body>
+</html>
