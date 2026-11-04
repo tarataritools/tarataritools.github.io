@@ -20,7 +20,7 @@
 
   { "id": "anytype", "name": "Anytype", "category": "Note Taking", "icon": "https://www.google.com/s2/favicons?sz=128&domain=anytype.io", "url": "https://anytype-release.fra1.cdn.digitaloceanspaces.com/Anytype%20Setup%20latest.exe", "file": "anytype-setup.exe", "installer": "exe", "args": "/S" },
   { "id": "appflowy", "name": "AppFlowy", "category": "Note Taking", "icon": "https://www.google.com/s2/favicons?sz=128&domain=appflowy.io", "url": "https://github.com/AppFlowy-IO/AppFlowy/releases/latest/download/AppFlowy-windows-x86_64.exe", "file": "appflowy-setup.exe", "installer": "exe", "args": "/sp- /verysilent /norestart" },
-  { "id": "notion", "name": "Notion", "category": "Note Taking", "icon": "https://cdn.simpleicons.org/notion/FFFFFF", "url": "https://www.notion.so/desktop/windows/download", "file": "notion-setup.exe", "installer": "exe", "args": "/S" },
+  { "id": "notion", "name": "Notion", "category": "Note Taking", "icon": "https://cdn.simpleicons.org/notion/FFFFFF", "url": "https://www.notion.so/desktop", "file": "", "installer": "fallback", "args": "" },
 
   { "id": "obs", "name": "OBS Studio", "category": "Media & PDF", "icon": "https://cdn.simpleicons.org/obsstudio/FFFFFF", "url": "https://github.com/obsproject/obs-studio/releases/latest/download/OBS-Studio-Windows-x64-Installer.exe", "file": "obs-setup.exe", "installer": "exe", "args": "/S" },
   { "id": "vlc", "name": "VLC", "category": "Media & PDF", "icon": "https://www.google.com/s2/favicons?sz=128&domain=videolan.org", "url": "https://get.videolan.org/vlc/last/win64/vlc-win64.exe", "file": "vlc-setup.exe", "installer": "exe", "args": "/S" },
