@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-<!-- Theme boot: prevents white flash on light mode reload -->
 <script>
 (function() {
   try {
@@ -47,6 +46,7 @@
   --accent-bright: #66ff66;
   --accent-bright-hover: #85ff85;
   --accent-soft: rgba(74, 222, 128, 0.12);
+  --on-accent: #052e16;
   --warn: #f59e0b;
   --warn-soft: rgba(245, 158, 11, 0.10);
   --warn-text: #fcd34d;
@@ -75,9 +75,10 @@
   --text-dim: #71717a;
   --accent: #16a34a;
   --accent-hover: #15803d;
-  --accent-bright: #22c55e;
-  --accent-bright-hover: #16a34a;
+  --accent-bright: #4ade80;
+  --accent-bright-hover: #86efac;
   --accent-soft: rgba(22, 163, 74, 0.10);
+  --on-accent: #052e16;
   --warn: #d97706;
   --warn-soft: rgba(217, 119, 6, 0.10);
   --warn-text: #92400e;
@@ -116,16 +117,15 @@ a:hover { text-decoration: underline; }
 }
 
 /* =========================================================
-   PAGE LOADER
+   PAGE LOADER — THUNDERBOLT
    ========================================================= */
 .page-loader {
   position: fixed;
   inset: 0;
   background: var(--bg);
   z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   transition: opacity 0.45s ease, visibility 0.45s ease;
 }
 .page-loader.done {
@@ -133,46 +133,58 @@ a:hover { text-decoration: underline; }
   visibility: hidden;
   pointer-events: none;
 }
-.ld-stage { display: flex; align-items: center; justify-content: center; }
-.ld-grid { display: flex; flex-direction: column; align-items: center; }
-.ld-strip { display: flex; }
-.ld-tip {
-  width: 0; height: 0; margin: 0 -6px;
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  border-bottom: 22px solid var(--accent-bright);
-  filter: drop-shadow(0 0 18px #65fc0d);
-  animation: ld-pulse 1s infinite;
-}
-:root[data-theme="light"] .ld-tip {
-  filter: drop-shadow(0 0 12px rgba(34, 197, 94, 0.55));
-}
-.ld-tip.reverse { transform: rotate(180deg); }
-.ld-tip.delay-01 { animation-delay: -0.05s; }
-.ld-tip.delay-02 { animation-delay: -0.10s; }
-.ld-tip.delay-03 { animation-delay: -0.15s; }
-.ld-tip.delay-04 { animation-delay: -0.20s; }
-.ld-tip.delay-05 { animation-delay: -0.25s; }
-.ld-tip.delay-06 { animation-delay: -0.30s; }
-.ld-tip.delay-07 { animation-delay: -0.35s; }
-.ld-tip.delay-08 { animation-delay: -0.40s; }
-.ld-tip.delay-09 { animation-delay: -0.45s; }
-.ld-tip.delay-10 { animation-delay: -0.50s; }
-.ld-tip.delay-11 { animation-delay: -0.55s; }
-.ld-tip.delay-12 { animation-delay: -0.60s; }
-.ld-tip.delay-13 { animation-delay: -0.65s; }
-.ld-tip.delay-14 { animation-delay: -0.70s; }
-.ld-tip.delay-15 { animation-delay: -0.75s; }
-.ld-tip.delay-16 { animation-delay: -0.80s; }
-.ld-tip.delay-17 { animation-delay: -0.85s; }
-.ld-tip.delay-18 { animation-delay: -0.90s; }
-.ld-tip.delay-19 { animation-delay: -0.95s; }
-.ld-tip.delay-20 { animation-delay: -1.00s; }
 
-@keyframes ld-pulse {
-  0%   { opacity: 0.1; }
-  30%  { opacity: 1;   }
-  100% { opacity: 0.1; }
+.bolt-loader {
+  --bl-size: 96px;
+  --bl-green: var(--accent-bright, #66ff66);
+  --bl-glow: rgba(102, 255, 102, 0.55);
+  position: relative;
+  width: var(--bl-size);
+  height: var(--bl-size);
+  display: grid;
+  place-items: center;
+  animation: bl-breathe 2.4s ease-in-out infinite;
+}
+:root[data-theme="light"] .bolt-loader {
+  --bl-glow: rgba(74, 222, 128, 0.45);
+}
+.bolt-loader::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+  border-top-color: var(--bl-green);
+  filter: drop-shadow(0 0 5px var(--bl-glow));
+  animation: bl-spin 1.4s linear infinite;
+}
+.bolt-loader__bolt {
+  width: 40%;
+  height: 40%;
+  fill: var(--bl-green);
+  filter: drop-shadow(0 0 6px var(--bl-glow));
+  animation: bl-zap 2.4s ease-in-out infinite;
+}
+
+@keyframes bl-spin { to { transform: rotate(360deg); } }
+@keyframes bl-breathe {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.06); }
+}
+@keyframes bl-zap {
+  0%, 88%, 100% { opacity: 1; }
+  90%           { opacity: 0.25; }
+  92%           { opacity: 1; }
+  94%           { opacity: 0.4; }
+  96%           { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bolt-loader,
+  .bolt-loader::before,
+  .bolt-loader__bolt {
+    animation: none !important;
+  }
 }
 
 .inline-loader {
@@ -183,15 +195,11 @@ a:hover { text-decoration: underline; }
   padding: 30px 0;
   animation: fadeIn 0.2s ease;
 }
-.inline-loader .ld-grid { transform: scale(0.65); }
+.inline-loader .bolt-loader { --bl-size: 56px; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-@media (prefers-reduced-motion: reduce) {
-  .ld-tip { animation: none; opacity: 0.7; }
-}
-
 /* =========================================================
-   CTA BUTTON — GREEN default, black sweep on click
+   CTA BUTTON — GREEN with BLACK text, black sweep on click
    ========================================================= */
 .cta-btn {
   outline: none;
@@ -210,14 +218,13 @@ a:hover { text-decoration: underline; }
   border-radius: 500px;
   overflow: hidden;
   background: var(--accent-bright);
-  color: ghostwhite;
+  color: var(--on-accent);
   text-decoration: none;
   gap: 8px;
   -webkit-tap-highlight-color: transparent;
   transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
   isolation: isolate;
 }
-:root[data-theme="light"] .cta-btn { color: #ffffff; }
 
 .cta-btn > span {
   position: relative;
@@ -225,6 +232,8 @@ a:hover { text-decoration: underline; }
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  color: inherit;
+  transition: color 0.15s ease;
 }
 
 .cta-btn::before {
@@ -249,13 +258,22 @@ a:hover { text-decoration: underline; }
   to   { transform: skew(30deg) translateX(250%); }
 }
 
+@keyframes cta-text-flash {
+  0%, 30%   { color: var(--on-accent); }
+  50%       { color: #ffffff; }
+  70%, 100% { color: var(--on-accent); }
+}
+.cta-btn.cta-pressed > span {
+  animation: cta-text-flash 0.45s ease forwards;
+}
+
 .cta-btn:hover {
   background: var(--accent-bright-hover);
   box-shadow: 0 0 22px rgba(102, 255, 102, 0.4);
   text-decoration: none;
 }
 :root[data-theme="light"] .cta-btn:hover {
-  box-shadow: 0 4px 18px rgba(34, 197, 94, 0.35);
+  box-shadow: 0 4px 18px rgba(74, 222, 128, 0.45);
 }
 
 .cta-btn:active { transform: scale(0.98); }
@@ -333,7 +351,7 @@ a:hover { text-decoration: underline; }
   padding: 2px 6px;
   margin-left: 2px;
   background: var(--accent-bright);
-  color: #052e16;
+  color: var(--on-accent);
   font-size: 9px;
   font-weight: 800;
   border-radius: 999px;
@@ -341,7 +359,6 @@ a:hover { text-decoration: underline; }
   line-height: 1.2;
   text-transform: uppercase;
 }
-:root[data-theme="light"] .new-badge { color: #ffffff; }
 
 .icon-btn {
   display: inline-flex;
@@ -360,7 +377,7 @@ a:hover { text-decoration: underline; }
 .icon-btn svg { width: 18px; height: 18px; fill: currentColor; }
 .icon-btn .material-symbols-rounded { font-size: 20px; }
 
-/* ---------- Hero (centered) ---------- */
+/* ---------- Hero ---------- */
 .hero {
   padding: 56px 0 36px;
   text-align: center;
@@ -445,8 +462,11 @@ a:hover { text-decoration: underline; }
   white-space: nowrap;
 }
 .filters__btn:hover { color: var(--text); }
-.filters__btn.active { background: var(--accent); color: #052e16; font-weight: 600; }
-:root[data-theme="light"] .filters__btn.active { color: #ffffff; }
+.filters__btn.active {
+  background: var(--accent-bright);
+  color: var(--on-accent);
+  font-weight: 600;
+}
 .filters__btn .material-symbols-rounded { font-size: 16px; }
 
 /* ---------- Category section ---------- */
@@ -664,7 +684,7 @@ a:hover { text-decoration: underline; }
 .dl-actions .cta-btn .dl-meta {
   font-size: 11px;
   font-weight: 500;
-  opacity: 0.85;
+  opacity: 0.75;
   letter-spacing: 0.02em;
 }
 .dl-actions .cta-btn .dl-icon-row {
@@ -735,7 +755,7 @@ a:hover { text-decoration: underline; }
 }
 .back-btn:hover { color: var(--text); }
 
-/* Optimize: app store / tools / starter pack sub-sections */
+/* Optimize: sub-sections */
 .optimize-section { margin-top: 48px; }
 .optimize-section__title {
   font-size: 20px;
@@ -817,8 +837,10 @@ a:hover { text-decoration: underline; }
   white-space: nowrap;
 }
 .copy-btn:hover { background: var(--surface-2); color: var(--text); }
-.copy-btn.copied { background: var(--accent); color: #052e16; }
-:root[data-theme="light"] .copy-btn.copied { color: #ffffff; }
+.copy-btn.copied {
+  background: var(--accent-bright);
+  color: var(--on-accent);
+}
 
 /* ISO cards */
 .iso-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
@@ -1019,53 +1041,17 @@ a:hover { text-decoration: underline; }
 .back-top:hover { background: var(--surface-3); }
 .back-top .material-symbols-rounded { font-size: 22px; }
 @media (max-width: 768px) { .back-top { bottom: 88px; } }
-
-.sr-only {
-  position: absolute;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
-  overflow: hidden;
-  clip: rect(0,0,0,0);
-  border: 0;
-}
 </style>
 </head>
 
 <body>
 
-<!-- ===== Page loader ===== -->
-<div class="page-loader" id="pageLoader" aria-hidden="true">
-  <div class="ld-stage">
-    <div class="ld-grid">
-      <div class="ld-strip">
-        <div class="ld-tip delay-01"></div>
-        <div class="ld-tip delay-02"></div>
-        <div class="ld-tip delay-03"></div>
-        <div class="ld-tip delay-04"></div>
-        <div class="ld-tip delay-05"></div>
-      </div>
-      <div class="ld-strip">
-        <div class="ld-tip reverse delay-06"></div>
-        <div class="ld-tip reverse delay-07"></div>
-        <div class="ld-tip reverse delay-08"></div>
-        <div class="ld-tip reverse delay-09"></div>
-        <div class="ld-tip reverse delay-10"></div>
-      </div>
-      <div class="ld-strip">
-        <div class="ld-tip delay-11"></div>
-        <div class="ld-tip delay-12"></div>
-        <div class="ld-tip delay-13"></div>
-        <div class="ld-tip delay-14"></div>
-        <div class="ld-tip delay-15"></div>
-      </div>
-      <div class="ld-strip">
-        <div class="ld-tip reverse delay-16"></div>
-        <div class="ld-tip reverse delay-17"></div>
-        <div class="ld-tip reverse delay-18"></div>
-        <div class="ld-tip reverse delay-19"></div>
-        <div class="ld-tip reverse delay-20"></div>
-      </div>
-    </div>
+<!-- ===== Page loader — Thunderbolt ===== -->
+<div class="page-loader" id="pageLoader" role="status" aria-label="Loading">
+  <div class="bolt-loader">
+    <svg class="bolt-loader__bolt" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z"/>
+    </svg>
   </div>
 </div>
 
@@ -1084,7 +1070,7 @@ a:hover { text-decoration: underline; }
       <button class="nav__item" data-target="optimize">
         <span class="material-symbols-rounded">bolt</span> Optimize
       </button>
-      <a href="/ditch/" class="nav__item">
+      <a href="https://tarataritools.github.io/ditch" class="nav__item">
         <span class="material-symbols-rounded">swap_horiz</span> TaraTariDitch
         <span class="new-badge">NEW</span>
       </a>
@@ -1106,7 +1092,7 @@ a:hover { text-decoration: underline; }
   <section class="page active" id="page-home">
     <div class="container">
       <div class="hero">
-        <h1>TaraTariTools: free open source software for every platform</h1>
+        <h1>TaraTariTools: Faster way to get tools you need!</h1>
         <p class="hero__sub">A hand-picked catalog of privacy tools, creative apps and clean Windows ISOs. Every app is free and safe to use. No ads, no trackers, no nonsense.</p>
         <div class="search">
           <span class="material-symbols-rounded">search</span>
@@ -1313,7 +1299,7 @@ a:hover { text-decoration: underline; }
     <span class="bottom-nav__icon"><span class="material-symbols-rounded">bolt</span></span>
     <span class="bottom-nav__label">Optimize</span>
   </button>
-  <a href="/ditch/" class="bottom-nav__item">
+  <a href="https://tarataritools.github.io/ditch" class="bottom-nav__item">
     <span class="bottom-nav__icon">
       <span class="material-symbols-rounded">swap_horiz</span>
       <span class="new-dot" aria-hidden="true"></span>
@@ -1642,6 +1628,7 @@ function renderISOs() {
         </div>
       </div>`;
   }).join('');
+  bindCtaButtons(grid);
 }
 
 /* =========================================================
@@ -1669,37 +1656,10 @@ const PLAYBOOKS = {
 function inlineLoaderHTML() {
   return `
     <div class="inline-loader">
-      <div class="ld-stage">
-        <div class="ld-grid">
-          <div class="ld-strip">
-            <div class="ld-tip delay-01"></div>
-            <div class="ld-tip delay-02"></div>
-            <div class="ld-tip delay-03"></div>
-            <div class="ld-tip delay-04"></div>
-            <div class="ld-tip delay-05"></div>
-          </div>
-          <div class="ld-strip">
-            <div class="ld-tip reverse delay-06"></div>
-            <div class="ld-tip reverse delay-07"></div>
-            <div class="ld-tip reverse delay-08"></div>
-            <div class="ld-tip reverse delay-09"></div>
-            <div class="ld-tip reverse delay-10"></div>
-          </div>
-          <div class="ld-strip">
-            <div class="ld-tip delay-11"></div>
-            <div class="ld-tip delay-12"></div>
-            <div class="ld-tip delay-13"></div>
-            <div class="ld-tip delay-14"></div>
-            <div class="ld-tip delay-15"></div>
-          </div>
-          <div class="ld-strip">
-            <div class="ld-tip reverse delay-16"></div>
-            <div class="ld-tip reverse delay-17"></div>
-            <div class="ld-tip reverse delay-18"></div>
-            <div class="ld-tip reverse delay-19"></div>
-            <div class="ld-tip reverse delay-20"></div>
-          </div>
-        </div>
+      <div class="bolt-loader">
+        <svg class="bolt-loader__bolt" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z"/>
+        </svg>
       </div>
     </div>`;
 }
@@ -1862,10 +1822,7 @@ function switchPage(target) {
     el.classList.toggle('active', el.dataset.target === target);
   });
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  if (target === 'isos') {
-    renderISOs();
-    bindCtaButtons(pageIds.isos);
-  }
+  if (target === 'isos') renderISOs();
   if (target === 'optimize') renderOptimizeSubsections();
   if (target === 'github') bindCtaButtons(pageIds.github);
 }
