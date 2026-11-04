@@ -14,9 +14,9 @@
 })();
 </script>
 
-<title>TaraTariTools — Free Open Source Software, Privacy Apps & Windows ISOs</title>
-<meta name="description" content="TaraTariTools is a hand-picked catalog of free open source software, privacy tools and clean Windows ISOs. Download apps for Windows, Linux, macOS, Android and iOS.">
-<meta name="keywords" content="tarataritools, open source software, privacy tools, free software, windows iso, linux apps, android apps, macos software, debloat windows">
+<title>TaraTariTools — Free Open Source Software, Privacy Apps & Starter Packs</title>
+<meta name="description" content="TaraTariTools is a hand-picked catalog of free open source software, privacy tools, starter packs and Windows optimizers. Download apps for Windows, Linux, macOS, Android and iOS.">
+<meta name="keywords" content="tarataritools, open source software, privacy tools, free software, starter pack, linux apps, android apps, macos software, debloat android, shizuku, canta">
 <link rel="canonical" href="https://tarataritools.github.io/">
 
 <meta property="og:title" content="TaraTariTools — Free Open Source Software & Privacy Apps">
@@ -24,8 +24,7 @@
 <meta property="og:url" content="https://tarataritools.github.io/">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#09090b">
-<meta name="google-site-verification" content="hfZM0cBQHouX3-Ccgk9Jt-IZMr6Tyq32V9QWV2BQRAc" />
-  
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -91,7 +90,7 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   background: var(--bg);
@@ -101,6 +100,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  overflow-x: hidden;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
@@ -118,7 +118,7 @@ a:hover { text-decoration: underline; }
 }
 
 /* =========================================================
-   PAGE LOADER — THUNDERBOLT
+   PAGE LOADER
    ========================================================= */
 .page-loader {
   position: fixed;
@@ -127,13 +127,9 @@ a:hover { text-decoration: underline; }
   z-index: 9999;
   display: grid;
   place-items: center;
-  transition: opacity 0.45s ease, visibility 0.45s ease;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
 }
-.page-loader.done {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
+.page-loader.done { opacity: 0; visibility: hidden; pointer-events: none; }
 
 .bolt-loader {
   --bl-size: 96px;
@@ -146,9 +142,7 @@ a:hover { text-decoration: underline; }
   place-items: center;
   animation: bl-breathe 2.4s ease-in-out infinite;
 }
-:root[data-theme="light"] .bolt-loader {
-  --bl-glow: rgba(74, 222, 128, 0.45);
-}
+:root[data-theme="light"] .bolt-loader { --bl-glow: rgba(74, 222, 128, 0.45); }
 .bolt-loader::before {
   content: "";
   position: absolute;
@@ -166,26 +160,17 @@ a:hover { text-decoration: underline; }
   filter: drop-shadow(0 0 6px var(--bl-glow));
   animation: bl-zap 2.4s ease-in-out infinite;
 }
-
 @keyframes bl-spin { to { transform: rotate(360deg); } }
-@keyframes bl-breathe {
-  0%, 100% { transform: scale(1); }
-  50%      { transform: scale(1.06); }
-}
+@keyframes bl-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
 @keyframes bl-zap {
   0%, 88%, 100% { opacity: 1; }
-  90%           { opacity: 0.25; }
-  92%           { opacity: 1; }
-  94%           { opacity: 0.4; }
-  96%           { opacity: 1; }
+  90% { opacity: 0.25; }
+  92% { opacity: 1; }
+  94% { opacity: 0.4; }
+  96% { opacity: 1; }
 }
-
 @media (prefers-reduced-motion: reduce) {
-  .bolt-loader,
-  .bolt-loader::before,
-  .bolt-loader__bolt {
-    animation: none !important;
-  }
+  .bolt-loader, .bolt-loader::before, .bolt-loader__bolt { animation: none !important; }
 }
 
 .inline-loader {
@@ -200,7 +185,7 @@ a:hover { text-decoration: underline; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 /* =========================================================
-   CTA BUTTON — GREEN, BLACK TEXT, WHITE SHIMMER ON CLICK
+   CTA BUTTON
    ========================================================= */
 .cta-btn {
   outline: none;
@@ -226,7 +211,6 @@ a:hover { text-decoration: underline; }
   transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
   isolation: isolate;
 }
-
 .cta-btn > span {
   position: relative;
   z-index: 10;
@@ -235,29 +219,23 @@ a:hover { text-decoration: underline; }
   gap: 8px;
   color: inherit;
 }
-
 .cta-btn::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   z-index: 0;
   background: rgba(255, 255, 255, 0.6);
   transform: skew(30deg) translateX(-250%);
   pointer-events: none;
 }
-
 .cta-btn.cta-pressed::before {
   animation: cta-sweep 0.45s cubic-bezier(0.3, 1, 0.8, 1) forwards;
 }
-
 @keyframes cta-sweep {
   from { transform: skew(30deg) translateX(-250%); }
-  to   { transform: skew(30deg) translateX(250%); }
+  to { transform: skew(30deg) translateX(250%); }
 }
-
 .cta-btn:hover {
   background: var(--accent-bright-hover);
   box-shadow: 0 0 22px rgba(102, 255, 102, 0.4);
@@ -266,20 +244,10 @@ a:hover { text-decoration: underline; }
 :root[data-theme="light"] .cta-btn:hover {
   box-shadow: 0 4px 18px rgba(74, 222, 128, 0.45);
 }
-
 .cta-btn:active { transform: scale(0.98); }
-
-.cta-btn:focus-visible {
-  box-shadow: 0 0 0 3px rgba(102, 255, 102, 0.55);
-}
-
+.cta-btn:focus-visible { box-shadow: 0 0 0 3px rgba(102, 255, 102, 0.55); }
 .cta-btn .material-symbols-rounded { font-size: 20px; color: inherit; }
-
-.cta-btn--sm {
-  padding: 0.6rem 1.4rem;
-  font-size: 13px;
-  letter-spacing: 0.02em;
-}
+.cta-btn--sm { padding: 0.6rem 1.4rem; font-size: 13px; letter-spacing: 0.02em; }
 .cta-btn--sm .material-symbols-rounded { font-size: 17px; }
 
 /* ---------- Header ---------- */
@@ -293,53 +261,34 @@ a:hover { text-decoration: underline; }
   border-bottom: 1px solid var(--border);
   transition: background-color 0.25s ease;
 }
-.header__inner {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  height: 60px;
-}
+.header__inner { display: flex; align-items: center; gap: 12px; height: 60px; }
+
 .logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--text);
-  font-weight: 700;
-  font-size: 17px;
-  letter-spacing: -0.01em;
-  text-decoration: none;
-  flex-shrink: 0;
+  display: flex; align-items: center; gap: 10px;
+  color: var(--text); font-weight: 700; font-size: 17px;
+  letter-spacing: -0.01em; text-decoration: none; flex-shrink: 0;
 }
 .logo:hover { text-decoration: none; }
 .logo img { height: 32px; width: auto; border-radius: 6px; }
-
-/* Visually hide the wordmark but keep it for SEO */
 .logo__text {
   position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
 }
-
 .logo__spacer { flex: 1; }
 
 .nav { display: flex; align-items: center; gap: 4px; }
 .nav__item {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  display: inline-flex; align-items: center; gap: 6px;
   padding: 8px 14px;
   background: transparent;
   border: 1px solid transparent;
   color: var(--text-muted);
-  font-family: var(--font);
-  font-size: 14px;
-  font-weight: 500;
+  font-family: var(--font); font-size: 14px; font-weight: 500;
   border-radius: var(--radius);
   cursor: pointer;
   transition: color 0.15s, background 0.15s, border-color 0.15s;
@@ -361,18 +310,13 @@ a:hover { text-decoration: underline; }
 .nav__item .material-symbols-rounded { font-size: 18px; }
 
 .new-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 6px;
-  margin-left: 2px;
+  display: inline-flex; align-items: center;
+  padding: 2px 6px; margin-left: 2px;
   background: rgba(0, 0, 0, 0.14);
   color: inherit;
-  font-size: 9px;
-  font-weight: 800;
+  font-size: 9px; font-weight: 800;
   border-radius: 999px;
-  letter-spacing: 0.06em;
-  line-height: 1.2;
-  text-transform: uppercase;
+  letter-spacing: 0.06em; line-height: 1.2; text-transform: uppercase;
 }
 .nav__item:not(.active) .new-badge {
   background: var(--accent-bright);
@@ -380,15 +324,10 @@ a:hover { text-decoration: underline; }
 }
 
 .icon-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  color: var(--text);
-  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--surface-2); border: 1px solid var(--border);
+  color: var(--text); cursor: pointer;
   transition: background 0.15s, border-color 0.15s, color 0.15s;
   flex-shrink: 0;
 }
@@ -417,32 +356,19 @@ a:hover { text-decoration: underline; }
   line-height: 1.6;
 }
 .search {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  max-width: 560px;
-  margin: 0 auto;
-  padding: 0 16px;
-  height: 52px;
+  display: flex; align-items: center; gap: 10px;
+  max-width: 560px; margin: 0 auto;
+  padding: 0 16px; height: 52px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   transition: border-color 0.15s, box-shadow 0.15s, background 0.25s;
 }
-.search:focus-within {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-soft);
-}
+.search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 .search .material-symbols-rounded { color: var(--text-dim); font-size: 20px; }
 .search input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: var(--text);
-  font-family: var(--font);
-  font-size: 15px;
-  min-width: 0;
+  flex: 1; background: transparent; border: none; outline: none;
+  color: var(--text); font-family: var(--font); font-size: 15px; min-width: 0;
 }
 .search input::placeholder { color: var(--text-dim); }
 .search__clear {
@@ -454,9 +380,7 @@ a:hover { text-decoration: underline; }
 
 /* ---------- Filters ---------- */
 .filters {
-  display: inline-flex;
-  gap: 4px;
-  padding: 4px;
+  display: inline-flex; gap: 4px; padding: 4px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-full);
@@ -465,45 +389,28 @@ a:hover { text-decoration: underline; }
 }
 .filters-wrap { text-align: center; }
 .filters__btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  display: inline-flex; align-items: center; gap: 6px;
   padding: 8px 14px;
-  background: transparent;
-  border: none;
+  background: transparent; border: none;
   color: var(--text-muted);
-  font-family: var(--font);
-  font-size: 13px;
-  font-weight: 500;
+  font-family: var(--font); font-size: 13px; font-weight: 500;
   border-radius: var(--radius-full);
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
   white-space: nowrap;
 }
 .filters__btn:hover { color: var(--text); }
-.filters__btn.active {
-  background: var(--accent-bright);
-  color: #000;
-  font-weight: 600;
-}
+.filters__btn.active { background: var(--accent-bright); color: #000; font-weight: 600; }
 .filters__btn .material-symbols-rounded { font-size: 16px; }
 
 /* ---------- Category section ---------- */
 .category { margin-bottom: 36px; }
 .category__title {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: 15px; font-weight: 600; color: var(--text);
   margin-bottom: 14px;
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
+  display: flex; align-items: baseline; gap: 8px;
 }
-.category__count {
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--text-dim);
-}
+.category__count { font-size: 13px; font-weight: 400; color: var(--text-dim); }
 
 /* ---------- Tool cards ---------- */
 .tools-grid {
@@ -511,75 +418,47 @@ a:hover { text-decoration: underline; }
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 10px;
 }
-
 .tool-card {
-  display: flex;
-  gap: 12px;
-  padding: 14px;
+  display: flex; gap: 12px; padding: 14px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   cursor: pointer;
-  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+  transition: border-color 0.15s, background 0.15s;
   text-decoration: none;
   color: inherit;
 }
-.tool-card:hover {
-  border-color: var(--border-hover);
-  background: var(--surface-2);
-  text-decoration: none;
-}
+.tool-card:hover { border-color: var(--border-hover); background: var(--surface-2); text-decoration: none; }
 .tool-card:active { transform: scale(0.99); }
-
 .tool-card__icon {
   flex-shrink: 0;
   width: 40px; height: 40px;
   border-radius: 8px;
   background: var(--surface-3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   overflow: hidden;
 }
 .tool-card__icon img { width: 32px; height: 32px; object-fit: contain; }
 .tool-card__icon .material-symbols-rounded { font-size: 22px; color: var(--accent); }
-
 .tool-card__body { flex: 1; min-width: 0; }
 .tool-card__name {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 14px; font-weight: 600; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   margin-bottom: 2px;
 }
-.tool-card__cat {
-  font-size: 11px;
-  color: var(--text-dim);
-  margin-bottom: 6px;
-}
+.tool-card__cat { font-size: 11px; color: var(--text-dim); margin-bottom: 6px; }
 .tool-card__desc {
-  font-size: 12px;
-  color: var(--text-muted);
-  line-height: 1.45;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  font-size: 12px; color: var(--text-muted); line-height: 1.45;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.tool-card__badges {
-  display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px;
-}
+.tool-card__badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
 .platform-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
+  display: inline-flex; align-items: center; gap: 3px;
   padding: 2px 6px;
   background: var(--surface-3);
   border-radius: 4px;
-  font-size: 10px;
-  font-weight: 500;
+  font-size: 10px; font-weight: 500;
   color: var(--text-muted);
 }
 .platform-badge img { width: 10px; height: 10px; }
@@ -592,17 +471,13 @@ a:hover { text-decoration: underline; }
 }
 .about h2 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
 .about p {
-  color: var(--text-muted);
-  margin-bottom: 10px;
-  max-width: 640px;
-  font-size: 14px;
-  line-height: 1.65;
+  color: var(--text-muted); margin-bottom: 10px;
+  max-width: 640px; font-size: 14px; line-height: 1.65;
 }
 
 /* ---------- Empty ---------- */
 .empty {
-  text-align: center;
-  padding: 48px 20px;
+  text-align: center; padding: 48px 20px;
   color: var(--text-dim);
 }
 .empty .material-symbols-rounded { font-size: 40px; margin-bottom: 10px; display: block; }
@@ -617,15 +492,46 @@ a:hover { text-decoration: underline; }
   margin-bottom: 10px;
 }
 .page .lead {
-  font-size: 15px;
-  color: var(--text-muted);
-  max-width: 640px;
-  margin-bottom: 32px;
+  font-size: 15px; color: var(--text-muted);
+  max-width: 640px; margin-bottom: 32px;
 }
 
-/* ---------- Optimize / Stepper ---------- */
-.stepper-step { margin-bottom: 24px; }
+/* ---------- Optimize tabs ---------- */
+.optimize-tabs {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  margin-bottom: 28px;
+}
+.optimize-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.optimize-tab:hover { color: var(--text); }
+.optimize-tab.active {
+  background: var(--accent-bright);
+  color: #000;
+  font-weight: 600;
+}
+.optimize-tab .material-symbols-rounded { font-size: 16px; }
 
+/* ---------- Stepper ---------- */
+.stepper-step { margin-bottom: 24px; }
 .os-cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -635,11 +541,8 @@ a:hover { text-decoration: underline; }
 @media (max-width: 480px) { .os-cards { grid-template-columns: 1fr; } }
 
 .os-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-  padding: 20px;
+  display: flex; flex-direction: column; align-items: flex-start;
+  gap: 4px; padding: 20px;
   background: var(--surface);
   border: 2px solid var(--border);
   border-radius: var(--radius-lg);
@@ -680,7 +583,6 @@ a:hover { text-decoration: underline; }
 .playbook-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
 .playbook-card p { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
 
-/* Download actions */
 .dl-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -688,40 +590,23 @@ a:hover { text-decoration: underline; }
   margin: 22px 0;
 }
 @media (max-width: 560px) { .dl-actions { grid-template-columns: 1fr; } }
-.dl-actions .cta-btn {
-  width: 100%;
-  padding: 1.05rem 1.5rem;
-  font-size: 14px;
-}
+.dl-actions .cta-btn { width: 100%; padding: 1.05rem 1.5rem; font-size: 14px; }
 .dl-actions .cta-btn > span {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  text-align: left;
-  width: 100%;
+  flex-direction: column; align-items: flex-start;
+  gap: 2px; text-align: left; width: 100%;
 }
-.dl-actions .cta-btn .dl-meta {
-  font-size: 11px;
-  font-weight: 500;
-  opacity: 0.75;
-  letter-spacing: 0.02em;
-}
+.dl-actions .cta-btn .dl-meta { font-size: 11px; font-weight: 500; opacity: 0.75; letter-spacing: 0.02em; }
 .dl-actions .cta-btn .dl-icon-row {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 700;
-  font-size: 15px;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-weight: 700; font-size: 15px;
 }
 
 /* Notes */
 .note {
-  display: flex;
-  gap: 12px;
+  display: flex; gap: 12px;
   padding: 14px 16px;
   border-radius: var(--radius);
-  font-size: 13px;
-  line-height: 1.55;
+  font-size: 13px; line-height: 1.55;
   margin: 16px 0;
 }
 .note .material-symbols-rounded { flex-shrink: 0; font-size: 20px; margin-top: 1px; }
@@ -731,11 +616,8 @@ a:hover { text-decoration: underline; }
 .note--info .material-symbols-rounded { color: var(--accent); }
 
 .steps-list {
-  margin: 16px 0;
-  padding-left: 20px;
-  color: var(--text-muted);
-  font-size: 13px;
-  line-height: 1.8;
+  margin: 16px 0; padding-left: 20px;
+  color: var(--text-muted); font-size: 13px; line-height: 1.8;
 }
 .steps-list li { margin-bottom: 4px; }
 
@@ -744,65 +626,116 @@ a:hover { text-decoration: underline; }
 .playbook-detail > p { font-size: 14px; color: var(--text-muted); margin-bottom: 4px; }
 
 .legacy-toggle {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  font-family: var(--font);
-  font-size: 13px;
-  cursor: pointer;
-  padding: 8px 0;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  background: none; border: none;
+  color: var(--text-muted); font-family: var(--font); font-size: 13px;
+  cursor: pointer; padding: 8px 0;
+  text-decoration: underline; text-underline-offset: 3px;
 }
 .legacy-toggle:hover { color: var(--text); }
 .legacy-content { display: none; margin-top: 16px; }
 .legacy-content.open { display: block; }
 
 .back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  display: inline-flex; align-items: center; gap: 6px;
   margin-top: 28px;
-  background: none;
-  border: none;
+  background: none; border: none;
   color: var(--text-muted);
-  font-family: var(--font);
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  padding: 8px 0;
+  font-family: var(--font); font-size: 13px; font-weight: 500;
+  cursor: pointer; padding: 8px 0;
 }
 .back-btn:hover { color: var(--text); }
 
 /* Optimize: sub-sections */
 .optimize-section { margin-top: 48px; }
+.optimize-section:first-child { margin-top: 0; }
 .optimize-section__title {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 20px; font-weight: 700;
   margin-bottom: 6px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: flex; align-items: center; gap: 10px;
 }
-.optimize-section__title .material-symbols-rounded {
-  font-size: 22px;
-  color: var(--accent);
-}
+.optimize-section__title .material-symbols-rounded { font-size: 22px; color: var(--accent); }
 .optimize-section__title img {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  flex-shrink: 0;
+  width: 24px; height: 24px; object-fit: contain; flex-shrink: 0;
 }
 .optimize-section__desc {
-  font-size: 14px;
-  color: var(--text-muted);
-  margin-bottom: 18px;
-  max-width: 620px;
+  font-size: 14px; color: var(--text-muted);
+  margin-bottom: 18px; max-width: 620px;
 }
+
+/* Android app card */
+.android-app-card {
+  display: flex;
+  gap: 14px;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 10px;
+}
+.android-app-card__icon {
+  flex-shrink: 0;
+  width: 52px; height: 52px;
+  border-radius: 12px;
+  background: var(--surface-3);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.android-app-card__icon img {
+  width: 40px; height: 40px; object-fit: contain;
+}
+.android-app-card__body { flex: 1; min-width: 0; }
+.android-app-card__name {
+  font-size: 15px; font-weight: 700;
+  margin-bottom: 4px; color: var(--text);
+}
+.android-app-card__desc {
+  font-size: 13px; color: var(--text-muted);
+  line-height: 1.5; margin-bottom: 10px;
+}
+.android-app-card__actions {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+
+.btn-mini {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 6px 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font); font-size: 12px; font-weight: 600;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn-mini:hover { background: var(--surface-3); border-color: var(--border-hover); text-decoration: none; }
+.btn-mini--filled {
+  background: var(--accent-bright);
+  border-color: var(--accent-bright);
+  color: #000;
+}
+.btn-mini--filled:hover {
+  background: var(--accent-bright-hover);
+  border-color: var(--accent-bright-hover);
+}
+.btn-mini--text {
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-muted);
+  padding: 4px 6px;
+  font-size: 11px;
+  font-weight: 500;
+}
+.btn-mini--text:hover {
+  color: var(--text);
+  background: transparent;
+  border-color: transparent;
+  text-decoration: underline;
+}
+.btn-mini .material-symbols-rounded { font-size: 15px; }
 
 /* PowerShell */
 .ps-section { margin-top: 48px; }
+.ps-section:first-child { margin-top: 0; }
 .ps-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -811,18 +744,14 @@ a:hover { text-decoration: underline; }
   margin-bottom: 12px;
 }
 .ps-card__head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: flex; align-items: center; gap: 10px;
   padding: 14px 18px;
   border-bottom: 1px solid var(--border);
 }
 .ps-card__head .material-symbols-rounded { color: var(--accent); font-size: 20px; }
 .ps-card__head strong { font-size: 14px; font-weight: 600; }
 .ps-card__bar {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  display: flex; align-items: center; gap: 6px;
   padding: 6px 12px;
   background: var(--code-bar-bg);
   border-bottom: 1px solid var(--border);
@@ -831,17 +760,16 @@ a:hover { text-decoration: underline; }
 .ps-card__dot--r { background: #ff5f57; }
 .ps-card__dot--y { background: #febc2e; }
 .ps-card__dot--g { background: #28c840; }
-.ps-card__label { font-size: 10px; color: var(--text-dim); margin-left: 6px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+.ps-card__label {
+  font-size: 10px; color: var(--text-dim); margin-left: 6px;
+  text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;
+}
 .ps-card__body {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: flex; align-items: center; gap: 10px;
   padding: 12px 14px;
-  font-family: var(--mono);
-  font-size: 12px;
+  font-family: var(--mono); font-size: 12px;
   color: var(--code-text);
-  overflow-x: auto;
-  word-break: break-all;
+  overflow-x: auto; word-break: break-all;
   -webkit-overflow-scrolling: touch;
 }
 .ps-card__prompt { color: var(--accent); font-weight: 700; flex-shrink: 0; }
@@ -854,67 +782,33 @@ a:hover { text-decoration: underline; }
   padding: 6px 12px;
   min-height: 32px;
   border-radius: var(--radius-full);
-  font-family: var(--font);
-  font-size: 11px;
-  font-weight: 600;
+  font-family: var(--font); font-size: 11px; font-weight: 600;
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
   white-space: nowrap;
 }
 .copy-btn:hover { background: var(--surface-2); color: var(--text); }
-.copy-btn.copied {
-  background: var(--accent-bright);
-  color: #000;
-}
+.copy-btn.copied { background: var(--accent-bright); color: #000; }
 
-/* ISO cards */
-.iso-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-.iso-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 18px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  transition: border-color 0.15s;
-}
-.iso-card:hover { border-color: var(--border-hover); }
-.iso-card__icon {
-  flex-shrink: 0;
-  width: 44px; height: 44px;
-  border-radius: 10px;
-  background: var(--surface-3);
+/* Starter page groups */
+.starter-group { margin-bottom: 40px; }
+.starter-group__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 14px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 8px;
 }
-.iso-card__icon img { width: 32px; height: 32px; object-fit: contain; }
-.iso-card__icon .material-symbols-rounded { font-size: 24px; color: var(--accent); }
-.iso-card__body { flex: 1; min-width: 0; }
-.iso-card__name { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
-.iso-card__meta { font-size: 12px; color: var(--text-dim); margin-bottom: 8px; }
-.iso-card__desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; margin-bottom: 14px; }
-.iso-card__foot { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.iso-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 3px 8px;
-  border-radius: 4px;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+.starter-group__title .material-symbols-rounded {
+  font-size: 18px;
+  color: var(--accent);
 }
-.iso-badge--official { background: var(--accent-soft); color: var(--accent); }
-.iso-badge--mirror { background: var(--surface-3); color: var(--text-muted); }
-.iso-badge--tool { background: rgba(96, 165, 250, 0.12); color: var(--iso-tool-text); }
-.iso-badge .material-symbols-rounded { font-size: 12px; }
 
 /* GitHub page */
 .github-card {
-  text-align: center;
-  padding: 48px 24px;
+  text-align: center; padding: 48px 24px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -927,9 +821,7 @@ a:hover { text-decoration: underline; }
   border-radius: 50%;
   background: var(--accent-soft);
   color: var(--accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
 }
 .github-card__icon svg { width: 32px; height: 32px; fill: currentColor; }
 .github-card h2 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
@@ -944,7 +836,7 @@ a:hover { text-decoration: underline; }
 }
 .footer p { font-size: 13px; color: var(--text-dim); }
 
-/* Bottom nav (mobile) */
+/* Bottom nav */
 .bottom-nav {
   display: none;
   position: fixed;
@@ -958,17 +850,12 @@ a:hover { text-decoration: underline; }
 }
 .bottom-nav__item {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: flex; flex-direction: column; align-items: center;
   gap: 3px;
   padding: 8px 0 10px;
-  background: none;
-  border: none;
+  background: none; border: none;
   color: var(--text-dim);
-  font-family: var(--font);
-  font-size: 10px;
-  font-weight: 500;
+  font-family: var(--font); font-size: 10px; font-weight: 500;
   cursor: pointer;
   transition: color 0.15s;
   text-decoration: none;
@@ -978,16 +865,12 @@ a:hover { text-decoration: underline; }
 .bottom-nav__item:hover { text-decoration: none; color: var(--text-muted); }
 .bottom-nav__icon {
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 52px;
-  height: 28px;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 52px; height: 28px;
   border-radius: 999px;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s;
 }
 .bottom-nav__icon .material-symbols-rounded { font-size: 22px; }
-.bottom-nav__icon svg { width: 20px; height: 20px; fill: currentColor; }
 .bottom-nav__label { line-height: 1.2; }
 
 .bottom-nav__item.active { color: #000; }
@@ -1003,53 +886,16 @@ a:hover { text-decoration: underline; }
 
 .new-dot {
   position: absolute;
-  top: 2px;
-  right: 8px;
-  width: 7px;
-  height: 7px;
+  top: 2px; right: 8px;
+  width: 7px; height: 7px;
   border-radius: 50%;
   background: var(--accent-bright);
   box-shadow: 0 0 6px var(--accent-bright);
   animation: new-dot-pulse 2s ease-in-out infinite;
 }
-.bottom-nav__item.active .new-dot {
-  background: #000;
-  box-shadow: none;
-}
 @keyframes new-dot-pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.55; }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  .nav { display: none; }
-  .header__inner { height: 56px; gap: 8px; }
-  .logo img { height: 28px; }
-  .bottom-nav { display: flex; }
-  main { padding-bottom: 84px; }
-  .hero { padding: 32px 0 24px; }
-  .hero__sub { font-size: 14px; margin-bottom: 22px; }
-  .tools-grid { grid-template-columns: 1fr; }
-  .tool-card { padding: 14px 16px; gap: 14px; }
-  .tool-card__icon { width: 44px; height: 44px; }
-  .tool-card__icon img { width: 34px; height: 34px; }
-  .filters { padding: 3px; gap: 2px; }
-  .filters__btn { padding: 9px 12px; font-size: 12px; min-height: 38px; }
-  .search { height: 48px; padding: 0 14px; }
-  .search input { font-size: 14px; }
-  .dl-actions { grid-template-columns: 1fr; }
-  .dl-actions .cta-btn { padding: 1rem 1.25rem; min-height: 60px; }
-  .iso-card { flex-direction: column; align-items: stretch; padding: 16px; }
-  .iso-card__icon { align-self: flex-start; }
-  .iso-card__foot { flex-direction: column; align-items: stretch; gap: 10px; }
-  .iso-card__foot .cta-btn { width: 100%; justify-content: center; }
-  .copy-btn { min-height: 36px; padding: 8px 14px; }
-  .github-card { padding: 32px 20px; margin: 16px auto; }
-  .page h2.section-heading { font-size: 24px; }
-  .optimize-section__title { font-size: 18px; }
-  .os-card { min-height: 90px; padding: 16px; }
-  .ps-card__body { font-size: 11px; padding: 10px 12px; }
 }
 
 /* Back to top */
@@ -1061,25 +907,85 @@ a:hover { text-decoration: underline; }
   background: var(--surface-2);
   border: 1px solid var(--border);
   color: var(--text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   cursor: pointer;
-  opacity: 0;
-  visibility: hidden;
+  opacity: 0; visibility: hidden;
   transition: opacity 0.2s, visibility 0.2s, background 0.15s;
   z-index: 90;
 }
 .back-top.visible { opacity: 1; visibility: visible; }
 .back-top:hover { background: var(--surface-3); }
 .back-top .material-symbols-rounded { font-size: 22px; }
-@media (max-width: 768px) { .back-top { bottom: 88px; } }
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+@media (max-width: 768px) {
+  /* PERF: kill expensive blur filters on mobile */
+  .header {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--bg);
+  }
+  .bottom-nav {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--bg);
+  }
+
+  .nav { display: none; }
+  .header__inner { height: 56px; gap: 8px; }
+  .logo img { height: 28px; }
+  .bottom-nav { display: flex; }
+  main { padding-bottom: 84px; }
+
+  .hero { padding: 32px 0 24px; }
+  .hero h1 { font-size: clamp(24px, 7vw, 34px); letter-spacing: -0.02em; }
+  .hero__sub { font-size: 14px; margin-bottom: 22px; }
+  .tools-grid { grid-template-columns: 1fr; }
+  .tool-card { padding: 14px 16px; gap: 14px; }
+  .tool-card__icon { width: 44px; height: 44px; }
+  .tool-card__icon img { width: 34px; height: 34px; }
+  .filters { padding: 3px; gap: 2px; }
+  .filters__btn { padding: 9px 12px; font-size: 12px; min-height: 38px; }
+  .search { height: 48px; padding: 0 14px; }
+  .search input { font-size: 14px; }
+
+  .dl-actions { grid-template-columns: 1fr; }
+  .dl-actions .cta-btn { padding: 1rem 1.25rem; min-height: 60px; }
+
+  .copy-btn { min-height: 36px; padding: 8px 14px; }
+  .github-card { padding: 32px 20px; margin: 16px auto; }
+  .page h2.section-heading { font-size: 24px; }
+  .optimize-section__title { font-size: 18px; }
+  .os-card { min-height: 90px; padding: 16px; }
+  .ps-card__body { font-size: 11px; padding: 10px 12px; }
+
+  .optimize-tabs { width: 100%; max-width: 400px; }
+  .optimize-tab { flex: 1; justify-content: center; font-size: 13px; padding: 9px 10px; }
+
+  .android-app-card { flex-direction: column; gap: 12px; padding: 16px; }
+  .android-app-card__icon { width: 48px; height: 48px; align-self: flex-start; }
+  .android-app-card__icon img { width: 36px; height: 36px; }
+  .android-app-card__actions { gap: 6px; }
+  .btn-mini { font-size: 11px; padding: 6px 10px; }
+
+  .back-top { bottom: 88px; }
+
+  /* PERF: reduce transitions */
+  body { transition: background-color 0.15s ease, color 0.15s ease; }
+  .tool-card, .ditch-card, .cta-btn { transition-duration: 0.1s; }
+}
+
+@media (max-width: 420px) {
+  .tools-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 
 <body>
 
-<!-- ===== Page loader — Thunderbolt ===== -->
+<!-- ===== Page loader ===== -->
 <div class="page-loader" id="pageLoader" role="status" aria-label="Loading">
   <div class="bolt-loader">
     <svg class="bolt-loader__bolt" viewBox="0 0 24 24" aria-hidden="true">
@@ -1107,8 +1013,8 @@ a:hover { text-decoration: underline; }
         <span class="material-symbols-rounded">swap_horiz</span> TaraTariDitch
         <span class="new-badge">NEW</span>
       </a>
-      <button class="nav__item" data-target="isos">
-        <span class="material-symbols-rounded">album</span> ISOs
+      <button class="nav__item" data-target="starter">
+        <span class="material-symbols-rounded">inventory_2</span> Starter
       </button>
     </nav>
     <button class="icon-btn" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
@@ -1126,7 +1032,7 @@ a:hover { text-decoration: underline; }
     <div class="container">
       <div class="hero">
         <h1>TaraTariTools: Faster way to get tools you need!</h1>
-        <p class="hero__sub">A hand-picked catalog of privacy tools, creative apps and clean Windows ISOs. Every app is free and safe to use. No ads, no trackers, no nonsense.</p>
+        <p class="hero__sub">A hand-picked catalog of privacy tools, creative apps and clean software. Every app is free and safe to use. No ads, no trackers, no nonsense.</p>
         <div class="search">
           <span class="material-symbols-rounded">search</span>
           <input type="text" id="searchInput" placeholder="Search tools, apps or categories…" aria-label="Search tools">
@@ -1155,7 +1061,7 @@ a:hover { text-decoration: underline; }
       <div class="about">
         <h2>About TaraTariTools</h2>
         <p>TaraTariTools is a personal catalog of free software. Every tool is hand-picked and free to use. The goal is simple: help you find better software without the noise.</p>
-        <p>You will find privacy-first browsers, open source creative apps, Windows optimization tools and clean installation ISOs here. All links go straight to the source. No mirrors, no bundles, no surprises.</p>
+        <p>You will find privacy-first browsers, open source creative apps, Android debloat tools and Windows optimizers here. All links go straight to the source. No mirrors, no bundles, no surprises.</p>
       </div>
     </div>
   </section>
@@ -1163,136 +1069,297 @@ a:hover { text-decoration: underline; }
   <!-- ============ OPTIMIZE ============ -->
   <section class="page" id="page-optimize">
     <div class="container">
-      <h2 class="section-heading">Optimize Windows with TaraTariTools</h2>
-      <p class="lead">TaraTariTools helps you speed up Windows. Pick your Windows version, download a playbook and follow the steps. The playbook removes bloat and improves performance.</p>
+      <h2 class="section-heading">Optimize your device</h2>
+      <p class="lead">Pick your platform. Remove bloat, install clean tools, and get a fast system — Windows or Android.</p>
 
-      <div class="stepper-step" id="stepOs">
-        <div class="os-cards">
-          <button class="os-card" data-os="win10">
-            <span class="material-symbols-rounded">desktop_windows</span>
-            <strong>Windows 10</strong>
-            <small>ReviOS only. Atlas is end-of-life on Win10.</small>
-          </button>
-          <button class="os-card" data-os="win11">
-            <span class="material-symbols-rounded">desktop_windows</span>
-            <strong>Windows 11</strong>
-            <small>Choose between Atlas and ReviOS.</small>
-          </button>
+      <div class="optimize-tabs" role="tablist" aria-label="Choose platform">
+        <button class="optimize-tab active" data-opt="pc" role="tab">
+          <span class="material-symbols-rounded">desktop_windows</span> Windows
+        </button>
+        <button class="optimize-tab" data-opt="android" role="tab">
+          <span class="material-symbols-rounded">android</span> Android
+        </button>
+      </div>
+
+      <!-- PC panel -->
+      <div class="optimize-panel" data-panel="pc">
+        <div class="stepper-step" id="stepOs">
+          <div class="os-cards">
+            <button class="os-card" data-os="win10">
+              <span class="material-symbols-rounded">desktop_windows</span>
+              <strong>Windows 10</strong>
+              <small>ReviOS only. Atlas is end-of-life on Win10.</small>
+            </button>
+            <button class="os-card" data-os="win11">
+              <span class="material-symbols-rounded">desktop_windows</span>
+              <strong>Windows 11</strong>
+              <small>Choose between Atlas and ReviOS.</small>
+            </button>
+          </div>
+        </div>
+
+        <div class="stepper-step" id="stepPlaybook" hidden></div>
+
+        <!-- Set up UniGetUI -->
+        <div class="ps-section">
+          <h2 class="optimize-section__title">
+            <img src="https://images-eds-ssl.xboxlive.com/image?url=4rt9.lXDC4H_93laV1_eHHFT949fUipzkiFOBH3fAiZZUCdYojwUyX2aTonS1aIwMrx6NUIsHfUHSLzjGJFxxnw8DVCREBQRVakddWo398MYEHNNwKo5Of1t7LjN2N52zi2Qc6fhtq5CnyYA5zmVOM8TgoLtn4hGJ8JptN_dL4I-&format=source&h=102" alt="" onerror="this.remove()">
+            Set up UniGetUI
+          </h2>
+          <p class="optimize-section__desc">UniGetUI is the modern GUI for WinGet, Chocolatey, Scoop and more. Install WinGet first, then grab UniGetUI from the App Store below.</p>
+
+          <div class="ps-card">
+            <div class="ps-card__head">
+              <span class="material-symbols-rounded">download</span>
+              <strong>WinGet installer script</strong>
+            </div>
+            <div class="ps-card__bar">
+              <span class="ps-card__dot ps-card__dot--r"></span>
+              <span class="ps-card__dot ps-card__dot--y"></span>
+              <span class="ps-card__dot ps-card__dot--g"></span>
+              <span class="ps-card__label">PowerShell (Admin)</span>
+            </div>
+            <div class="ps-card__body">
+              <span class="ps-card__prompt">PS&gt;</span>
+              <code>Install-Script -Name winget-install -RequiredVersion 5.3.1</code>
+              <button class="copy-btn" data-copy="Install-Script -Name winget-install -RequiredVersion 5.3.1">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- App Store -->
+        <div class="optimize-section">
+          <h2 class="optimize-section__title">
+            <span class="material-symbols-rounded">store</span>
+            App Store
+          </h2>
+          <p class="optimize-section__desc">Graphical front-ends for WinGet. Install apps in bulk without touching the terminal.</p>
+          <div class="tools-grid" id="appStoreGrid"></div>
+        </div>
+
+        <!-- Optimization Tools -->
+        <div class="optimize-section">
+          <h2 class="optimize-section__title">
+            <span class="material-symbols-rounded">cleaning_services</span>
+            Optimization Tools
+          </h2>
+          <p class="optimize-section__desc">Dedicated cleaners and Windows tweakers. Lightweight alternatives to the full playbook.</p>
+          <div class="tools-grid" id="optimizationToolsGrid"></div>
+        </div>
+
+        <!-- Windows Starter Pack -->
+        <div class="optimize-section">
+          <h2 class="optimize-section__title">
+            <span class="material-symbols-rounded">inventory_2</span>
+            Windows Starter Pack
+          </h2>
+          <p class="optimize-section__desc">First time setting up Windows? Pick one to bulk-install your apps.</p>
+          <div class="tools-grid" id="starterPackGrid"></div>
+        </div>
+
+        <!-- PowerShell tweaks -->
+        <div class="ps-section">
+          <h2 class="optimize-section__title">
+            <span class="material-symbols-rounded">code</span>
+            Quick PowerShell tweaks
+          </h2>
+          <p class="optimize-section__desc">Not ready for a full playbook? Paste one of these commands into an elevated PowerShell window.</p>
+
+          <div class="ps-card">
+            <div class="ps-card__head">
+              <span class="material-symbols-rounded">build</span>
+              <strong>Chris Titus Windows Utility</strong>
+            </div>
+            <div class="ps-card__bar">
+              <span class="ps-card__dot ps-card__dot--r"></span>
+              <span class="ps-card__dot ps-card__dot--y"></span>
+              <span class="ps-card__dot ps-card__dot--g"></span>
+              <span class="ps-card__label">PowerShell (Admin)</span>
+            </div>
+            <div class="ps-card__body">
+              <span class="ps-card__prompt">PS&gt;</span>
+              <code>irm christitus.com/win | iex</code>
+              <button class="copy-btn" data-copy="irm christitus.com/win | iex">Copy</button>
+            </div>
+          </div>
+
+          <div class="ps-card">
+            <div class="ps-card__head">
+              <span class="material-symbols-rounded">public</span>
+              <strong>Just the Browser — Browser debloat</strong>
+            </div>
+            <div class="ps-card__bar">
+              <span class="ps-card__dot ps-card__dot--r"></span>
+              <span class="ps-card__dot ps-card__dot--y"></span>
+              <span class="ps-card__dot ps-card__dot--g"></span>
+              <span class="ps-card__label">PowerShell (Admin)</span>
+            </div>
+            <div class="ps-card__body">
+              <span class="ps-card__prompt">PS&gt;</span>
+              <code>&amp; ([scriptblock]::Create((irm "https://raw.githubusercontent.com/corbindavenport/just-the-browser/main/main.ps1")))</code>
+              <button class="copy-btn" data-copy='&amp; ([scriptblock]::Create((irm "https://raw.githubusercontent.com/corbindavenport/just-the-browser/main/main.ps1")))'>Copy</button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="stepper-step" id="stepPlaybook" hidden></div>
-
-      <!-- Set up UniGetUI -->
-      <div class="ps-section">
-        <h2 class="optimize-section__title">
-          <img src="https://images-eds-ssl.xboxlive.com/image?url=4rt9.lXDC4H_93laV1_eHHFT949fUipzkiFOBH3fAiZZUCdYojwUyX2aTonS1aIwMrx6NUIsHfUHSLzjGJFxxnw8DVCREBQRVakddWo398MYEHNNwKo5Of1t7LjN2N52zi2Qc6fhtq5CnyYA5zmVOM8TgoLtn4hGJ8JptN_dL4I-&format=source&h=102" alt="" onerror="this.remove()">
-          Set up UniGetUI
-        </h2>
-        <p class="optimize-section__desc">UniGetUI is the modern GUI for WinGet, Chocolatey, Scoop and more. Install WinGet first, then grab UniGetUI from the App Store below.</p>
-
-        <div class="ps-card">
-          <div class="ps-card__head">
-            <span class="material-symbols-rounded">download</span>
-            <strong>WinGet installer script</strong>
-          </div>
-          <div class="ps-card__bar">
-            <span class="ps-card__dot ps-card__dot--r"></span>
-            <span class="ps-card__dot ps-card__dot--y"></span>
-            <span class="ps-card__dot ps-card__dot--g"></span>
-            <span class="ps-card__label">PowerShell (Admin)</span>
-          </div>
-          <div class="ps-card__body">
-            <span class="ps-card__prompt">PS&gt;</span>
-            <code>Install-Script -Name winget-install -RequiredVersion 5.3.1</code>
-            <button class="copy-btn" data-copy="Install-Script -Name winget-install -RequiredVersion 5.3.1">Copy</button>
-          </div>
+      <!-- Android panel -->
+      <div class="optimize-panel" data-panel="android" hidden>
+        <div class="note note--info" style="margin-top: 0;">
+          <span class="material-symbols-rounded">school</span>
+          <span>Don't know how to debloat? Search YouTube for <strong>"how to debloat android using canta debloater"</strong> — you'll find plenty of tutorials.</span>
         </div>
-      </div>
 
-      <!-- App Store -->
-      <div class="optimize-section">
-        <h2 class="optimize-section__title">
-          <span class="material-symbols-rounded">store</span>
-          App Store
-        </h2>
-        <p class="optimize-section__desc">Graphical front-ends for WinGet. Install apps in bulk without touching the terminal.</p>
-        <div class="tools-grid" id="appStoreGrid"></div>
-      </div>
-
-      <!-- Optimization Tools -->
-      <div class="optimize-section">
-        <h2 class="optimize-section__title">
-          <span class="material-symbols-rounded">cleaning_services</span>
-          Optimization Tools
-        </h2>
-        <p class="optimize-section__desc">Dedicated cleaners and Windows tweakers. Lightweight alternatives to the full playbook.</p>
-        <div class="tools-grid" id="optimizationToolsGrid"></div>
-      </div>
-
-      <!-- Windows Starter Pack -->
-      <div class="optimize-section">
-        <h2 class="optimize-section__title">
-          <span class="material-symbols-rounded">inventory_2</span>
-          Windows Starter Pack
-        </h2>
-        <p class="optimize-section__desc">First time setting up Windows? Pick one to bulk-install your apps.</p>
-        <div class="tools-grid" id="starterPackGrid"></div>
-      </div>
-
-      <!-- PowerShell tweaks -->
-      <div class="ps-section">
-        <h2 class="optimize-section__title">
-          <span class="material-symbols-rounded">code</span>
-          Quick PowerShell tweaks
-        </h2>
-        <p class="optimize-section__desc">Not ready for a full playbook? Paste one of these commands into an elevated PowerShell window.</p>
-
-        <div class="ps-card">
-          <div class="ps-card__head">
+        <div class="optimize-section" style="margin-top: 20px;">
+          <h2 class="optimize-section__title">
             <span class="material-symbols-rounded">build</span>
-            <strong>Chris Titus Windows Utility</strong>
+            Core apps
+          </h2>
+          <p class="optimize-section__desc">Install Shizuku first, then Canta. Task Manager is optional but useful for advanced users.</p>
+
+          <div class="android-app-card">
+            <div class="android-app-card__icon">
+              <img src="https://shizuku.rikka.app/logo.png" alt="" onerror="this.style.display='none'">
+            </div>
+            <div class="android-app-card__body">
+              <div class="android-app-card__name">Shizuku</div>
+              <div class="android-app-card__desc">Grants apps root-like API access. Required for Canta. No root needed.</div>
+              <div class="android-app-card__actions">
+                <a class="btn-mini btn-mini--filled" href="https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api" target="_blank" rel="noopener">
+                  <span class="material-symbols-rounded">shop</span> Play Store
+                </a>
+                <a class="btn-mini" href="https://www.apkmirror.com/apk/xingchen-rikka/shizuku-manager/shizuku-13-6-0-r1091-b844bc49-release/shizuku-13-6-0-r1091-b844bc49-android-apk-download/" target="_blank" rel="noopener">
+                  <span class="material-symbols-rounded">download</span> APK Mirror
+                </a>
+                <a class="btn-mini btn-mini--text" href="https://shizuku.rikka.app/guide/setup/" target="_blank" rel="noopener">
+                  Setup docs →
+                </a>
+              </div>
+            </div>
           </div>
-          <div class="ps-card__bar">
-            <span class="ps-card__dot ps-card__dot--r"></span>
-            <span class="ps-card__dot ps-card__dot--y"></span>
-            <span class="ps-card__dot ps-card__dot--g"></span>
-            <span class="ps-card__label">PowerShell (Admin)</span>
+
+          <div class="android-app-card">
+            <div class="android-app-card__icon">
+              <img src="https://raw.githubusercontent.com/samolego/Canta/master/androidApp/src/main/res/mipmap-xxxhdpi/ic_launcher.png" alt="" onerror="this.style.display='none'">
+            </div>
+            <div class="android-app-card__body">
+              <div class="android-app-card__name">Canta</div>
+              <div class="android-app-card__desc">Uninstall system bloatware without root, using Shizuku. The main debloat tool.</div>
+              <div class="android-app-card__actions">
+                <a class="btn-mini btn-mini--filled" href="https://play.google.com/store/apps/details?id=io.github.samolego.canta" target="_blank" rel="noopener">
+                  <span class="material-symbols-rounded">shop</span> Play Store
+                </a>
+                <a class="btn-mini" href="https://samolego.github.io/Canta/" target="_blank" rel="noopener">
+                  <span class="material-symbols-rounded">public</span> Website
+                </a>
+                <a class="btn-mini btn-mini--text" href="https://samolego.github.io/Canta/install.html" target="_blank" rel="noopener">
+                  Install docs →
+                </a>
+              </div>
+            </div>
           </div>
-          <div class="ps-card__body">
-            <span class="ps-card__prompt">PS&gt;</span>
-            <code>irm christitus.com/win | iex</code>
-            <button class="copy-btn" data-copy="irm christitus.com/win | iex">Copy</button>
+
+          <div class="android-app-card">
+            <div class="android-app-card__icon">
+              <img src="https://image.winudf.com/v2/image1/Y29tLnJrLnRhc2ttYW5hZ2VyX2ljb25fMTc2MDcwOTUyM18wMzI/icon.png?w=140&fakeurl=1" alt="" onerror="this.style.display='none'">
+            </div>
+            <div class="android-app-card__body">
+              <div class="android-app-card__name">Task Manager (root / Shizuku)</div>
+              <div class="android-app-card__desc">Advanced task manager. Works with root or Shizuku. See and kill every running process.</div>
+              <div class="android-app-card__actions">
+                <a class="btn-mini btn-mini--filled" href="https://play.google.com/store/apps/details?id=com.rk.taskmanager" target="_blank" rel="noopener">
+                  <span class="material-symbols-rounded">shop</span> Play Store
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="ps-card">
-          <div class="ps-card__head">
-            <span class="material-symbols-rounded">public</span>
-            <strong>Just the Browser — Browser debloat</strong>
+        <div class="ps-section">
+          <h2 class="optimize-section__title">
+            <span class="material-symbols-rounded">terminal</span>
+            ADB command for Shizuku
+          </h2>
+          <p class="optimize-section__desc">After installing Shizuku, run this once from your PC with USB debugging enabled. Starts Shizuku without needing a reboot.</p>
+
+          <div class="ps-card">
+            <div class="ps-card__head">
+              <span class="material-symbols-rounded">adb</span>
+              <strong>Shizuku v11.2.0+</strong>
+            </div>
+            <div class="ps-card__bar">
+              <span class="ps-card__dot ps-card__dot--r"></span>
+              <span class="ps-card__dot ps-card__dot--y"></span>
+              <span class="ps-card__dot ps-card__dot--g"></span>
+              <span class="ps-card__label">ADB Shell</span>
+            </div>
+            <div class="ps-card__body">
+              <span class="ps-card__prompt">$&gt;</span>
+              <code>adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/start.sh</code>
+              <button class="copy-btn" data-copy="adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/start.sh">Copy</button>
+            </div>
           </div>
-          <div class="ps-card__bar">
-            <span class="ps-card__dot ps-card__dot--r"></span>
-            <span class="ps-card__dot ps-card__dot--y"></span>
-            <span class="ps-card__dot ps-card__dot--g"></span>
-            <span class="ps-card__label">PowerShell (Admin)</span>
-          </div>
-          <div class="ps-card__body">
-            <span class="ps-card__prompt">PS&gt;</span>
-            <code>&amp; ([scriptblock]::Create((irm "https://raw.githubusercontent.com/corbindavenport/just-the-browser/main/main.ps1")))</code>
-            <button class="copy-btn" data-copy='&amp; ([scriptblock]::Create((irm "https://raw.githubusercontent.com/corbindavenport/just-the-browser/main/main.ps1")))'>Copy</button>
-          </div>
+        </div>
+
+        <div class="optimize-section">
+          <h2 class="optimize-section__title">
+            <span class="material-symbols-rounded">package_2</span>
+            Debloat package
+          </h2>
+          <p class="optimize-section__desc">Ready-made batch scripts to remove bloat on popular Android devices.</p>
+          <div class="tools-grid" id="androidDebloatGrid"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ ISOS ============ -->
-  <section class="page" id="page-isos">
+  <!-- ============ STARTER ============ -->
+  <section class="page" id="page-starter">
     <div class="container">
-      <h2 class="section-heading">Windows ISOs</h2>
-      <p class="lead">Clean Windows installation images. Official images come from Microsoft. Community mirrors are provided as-is. Always check the SHA-256 hash before installing.</p>
-      <div class="iso-grid" id="isoGrid"></div>
+      <h2 class="section-heading">Starter Pack</h2>
+      <p class="lead">Just reset your phone or bought a new PC? Start here. Pick what you need, install once, done.</p>
+
+      <div class="starter-group">
+        <h3 class="starter-group__title">
+          <span class="material-symbols-rounded">password</span> Passwords
+        </h3>
+        <div class="tools-grid" id="starterPasswords"></div>
+      </div>
+
+      <div class="starter-group">
+        <h3 class="starter-group__title">
+          <span class="material-symbols-rounded">public</span> Browsers
+        </h3>
+        <div class="tools-grid" id="starterBrowsers"></div>
+      </div>
+
+      <div class="starter-group">
+        <h3 class="starter-group__title">
+          <span class="material-symbols-rounded">android</span> Android essentials
+        </h3>
+        <div class="tools-grid" id="starterAndroid"></div>
+      </div>
+
+      <div class="starter-group">
+        <h3 class="starter-group__title">
+          <span class="material-symbols-rounded">folder_shared</span> Files &amp; downloads
+        </h3>
+        <div class="tools-grid" id="starterFiles"></div>
+      </div>
+
+      <div class="starter-group">
+        <h3 class="starter-group__title">
+          <span class="material-symbols-rounded">photo_library</span> Photos &amp; notes
+        </h3>
+        <div class="tools-grid" id="starterPhotos"></div>
+      </div>
+
+      <div class="starter-group">
+        <h3 class="starter-group__title">
+          <span class="material-symbols-rounded">play_circle</span> Media
+        </h3>
+        <div class="tools-grid" id="starterMedia"></div>
+      </div>
     </div>
   </section>
 
@@ -1322,7 +1389,7 @@ a:hover { text-decoration: underline; }
   </div>
 </footer>
 
-<!-- Mobile bottom nav -->
+<!-- Mobile bottom nav — 4 items -->
 <nav class="bottom-nav" aria-label="Primary mobile">
   <button class="bottom-nav__item active" data-target="home">
     <span class="bottom-nav__icon"><span class="material-symbols-rounded">home</span></span>
@@ -1339,15 +1406,9 @@ a:hover { text-decoration: underline; }
     </span>
     <span class="bottom-nav__label">Ditch</span>
   </a>
-  <button class="bottom-nav__item" data-target="isos">
-    <span class="bottom-nav__icon"><span class="material-symbols-rounded">album</span></span>
-    <span class="bottom-nav__label">ISOs</span>
-  </button>
-  <button class="bottom-nav__item" data-target="github">
-    <span class="bottom-nav__icon">
-      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
-    </span>
-    <span class="bottom-nav__label">GitHub</span>
+  <button class="bottom-nav__item" data-target="starter">
+    <span class="bottom-nav__icon"><span class="material-symbols-rounded">inventory_2</span></span>
+    <span class="bottom-nav__label">Starter</span>
   </button>
 </nav>
 
@@ -1408,7 +1469,7 @@ const toolsDatabase = [
   { id: 62, name: "GridCraft", url: "https://getartcraft.com/apps/gridcraft", icon: "https://getartcraft.com/images/apps/gridcraft/icon.webp", category: "Office / Productivity", platforms: ["Windows", "Linux", "macOS"], desc: "Open source Excel alternative. Spreadsheets with XLSX and pivot tables." },
   { id: 12, name: "Waterfox", url: "https://www.waterfox.com/", icon: "https://vectorified.com/images/waterfox-icon-18.png", category: "Browsers", platforms: ["Windows", "Linux", "macOS", "Android"], desc: "Fast, ethical Firefox-based browser." },
   { id: 13, name: "Firefox", url: "https://www.mozilla.org/firefox/new/", icon: "https://img.alternativeto.net/icons/280/firefox_232783.svg", category: "Browsers", platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Popular open source browser." },
-  { id: 14, name: "Brave", url: "https://brave.com/download/", icon: "https://brave.com/static-assets/images/brave-logo-sans-text.svg", category: "Browsers", platforms: ["Windows", "Linux", "macOS"], desc: "Chromium based with built-in adblock." },
+  { id: 14, name: "Brave", url: "https://brave.com/download/", icon: "https://brave.com/static-assets/images/brave-logo-sans-text.svg", category: "Browsers", platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Chromium based with built-in adblock." },
   { id: 15, name: "Helium", url: "https://helium.computer/", icon: "https://static0.makeuseofimages.com/wordpress/wp-content/uploads/2025/11/helium-browser-logo.png", category: "Browsers", platforms: ["Windows", "Linux", "macOS"], desc: "Lightweight Chromium fork." },
   { id: 16, name: "Zen Browser", url: "https://zen-browser.app/", icon: "https://static1.xdaimages.com/wordpress/wp-content/uploads/2025/05/zen-browser-logo.png", category: "Browsers", platforms: ["Windows", "Linux", "macOS"], desc: "Vertical tabs, minimal design." },
   { id: 52, name: "VectorCraft", url: "https://getartcraft.com/apps/vectorcraft", icon: "https://getartcraft.com/images/apps/vectorcraft/icon.webp", category: "Design & Graphics", platforms: ["Windows", "Linux", "macOS", "Web"], desc: "Open source Illustrator alternative. Vector illustration with pen tools." },
@@ -1438,6 +1499,9 @@ const toolsDatabase = [
   { id: 35, name: "Gator", url: "https://play.google.com/store/apps/details?id=com.mitigator.gator", icon: "https://images.sftcdn.net/images/t_app-icon-m/p/358f34a5-301c-4c51-b50b-561de35f2457/2686083238/gator-system-cleaning-tool-logo", category: "System / Android Tools", platforms: ["Android"], desc: "System cleaning and optimization tool for Android." },
   { id: 42, name: "Shizuku", url: "https://shizuku.rikka.app/", icon: "https://shizuku.rikka.app/logo.png", category: "System / Android Tools", platforms: ["Android"], desc: "Grants apps root-like API access, no root needed." },
   { id: 43, name: "Canta", url: "https://samolego.github.io/Canta/", icon: "https://raw.githubusercontent.com/samolego/Canta/master/androidApp/src/main/res/mipmap-xxxhdpi/ic_launcher.png", category: "System / Android Tools", platforms: ["Android"], desc: "Uninstall bloatware without root, via Shizuku." },
+  { id: 68, name: "ZArchiver", url: "https://play.google.com/store/apps/details?id=ru.zdevs.zarchiver", icon: "https://zarchiver.net/favicon.ico", category: "Archive / Compression", platforms: ["Android"], desc: "Powerful archive manager for Android. Handles RAR, ZIP, 7z and more." },
+  { id: 69, name: "Ente Photos", url: "https://ente.io/", icon: "https://ente.io/favicon.ico", category: "Cloud", platforms: ["Android", "iOS", "Web", "Windows", "macOS", "Linux"], desc: "Privacy-first photo backup. 10GB free. End-to-end encrypted." },
+  { id: 70, name: "MJ PDF", url: "https://gitlab.com/mudlej_android/mj_pdf_reader", icon: "https://img.icons8.com/color/96/pdf-2.png", category: "PDF", platforms: ["Android"], desc: "Fast, minimal PDF viewer for Android. No ads, no tracking." },
   { id: 36, name: "Kudu", url: "https://usekudu.com/download", icon: "https://usekudu.com/favicon.ico", category: "System / Utilities", platforms: ["Windows", "macOS", "Linux"], desc: "Free system cleaner and browser cache remover." },
   { id: 37, name: "WinHance", url: "https://winhance.net/", icon: "https://winhance.net/favicon.ico", category: "System / Utilities", platforms: ["Windows"], desc: "Open source Windows optimizer. Remove bloat and customize settings." },
   { id: 61, name: "CADCraft", url: "https://getartcraft.com/apps/cadcraft", icon: "https://getartcraft.com/images/apps/cadcraft/icon.webp", category: "System / Utilities", platforms: ["Windows", "Linux", "macOS"], desc: "Open source AutoCAD alternative. CAD and drafting with layers." },
@@ -1454,7 +1518,7 @@ const toolsDatabase = [
   { id: 47, name: "Windows 7 SP1", url: "https://buzzheavier.com/wru8ac6nwk17", icon: "https://img.icons8.com/color/96/windows-logo.png", category: "Operating Systems", platforms: [], isOS: true, desc: "Windows 7 Service Pack 1, x64 and x86, English." }
 ];
 
-const CATEGORY_ORDER = ["Archive / Compression","Video / Media","Design & Graphics","Display / Utilities","Office / Productivity","Browsers","Download Managers","Torrent","PDF","Password Managers","Screenshots","File Sharing","Communication","Gaming","Controller / Phone Tools","Online Tools","System / Android Tools","System / Utilities","Package Managers","Operating Systems"];
+const CATEGORY_ORDER = ["Archive / Compression","Video / Media","Design & Graphics","Display / Utilities","Office / Productivity","Browsers","Download Managers","Torrent","PDF","Password Managers","Screenshots","File Sharing","Communication","Gaming","Controller / Phone Tools","Online Tools","Cloud","System / Android Tools","System / Utilities","Package Managers","Operating Systems"];
 
 const PLATFORM_META = {
   Windows: { label: "Windows", icon: "https://cdn.simpleicons.org/windows/e8eaed", type: "img" },
@@ -1490,7 +1554,7 @@ function renderPlatformBadges(tool) {
 function renderToolCard(tool) {
   const icon = tool.iconSymbol
     ? `<span class="material-symbols-rounded">${tool.iconSymbol}</span>`
-    : `<img src="${escapeHtml(tool.icon)}" alt="${escapeHtml(tool.name)} icon" onerror="this.src='https://placehold.co/40x40/26262b/4ade80?text=?'">`;
+    : `<img src="${escapeHtml(tool.icon)}" alt="${escapeHtml(tool.name)} icon" loading="lazy" onerror="this.src='https://placehold.co/40x40/26262b/4ade80?text=?'">`;
   return `
     <a class="tool-card" href="${escapeHtml(tool.url)}" target="_blank" rel="noopener noreferrer">
       <div class="tool-card__icon">${icon}</div>
@@ -1513,7 +1577,8 @@ const SYNONYMS = {
   "powerpoint": "DeckCraft", "autocad": "CADCraft", "figma": "FigCraft",
   "after effects": "EffectCraft", "indesign": "DesignCraft", "pro tools": "SoundCraft",
   "usb tool": "Ventoy", "bootable usb": "Ventoy", "google keep": "OpenKeep",
-  "texture": "TextureCraft", "material": "MaterialCraft", "revolt": "Stoat"
+  "texture": "TextureCraft", "material": "MaterialCraft", "revolt": "Stoat",
+  "photo backup": "Ente Photos", "photos": "Ente Photos", "zip": "ZArchiver"
 };
 
 function resolveSynonym(token) {
@@ -1564,10 +1629,22 @@ function debounce(fn, wait) {
 }
 
 /* =========================================================
+   MOBILE DETECTION
+   ========================================================= */
+const isMobileViewport = () => window.matchMedia('(max-width: 768px)').matches;
+
+/* =========================================================
    HOME RENDERING
    ========================================================= */
-let currentFilter = 'all';
+// Auto-default filter: mobile tools on phones, all on desktops
+let currentFilter = isMobileViewport() ? 'mobile' : 'all';
 let currentQuery = '';
+
+function setFilterButtons() {
+  document.querySelectorAll('.filters__btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.platform === currentFilter);
+  });
+}
 
 function filteredTools() {
   let base = toolsDatabase;
@@ -1614,58 +1691,45 @@ function renderOptimizeSubsections() {
   document.getElementById('appStoreGrid').innerHTML = appStore.map(renderToolCard).join('');
   document.getElementById('optimizationToolsGrid').innerHTML = optTools.map(renderToolCard).join('');
   document.getElementById('starterPackGrid').innerHTML = starter.map(renderToolCard).join('');
+
+  const debloat = [33].map(id => toolsDatabase.find(t => t.id === id)).filter(Boolean);
+  document.getElementById('androidDebloatGrid').innerHTML = debloat.map(renderToolCard).join('');
 }
 
 /* =========================================================
-   ISOS
+   STARTER PAGE
    ========================================================= */
-const isosData = [
-  { name: "Ventoy", meta: "Bootable USB creator", desc: "Create a bootable USB from multiple ISOs at once. No reformatting needed when you swap images. Essential for installing any ISO below.", url: "https://www.ventoy.net/en/index.html", type: "tool", icon: "https://static1.xdaimages.com/wordpress/wp-content/uploads/2024/08/ventoy-logo.png" },
-  { name: "Windows 11 25H2", meta: "Build 26200.6584 · x64 · English (US)", desc: "Latest Windows 11 feature update with consumer editions (Home and Pro). Served directly from Microsoft.", url: "https://software-static.download.prss.microsoft.com/dbazure/888969d5-f34g-4e03-ac9d-1f9786c66749/26200.6584.250915-1905.25h2_ge_release_svc_refresh_CLIENT_CONSUMER_x64FRE_en-us.iso", type: "official", icon: "https://img.icons8.com/color/48/000000/windows-11.png" },
-  { name: "Windows 11 LTSC", meta: "Build 26100.1742 · Enterprise LTSC · x64", desc: "Long-Term Servicing build. No Store, no Copilot, minimal background services.", url: "https://oemsoc.download.prss.microsoft.com/dbazure/X23-81951_26100.1742.240906-0331.ge_release_svc_refresh_CLIENT_ENTERPRISES_OEM_x64FRE_en-us.iso_640de540-87c4-427f-be87-e6d53a3a60b4?t=2c3b664b-b119-4088-9db1-ccff72c6d22e&P1=102816950270&P2=601&P3=2&P4=OC448onxqdmdUsBUApAiE8pj1FZ%2bEPTU3%2bC6Quq29MVwMyyDUtR%2fsbiy7RdVoZOHaZRndvzeOOnIwJZ2x3%2bmP6YK9cjJSP41Lvs0SulF4SVyL5C0DdDmiWqh2QW%2bcDPj2Xp%2bMrI9NOeElSBS5kkOWP8Eiyf2VkkQFM3g5vIk3HJVvu5sWo6pFKpFv4lML%2bHaIiTSuwbPMs5xwEQTfScuTKfigNlUZPdHRMp1B3uKLgIA3r0IbRpZgHYMXEwXQ%2fSLMdDNQthpqQvz1PThVkx7ObD55CXgt0GNSAWRfjdURWb8ywWk1gT7ozAgpP%2fKNm56U5nh33WZSuMZIuO1SBM2vw%3d%3d", type: "official", icon: "https://img.icons8.com/color/48/000000/windows-11.png" },
-  { name: "Windows 10 ISO", meta: "Consumer editions · x64 · English", desc: "Official Windows 10 installation image with Home and Pro editions.", url: "https://drive.google.com/file/d/1zl7Uv5VGzRsu0P5fFEcHyx-vmBkzc4S0/view?usp=sharing", type: "mirror", icon: "https://img.icons8.com/color/48/000000/windows-10.png" },
-  { name: "Windows 10 LTSC", meta: "Enterprise LTSC · x64 · English", desc: "Lean, telemetry-light Windows 10 build that stays stable for years.", url: "https://buzzheavier.com/yhggy3l1e5oq", type: "mirror", icon: "https://img.icons8.com/color/48/000000/windows-10.png" },
-  { name: "Windows 7 SP1", meta: "Service Pack 1 · x64 / x86 · English", desc: "Archived Windows 7 image for legacy machines and testing.", url: "https://buzzheavier.com/wru8ac6nwk17", type: "mirror", icon: "https://img.icons8.com/color/96/windows-logo.png" }
-];
-
-function renderISOs() {
-  const grid = document.getElementById('isoGrid');
-  grid.innerHTML = isosData.map(iso => {
-    const icon = iso.icon
-      ? `<img src="${escapeHtml(iso.icon)}" alt="" onerror="this.remove()">`
-      : `<span class="material-symbols-rounded">${iso.iconSymbol || 'album'}</span>`;
-    let badge, btnLabel;
-    if (iso.type === 'tool') {
-      badge = `<span class="iso-badge iso-badge--tool"><span class="material-symbols-rounded">build</span>USB Tool</span>`;
-      btnLabel = 'Get Ventoy';
-    } else if (iso.type === 'official') {
-      badge = `<span class="iso-badge iso-badge--official"><span class="material-symbols-rounded">verified</span>Official</span>`;
-      btnLabel = 'Download';
-    } else {
-      badge = `<span class="iso-badge iso-badge--mirror"><span class="material-symbols-rounded">cloud_download</span>Mirror</span>`;
-      btnLabel = 'Download';
-    }
-    return `
-      <div class="iso-card">
-        <div class="iso-card__icon">${icon}</div>
-        <div class="iso-card__body">
-          <div class="iso-card__name">${escapeHtml(iso.name)}</div>
-          <div class="iso-card__meta">${escapeHtml(iso.meta)}</div>
-          <p class="iso-card__desc">${escapeHtml(iso.desc)}</p>
-          <div class="iso-card__foot">
-            ${badge}
-            <a class="cta-btn cta-btn--sm" href="${escapeHtml(iso.url)}" target="_blank" rel="noopener">
-              <span><span class="material-symbols-rounded">download</span>${btnLabel}</span>
-            </a>
-          </div>
-        </div>
-      </div>`;
-  }).join('');
-  bindCtaButtons(grid);
+function renderStarter() {
+  const pick = ids => ids.map(id => toolsDatabase.find(t => t.id === id)).filter(Boolean).map(renderToolCard).join('');
+  document.getElementById('starterPasswords').innerHTML = pick([21, 22]);
+  document.getElementById('starterBrowsers').innerHTML = pick([13, 14]);
+  document.getElementById('starterAndroid').innerHTML = pick([35, 68, 70]);
+  document.getElementById('starterFiles').innerHTML = pick([26, 17, 18]);
+  document.getElementById('starterPhotos').innerHTML = pick([69, 11]);
+  document.getElementById('starterMedia').innerHTML = pick([4]);
 }
 
 /* =========================================================
-   OPTIMIZE / PLAYBOOKS
+   OPTIMIZE TABS
+   ========================================================= */
+let currentOptTab = isMobileViewport() ? 'android' : 'pc';
+
+function setOptimizeTab(tab) {
+  currentOptTab = tab;
+  document.querySelectorAll('.optimize-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.opt === tab);
+  });
+  document.querySelectorAll('.optimize-panel').forEach(p => {
+    p.hidden = p.dataset.panel !== tab;
+  });
+}
+
+document.querySelectorAll('.optimize-tab').forEach(tab => {
+  tab.addEventListener('click', () => setOptimizeTab(tab.dataset.opt));
+});
+
+/* =========================================================
+   PLAYBOOK STEPPER
    ========================================================= */
 const PLAYBOOKS = {
   atlas: {
@@ -1823,7 +1887,7 @@ function initOptimize() {
 }
 
 /* =========================================================
-   CTA BUTTON CLICK EFFECT
+   CTA BUTTON
    ========================================================= */
 function bindCtaButtons(root) {
   (root || document).querySelectorAll('.cta-btn').forEach(btn => {
@@ -1843,7 +1907,7 @@ function bindCtaButtons(root) {
 const pageIds = {
   home: document.getElementById('page-home'),
   optimize: document.getElementById('page-optimize'),
-  isos: document.getElementById('page-isos'),
+  starter: document.getElementById('page-starter'),
   github: document.getElementById('page-github')
 };
 
@@ -1855,8 +1919,11 @@ function switchPage(target) {
     el.classList.toggle('active', el.dataset.target === target);
   });
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  if (target === 'isos') renderISOs();
-  if (target === 'optimize') renderOptimizeSubsections();
+  if (target === 'optimize') {
+    renderOptimizeSubsections();
+    setOptimizeTab(currentOptTab);
+  }
+  if (target === 'starter') renderStarter();
   if (target === 'github') bindCtaButtons(pageIds.github);
 }
 
@@ -1879,7 +1946,7 @@ searchInput.addEventListener('input', debounce(function() {
   currentQuery = this.value;
   searchClear.hidden = !this.value;
   renderHome();
-}, 100));
+}, 120));
 
 searchClear.addEventListener('click', function() {
   searchInput.value = '';
@@ -1931,28 +1998,55 @@ function fallbackCopy(text, cb) {
 }
 
 /* =========================================================
-   BACK TO TOP
+   SCROLL — rAF throttled
    ========================================================= */
 const backTop = document.getElementById('backTop');
+let scrollPending = false;
 window.addEventListener('scroll', function() {
-  backTop.classList.toggle('visible', window.scrollY > 400);
+  if (scrollPending) return;
+  scrollPending = true;
+  requestAnimationFrame(() => {
+    backTop.classList.toggle('visible', window.scrollY > 400);
+    scrollPending = false;
+  });
 }, { passive: true });
 backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+/* =========================================================
+   RESIZE — debounced, auto-switch optimize tab only when user hasn't chosen
+   ========================================================= */
+let userChoseOptTab = false;
+document.querySelectorAll('.optimize-tab').forEach(tab => {
+  tab.addEventListener('click', () => { userChoseOptTab = true; });
+});
+
+window.addEventListener('resize', debounce(function() {
+  if (userChoseOptTab) return;
+  const shouldBe = isMobileViewport() ? 'android' : 'pc';
+  if (shouldBe !== currentOptTab) setOptimizeTab(shouldBe);
+}, 300), { passive: true });
 
 /* =========================================================
    INIT
    ========================================================= */
 function init() {
+  setFilterButtons();
   renderHome();
-  renderISOs();
   renderOptimizeSubsections();
+  renderStarter();
   initOptimize();
   bindCtaButtons();
+  setOptimizeTab(currentOptTab);
+
   window.addEventListener('load', () => {
     setTimeout(() => {
       document.getElementById('pageLoader').classList.add('done');
-    }, 900);
+    }, 800);
   });
+  // Fallback if load already fired
+  if (document.readyState === 'complete') {
+    setTimeout(() => document.getElementById('pageLoader').classList.add('done'), 800);
+  }
 }
 
 if (document.readyState === 'loading') {
