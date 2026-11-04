@@ -310,29 +310,53 @@ a:hover { text-decoration: underline; }
   flex-shrink: 0;
 }
 .logo:hover { text-decoration: none; }
-.logo img { height: 28px; width: auto; border-radius: 6px; }
+.logo img { height: 32px; width: auto; border-radius: 6px; }
+
+/* Visually hide the wordmark but keep it for SEO */
+.logo__text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .logo__spacer { flex: 1; }
 
-.nav { display: flex; align-items: center; gap: 2px; }
+.nav { display: flex; align-items: center; gap: 4px; }
 .nav__item {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 12px;
+  padding: 8px 14px;
   background: transparent;
-  border: none;
+  border: 1px solid transparent;
   color: var(--text-muted);
   font-family: var(--font);
   font-size: 14px;
   font-weight: 500;
   border-radius: var(--radius);
   cursor: pointer;
-  transition: color 0.15s, background 0.15s;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
   text-decoration: none;
   position: relative;
 }
 .nav__item:hover { color: var(--text); background: var(--surface-2); text-decoration: none; }
-.nav__item.active { color: var(--text); background: var(--surface-2); }
+.nav__item.active {
+  background: var(--accent-bright);
+  border-color: var(--accent-bright);
+  color: #000;
+  font-weight: 600;
+}
+.nav__item.active:hover {
+  color: #000;
+  background: var(--accent-bright-hover);
+  border-color: var(--accent-bright-hover);
+}
 .nav__item .material-symbols-rounded { font-size: 18px; }
 
 .new-badge {
@@ -340,14 +364,18 @@ a:hover { text-decoration: underline; }
   align-items: center;
   padding: 2px 6px;
   margin-left: 2px;
-  background: var(--accent-bright);
-  color: var(--on-accent);
+  background: rgba(0, 0, 0, 0.14);
+  color: inherit;
   font-size: 9px;
   font-weight: 800;
   border-radius: 999px;
   letter-spacing: 0.06em;
   line-height: 1.2;
   text-transform: uppercase;
+}
+.nav__item:not(.active) .new-badge {
+  background: var(--accent-bright);
+  color: #000;
 }
 
 .icon-btn {
@@ -454,7 +482,7 @@ a:hover { text-decoration: underline; }
 .filters__btn:hover { color: var(--text); }
 .filters__btn.active {
   background: var(--accent-bright);
-  color: var(--on-accent);
+  color: #000;
   font-weight: 600;
 }
 .filters__btn .material-symbols-rounded { font-size: 16px; }
@@ -835,7 +863,7 @@ a:hover { text-decoration: underline; }
 .copy-btn:hover { background: var(--surface-2); color: var(--text); }
 .copy-btn.copied {
   background: var(--accent-bright);
-  color: var(--on-accent);
+  color: #000;
 }
 
 /* ISO cards */
@@ -955,17 +983,22 @@ a:hover { text-decoration: underline; }
   width: 52px;
   height: 28px;
   border-radius: 999px;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.2s;
 }
 .bottom-nav__icon .material-symbols-rounded { font-size: 22px; }
 .bottom-nav__icon svg { width: 20px; height: 20px; fill: currentColor; }
 .bottom-nav__label { line-height: 1.2; }
 
-.bottom-nav__item.active { color: var(--accent); }
-.bottom-nav__item.active .bottom-nav__icon { background: var(--accent-soft); }
+.bottom-nav__item.active { color: #000; }
+.bottom-nav__item.active .bottom-nav__icon {
+  background: var(--accent-bright);
+  color: #000;
+}
 .bottom-nav__item.active .bottom-nav__icon .material-symbols-rounded {
+  color: #000;
   font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
 }
+.bottom-nav__item.active .bottom-nav__label { color: #000; }
 
 .new-dot {
   position: absolute;
@@ -978,6 +1011,10 @@ a:hover { text-decoration: underline; }
   box-shadow: 0 0 6px var(--accent-bright);
   animation: new-dot-pulse 2s ease-in-out infinite;
 }
+.bottom-nav__item.active .new-dot {
+  background: #000;
+  box-shadow: none;
+}
 @keyframes new-dot-pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.55; }
@@ -987,8 +1024,7 @@ a:hover { text-decoration: underline; }
 @media (max-width: 768px) {
   .nav { display: none; }
   .header__inner { height: 56px; gap: 8px; }
-  .logo { font-size: 16px; }
-  .logo img { height: 26px; }
+  .logo img { height: 28px; }
   .bottom-nav { display: flex; }
   main { padding-bottom: 84px; }
   .hero { padding: 32px 0 24px; }
@@ -1056,7 +1092,7 @@ a:hover { text-decoration: underline; }
   <div class="container header__inner">
     <a href="#" class="logo" data-target="home" aria-label="TaraTariTools home">
       <img src="https://raw.githubusercontent.com/tarataritools/tarataritools.github.io/main/images/TaraTariToolsLogo.png" alt="TaraTariTools logo" onerror="this.remove()">
-      <span>TaraTariTools</span>
+      <span class="logo__text">TaraTariTools</span>
     </a>
     <span class="logo__spacer"></span>
     <nav class="nav" aria-label="Primary">
@@ -1372,7 +1408,7 @@ const toolsDatabase = [
   { id: 12, name: "Waterfox", url: "https://www.waterfox.com/", icon: "https://vectorified.com/images/waterfox-icon-18.png", category: "Browsers", platforms: ["Windows", "Linux", "macOS", "Android"], desc: "Fast, ethical Firefox-based browser." },
   { id: 13, name: "Firefox", url: "https://www.mozilla.org/firefox/new/", icon: "https://img.alternativeto.net/icons/280/firefox_232783.svg", category: "Browsers", platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Popular open source browser." },
   { id: 14, name: "Brave", url: "https://brave.com/download/", icon: "https://brave.com/static-assets/images/brave-logo-sans-text.svg", category: "Browsers", platforms: ["Windows", "Linux", "macOS"], desc: "Chromium based with built-in adblock." },
-  { id: 15, name: "Helium", url: "https://helium.computer/", icon: "https://raw.githubusercontent.com/mbrukman/helium-browser/main/resources/branding/app_icon/raw.png", category: "Browsers", platforms: ["Windows", "Linux", "macOS"], desc: "Lightweight Chromium fork." },
+  { id: 15, name: "Helium", url: "https://helium.computer/", icon: "https://static0.makeuseofimages.com/wordpress/wp-content/uploads/2025/11/helium-browser-logo.png", category: "Browsers", platforms: ["Windows", "Linux", "macOS"], desc: "Lightweight Chromium fork." },
   { id: 16, name: "Zen Browser", url: "https://zen-browser.app/", icon: "https://static1.xdaimages.com/wordpress/wp-content/uploads/2025/05/zen-browser-logo.png", category: "Browsers", platforms: ["Windows", "Linux", "macOS"], desc: "Vertical tabs, minimal design." },
   { id: 52, name: "VectorCraft", url: "https://getartcraft.com/apps/vectorcraft", icon: "https://getartcraft.com/images/apps/vectorcraft/icon.webp", category: "Design & Graphics", platforms: ["Windows", "Linux", "macOS", "Web"], desc: "Open source Illustrator alternative. Vector illustration with pen tools." },
   { id: 57, name: "DesignCraft", url: "https://getartcraft.com/apps/designcraft", icon: "https://getartcraft.com/images/apps/designcraft/icon.webp", category: "Design & Graphics", platforms: ["Windows", "Linux", "macOS"], desc: "Open source InDesign alternative. Page layout with grids." },
@@ -1391,7 +1427,7 @@ const toolsDatabase = [
   { id: 24, name: "ShareX", url: "https://getsharex.com/downloads/", icon: "https://img.alternativeto.net/icons/280/sharex_233027.svg", category: "Screenshots", platforms: ["Windows", "Linux"], desc: "Advanced screen capture and annotation." },
   { id: 25, name: "Flameshot", url: "https://flameshot.org/#download", icon: "https://img.alternativeto.net/icons/140/flameshot_234680.svg", category: "Screenshots", platforms: ["Windows"], desc: "Powerful screenshot annotation tool." },
   { id: 26, name: "LocalSend", url: "https://localsend.org/", icon: "https://img.alternativeto.net/icons/280/localsend_251558.svg", category: "File Sharing", platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Cross-platform local file sharing." },
-  { id: 27, name: "Revolt", url: "https://revolt.chat/download", icon: "https://img.alternativeto.net/icons/140/revolt-chat_278179.svg", category: "Communication", platforms: ["Windows", "Linux", "macOS"], desc: "Open source Discord alternative." },
+  { id: 27, name: "Stoat", url: "https://stoat.chat/", icon: "https://stoat.chat/favicon.ico", category: "Communication", platforms: ["Windows", "Linux", "macOS"], desc: "Open source chat platform. Formerly Revolt." },
   { id: 28, name: "Playnite", url: "https://playnite.link/", icon: "https://img.alternativeto.net/icons/140/playnite_233369.svg", category: "Gaming", platforms: ["Windows"], desc: "Unified video game library manager." },
   { id: 29, name: "Heroic Games Launcher", url: "https://heroicgameslauncher.com/", icon: "https://img.alternativeto.net/icons/140/heroic-games-launcher_238974.svg", category: "Gaming", platforms: ["Windows"], desc: "Open source Epic and GOG launcher." },
   { id: 30, name: "AntiMicroX", url: "https://github.com/AntiMicroX/antimicrox/releases", icon: "https://img.alternativeto.net/icons/140/avif/antimicrox_170260.png", category: "Gaming", platforms: ["Windows"], desc: "Map keyboard and mouse to a gamepad." },
@@ -1476,7 +1512,7 @@ const SYNONYMS = {
   "powerpoint": "DeckCraft", "autocad": "CADCraft", "figma": "FigCraft",
   "after effects": "EffectCraft", "indesign": "DesignCraft", "pro tools": "SoundCraft",
   "usb tool": "Ventoy", "bootable usb": "Ventoy", "google keep": "OpenKeep",
-  "texture": "TextureCraft", "material": "MaterialCraft"
+  "texture": "TextureCraft", "material": "MaterialCraft", "revolt": "Stoat"
 };
 
 function resolveSynonym(token) {
