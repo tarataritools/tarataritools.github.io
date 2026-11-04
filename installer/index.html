@@ -15,7 +15,7 @@
 </script>
 
 <title>TaraTari Installer — Bulk App Installer</title>
-<meta name="description" content="Pick your apps. Get one installer. No bloatware, no dependencies.">
+<meta name="description" content="Pick your apps. Get one installer with a progress bar. No bloatware, no dependencies.">
 <link rel="canonical" href="https://tarataritools.github.io/installer/">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,7 +46,6 @@
   --radius-lg: 14px;
   --radius-full: 999px;
   --font: 'Inter', system-ui, -apple-system, sans-serif;
-  --mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
 }
 
 :root[data-theme="light"] {
@@ -80,6 +79,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  padding-bottom: 100px;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
@@ -103,7 +103,6 @@ a:hover { text-decoration: underline; }
   transition: opacity 0.45s ease, visibility 0.45s ease;
 }
 .page-loader.done { opacity: 0; visibility: hidden; pointer-events: none; }
-
 .bolt-loader {
   --bl-size: 96px;
   --bl-green: var(--accent-bright, #66ff66);
@@ -136,11 +135,10 @@ a:hover { text-decoration: underline; }
   border-bottom: 1px solid var(--border);
 }
 .header__inner { display: flex; align-items: center; gap: 12px; height: 60px; }
-
 .logo {
   display: flex; align-items: center; gap: 10px;
   color: var(--text); font-weight: 700; font-size: 17px;
-  letter-spacing: -0.01em; text-decoration: none; flex-shrink: 0;
+  text-decoration: none; flex-shrink: 0;
 }
 .logo:hover { text-decoration: none; }
 .logo img { height: 32px; width: auto; border-radius: 6px; }
@@ -149,7 +147,6 @@ a:hover { text-decoration: underline; }
   overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
 .logo__spacer { flex: 1; }
-
 .icon-btn {
   display: inline-flex; align-items: center; justify-content: center;
   width: 36px; height: 36px; border-radius: 50%;
@@ -162,7 +159,7 @@ a:hover { text-decoration: underline; }
 .icon-btn .material-symbols-rounded { font-size: 20px; }
 
 /* Hero */
-.hero { padding: 56px 0 36px; text-align: center; }
+.hero { padding: 56px 0 32px; text-align: center; }
 .hero h1 {
   font-size: clamp(28px, 5vw, 44px);
   font-weight: 800; line-height: 1.15; letter-spacing: -0.03em;
@@ -170,8 +167,13 @@ a:hover { text-decoration: underline; }
 }
 .hero__sub {
   font-size: clamp(14px, 2vw, 17px);
-  color: var(--text-muted); max-width: 580px; margin: 0 auto 28px; line-height: 1.6;
+  color: var(--text-muted); max-width: 580px; margin: 0 auto 24px;
 }
+.hero__note {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 16px; font-size: 12px; color: var(--text-dim);
+}
+.hero__note .material-symbols-rounded { font-size: 15px; }
 
 /* Search */
 .search {
@@ -191,15 +193,14 @@ a:hover { text-decoration: underline; }
 .search__clear {
   background: none; border: none; color: var(--text-dim);
   cursor: pointer; padding: 4px; display: flex; align-items: center;
-  border-radius: 4px; transition: color 0.15s;
+  border-radius: 4px;
 }
 .search__clear:hover { color: var(--text); }
 
-/* Category chips */
+/* Chips */
 .chips-wrap {
   position: sticky; top: 60px; z-index: 40;
   background: var(--bg); padding: 10px 0 14px; margin-bottom: 8px;
-  transition: background-color 0.25s ease;
 }
 .chips {
   display: flex; gap: 6px; overflow-x: auto;
@@ -220,19 +221,50 @@ a:hover { text-decoration: underline; }
   background: var(--accent-bright); color: #000;
   border-color: var(--accent-bright); font-weight: 600;
 }
-.chip .count { font-size: 11px; opacity: 0.65; font-weight: 600; }
+.chip__num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--surface-3);
+  font-size: 10px; font-weight: 700;
+  color: var(--text-muted);
+}
+.chip.active .chip__num {
+  background: rgba(0,0,0,0.18);
+  color: #000;
+}
+.chip .count { font-size: 11px; opacity: 0.65; font-weight: 600; margin-left: 2px; }
+
+/* Category section */
+.app-section { margin-bottom: 32px; }
+.app-section__title {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 15px; font-weight: 700;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.app-section__num {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 26px; height: 26px; padding: 0 8px;
+  border-radius: var(--radius-full);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px; font-weight: 800;
+}
+.app-section__count {
+  font-size: 12px; font-weight: 400; color: var(--text-dim); margin-left: 2px;
+}
 
 /* App grid */
 .app-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 10px;
-  padding-bottom: 120px;
 }
 
 .app-card {
   display: flex; align-items: flex-start; gap: 12px;
-  padding: 16px;
+  padding: 14px;
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   cursor: pointer; text-align: left;
@@ -260,19 +292,26 @@ a:hover { text-decoration: underline; }
 .app-card.selected .app-card__check .material-symbols-rounded { display: block; }
 
 .app-card__icon {
-  flex-shrink: 0; width: 40px; height: 40px;
-  border-radius: 8px; background: var(--surface-3);
-  display: flex; align-items: center; justify-content: center; overflow: hidden;
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border-radius: 8px;
+  background: var(--surface-3);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  padding: 6px;
+}
+.app-card__icon img {
+  width: 100%; height: 100%; object-fit: contain;
 }
 .app-card__icon .material-symbols-rounded { font-size: 22px; color: var(--accent); }
 
-.app-card__body { flex: 1; min-width: 0; padding-right: 20px; }
+.app-card__body { flex: 1; min-width: 0; padding-right: 18px; }
 .app-card__name {
   font-size: 14px; font-weight: 600; color: var(--text);
   margin-bottom: 2px; line-height: 1.3;
 }
 .app-card__cat {
-  font-size: 11px; color: var(--text-dim); margin-bottom: 6px;
+  font-size: 11px; color: var(--text-dim);
 }
 .app-card__fallback {
   font-size: 10px; color: var(--text-dim);
@@ -283,11 +322,11 @@ a:hover { text-decoration: underline; }
 
 /* Empty */
 .empty {
-  grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-dim);
+  text-align: center; padding: 60px 20px; color: var(--text-dim);
 }
 .empty .material-symbols-rounded { font-size: 44px; margin-bottom: 12px; display: block; }
 
-/* Sticky bottom bar */
+/* Bottom bar */
 .bottom-bar {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
   background: var(--bottom-nav-bg);
@@ -300,9 +339,10 @@ a:hover { text-decoration: underline; }
   display: flex; align-items: center; gap: 16px;
 }
 .bottom-bar__count {
-  font-size: 14px; font-weight: 600; color: var(--text-muted); flex: 1;
+  font-size: 14px; font-weight: 500; color: var(--text-muted); flex: 1;
 }
-.bottom-bar__count strong { color: var(--text); }
+.bottom-bar__count strong { color: var(--text); font-weight: 700; }
+
 .cta-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   padding: 12px 28px; border: none; border-radius: var(--radius-full);
@@ -315,13 +355,12 @@ a:hover { text-decoration: underline; }
 :root[data-theme="light"] .cta-btn:hover { box-shadow: 0 4px 18px rgba(74,222,128,0.45); }
 .cta-btn:active { transform: scale(0.98); }
 .cta-btn:disabled {
-  background: var(--surface-3); color: var(--text-dim); cursor: not-allowed;
-  box-shadow: none;
+  background: var(--surface-3); color: var(--text-dim); cursor: not-allowed; box-shadow: none;
 }
 
 /* Footer */
 .footer {
-  margin-top: 20px; padding: 28px 0 calc(28px + env(safe-area-inset-bottom, 0));
+  margin-top: 20px; padding: 28px 0;
   border-top: 1px solid var(--border); text-align: center;
 }
 .footer p { font-size: 13px; color: var(--text-dim); }
@@ -343,7 +382,6 @@ a:hover { text-decoration: underline; }
 </head>
 <body>
 
-<!-- Loader -->
 <div class="page-loader" id="pageLoader" role="status" aria-label="Loading">
   <div class="bolt-loader">
     <svg class="bolt-loader__bolt" viewBox="0 0 24 24" aria-hidden="true">
@@ -352,7 +390,6 @@ a:hover { text-decoration: underline; }
   </div>
 </div>
 
-<!-- Header -->
 <header class="header">
   <div class="container header__inner">
     <a href="/" class="logo" aria-label="TaraTariTools home">
@@ -370,13 +407,17 @@ a:hover { text-decoration: underline; }
   <section class="hero">
     <div class="container">
       <h1>TaraTari Installer</h1>
-      <p class="hero__sub">Pick your apps. Get one installer. No bloatware, no dependencies, no nonsense.</p>
+      <p class="hero__sub">Pick your apps. Get one installer with a progress bar. No bloatware, no dependencies, no nonsense.</p>
       <div class="search">
         <span class="material-symbols-rounded">search</span>
         <input type="text" id="searchInput" placeholder="Search apps or categories…" aria-label="Search apps">
         <button class="search__clear" id="searchClear" aria-label="Clear search" hidden>
           <span class="material-symbols-rounded" style="font-size:18px;">close</span>
         </button>
+      </div>
+      <div class="hero__note">
+        <span class="material-symbols-rounded">info</span>
+        Some apps open their official download page in a new tab (marked with an arrow).
       </div>
     </div>
   </section>
@@ -387,9 +428,7 @@ a:hover { text-decoration: underline; }
     </div>
   </div>
 
-  <div class="container">
-    <div class="app-grid" id="appGrid"></div>
-  </div>
+  <div class="container" id="appContainer"></div>
 </main>
 
 <div class="bottom-bar">
