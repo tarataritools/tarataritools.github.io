@@ -353,6 +353,12 @@ a:hover { text-decoration: underline; }
 .cta-btn:disabled {
   background: var(--surface-3); color: var(--text-dim); cursor: not-allowed; box-shadow: none;
 }
+.cta-btn__loading {
+  display: inline-block; width: 14px; height: 14px;
+  border: 2px solid #000; border-top-color: transparent;
+  border-radius: 50%; animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 
 .footer {
   margin-top: 20px; padding: 28px 0;
@@ -692,6 +698,60 @@ function updateCount() {
   document.getElementById('generateBtn').disabled = n === 0;
 }
 
+function deriveFile(app) {
+  if (app.file) return app.file;
+  try {
+    var base = new URL(app.url).pathname.split('/').pop();
+    if (base && base.indexOf('.') !== -1) return decodeURIComponent(base);
+  } catch (e) {}
+  return app.name.replace(/[^a-z0-9]/gi, '_') + (app.installer === 'msi' ? '.msi' : '.exe');
+}
+
+async function generateInstaller(apps) {
+  var btn = document.getElementById('generateBtn');
+  var originalHTML = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="cta-btn__loading"></span> Building…';
+
+  try {
+    var res = await fetch('launcher.exe', { cache: 'no-store' });
+    if (!res.ok) throw new Error('launcher.exe not found (' + res.status + ')');
+    var exeBytes = new Uint8Array(await res.arrayBuffer());
+
+    var payload = apps.map(function (a) {
+      return {
+        name: a.name,
+        url: a.url,
+        file: deriveFile(a),
+        installer: a.installer,
+        args: a.args || ''
+      };
+    });
+
+    var enc = new TextEncoder();
+    var start = enc.encode('@@TARATARI_CONFIG@@');
+    var end = enc.encode('@@TARATARI_END@@');
+    var json = enc.encode(JSON.stringify(payload));
+
+    var blob = new Blob([exeBytes, start, json, end], { type: 'application/octet-stream' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'TaraTari-Setup.exe';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+  } catch (err) {
+    console.error('Installer generation failed:', err);
+    alert('Could not build installer:\n\n' + (err.message || err) +
+      '\n\nMake sure launcher.exe is uploaded next to index.html.');
+  } finally {
+    btn.disabled = selected.size === 0;
+    btn.innerHTML = originalHTML;
+  }
+}
+
 document.getElementById('generateBtn').addEventListener('click', function () {
   var chosen = allApps.filter(function (a) { return selected.has(a.id); });
   var installable = chosen.filter(function (a) { return a.installer !== 'fallback'; });
@@ -700,298 +760,9 @@ document.getElementById('generateBtn').addEventListener('click', function () {
   fallbacks.forEach(function (app) { window.open(app.url, '_blank', 'noopener'); });
 
   if (installable.length > 0) {
-    var psScript = buildPowerShell(installable);
-    var bat = buildBat(psScript);
-    downloadFile('taratari-installer.bat', bat);
+    generateInstaller(installable);
   }
 });
-
-function downloadFile(filename, text) {
-  var blob = new Blob([text], { type: 'application/octet-stream' });
-  var url = URL.createObjectURL(blob);
-  var a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-}
-
-function deriveFile(app) {
-  if (app.file) return app.file;
-  try {
-    var base = new URL(app.url).pathname.split('/').pop();
-    if (base && base.indexOf('.') !== -1) return base;
-  } catch (e) {}
-  return app.name.replace(/[^a-z0-9]/gi, '_') + (app.installer === 'msi' ? '.msi' : '.exe');
-}
-
-var PS_BODY = String.raw`
-$ProgressPreference = 'SilentlyContinue'
-try {
-    [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
-} catch {}
-
-$ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-
-$temp = Join-Path $env:TEMP ("taratari_" + [Guid]::NewGuid().ToString('N'))
-New-Item -ItemType Directory -Path $temp -Force | Out-Null
-
-$bgColor     = [System.Drawing.Color]::FromArgb(19, 19, 22)
-$fgColor     = [System.Drawing.Color]::FromArgb(228, 228, 231)
-$mutedColor  = [System.Drawing.Color]::FromArgb(161, 161, 170)
-$accentColor = [System.Drawing.Color]::FromArgb(102, 255, 102)
-$surfaceColor= [System.Drawing.Color]::FromArgb(28, 28, 32)
-$borderColor = [System.Drawing.Color]::FromArgb(39, 39, 42)
-$warnColor   = [System.Drawing.Color]::FromArgb(245, 158, 11)
-
-function Download-File {
-    param($Url, $Dest)
-    try {
-        Invoke-WebRequest -Uri $Url -OutFile $Dest -UseBasicParsing -ErrorAction Stop -MaximumRedirection 10 -UserAgent $ua
-        return $true
-    } catch {
-        try {
-            $wc = New-Object System.Net.WebClient
-            $wc.Headers.Add('User-Agent', $ua)
-            $wc.DownloadFile($Url, $Dest)
-            return $true
-        } catch {
-            return $false
-        }
-    }
-}
-
-function Test-IsInstaller {
-    param($Path)
-    try {
-        $fs = [IO.File]::OpenRead($Path)
-        $buf = New-Object byte[] 5
-        $fs.Read($buf, 0, 5) | Out-Null
-        $fs.Close()
-        $sig = [Text.Encoding]::ASCII.GetString($buf)
-        if ($sig.StartsWith('<') -or $sig.StartsWith('{') -or $sig.StartsWith('[')) { return $false }
-        return $true
-    } catch { return $false }
-}
-
-$form = New-Object System.Windows.Forms.Form
-$form.Text = "TaraTari Installer"
-$form.Size = New-Object System.Drawing.Size(560, 460)
-$form.StartPosition = "CenterScreen"
-$form.BackColor = $bgColor
-$form.ForeColor = $fgColor
-$form.FormBorderStyle = "FixedSingle"
-$form.MaximizeBox = $false
-$form.MinimizeBox = $false
-
-$title = New-Object System.Windows.Forms.Label
-$title.Text = "TaraTari Installer"
-$title.Font = New-Object System.Drawing.Font("Segoe UI", 20, [System.Drawing.FontStyle]::Bold)
-$title.ForeColor = $accentColor
-$title.Location = New-Object System.Drawing.Point(24, 20)
-$title.Size = New-Object System.Drawing.Size(500, 40)
-$form.Controls.Add($title)
-
-$subtitle = New-Object System.Windows.Forms.Label
-$subtitle.Text = "Installing your selected apps"
-$subtitle.Font = New-Object System.Drawing.Font("Segoe UI", 10)
-$subtitle.ForeColor = $mutedColor
-$subtitle.Location = New-Object System.Drawing.Point(24, 62)
-$subtitle.Size = New-Object System.Drawing.Size(500, 20)
-$form.Controls.Add($subtitle)
-
-$statusLabel = New-Object System.Windows.Forms.Label
-$statusLabel.Text = "Preparing..."
-$statusLabel.Font = New-Object System.Drawing.Font("Segoe UI", 11, [System.Drawing.FontStyle]::Bold)
-$statusLabel.ForeColor = $fgColor
-$statusLabel.Location = New-Object System.Drawing.Point(24, 100)
-$statusLabel.Size = New-Object System.Drawing.Size(500, 22)
-$form.Controls.Add($statusLabel)
-
-$progress = New-Object System.Windows.Forms.ProgressBar
-$progress.Location = New-Object System.Drawing.Point(24, 130)
-$progress.Size = New-Object System.Drawing.Size(496, 22)
-$progress.Minimum = 0
-$progress.Maximum = 100
-$form.Controls.Add($progress)
-
-$logBox = New-Object System.Windows.Forms.ListBox
-$logBox.Location = New-Object System.Drawing.Point(24, 170)
-$logBox.Size = New-Object System.Drawing.Size(496, 170)
-$logBox.BackColor = $surfaceColor
-$logBox.ForeColor = $fgColor
-$logBox.BorderStyle = "FixedSingle"
-$logBox.Font = New-Object System.Drawing.Font("Consolas", 9)
-$form.Controls.Add($logBox)
-
-$closeBtn = New-Object System.Windows.Forms.Button
-$closeBtn.Text = "Please wait..."
-$closeBtn.Location = New-Object System.Drawing.Point(408, 360)
-$closeBtn.Size = New-Object System.Drawing.Size(112, 36)
-$closeBtn.BackColor = $surfaceColor
-$closeBtn.ForeColor = $mutedColor
-$closeBtn.FlatStyle = "Flat"
-$closeBtn.FlatAppearance.BorderColor = $borderColor
-$closeBtn.Enabled = $false
-$form.Controls.Add($closeBtn)
-$closeBtn.Add_Click({ $form.Close() })
-
-$form.Add_Shown({
-    $total = $apps.Count
-    $i = 0
-    $ok = 0
-    $failed = 0
-
-    foreach ($entry in $apps) {
-        $parts = $entry -split '\|'
-        $name = $parts[0]
-        $url  = $parts[1]
-        $file = $parts[2]
-        $type = $parts[3]
-        $appArgs = if ($parts.Count -ge 5) { $parts[4] } else { '' }
-
-        $statusLabel.Text = "Installing $name..."
-        $form.Refresh()
-        [System.Windows.Forms.Application]::DoEvents()
-
-        $dest = Join-Path $temp $file
-        $dlOk = Download-File -Url $url -Dest $dest
-
-        if ($dlOk -and -not (Test-IsInstaller -Path $dest)) {
-            $dlOk = $false
-            $logBox.Items.Add("X  $name : server returned HTML, not an installer")
-            $logBox.TopIndex = $logBox.Items.Count - 1
-            $failed++
-        } elseif (-not $dlOk) {
-            $logBox.Items.Add("X  $name : download failed")
-            $logBox.TopIndex = $logBox.Items.Count - 1
-            $failed++
-        }
-
-        if ($dlOk) {
-            try {
-                if ($type -eq 'msi') {
-                    $msiArgs = '/i "' + $dest + '" /qn /norestart ' + $appArgs
-                    $p = Start-Process 'msiexec.exe' -ArgumentList $msiArgs -Wait -PassThru -WindowStyle Hidden
-                } elseif ($appArgs -ne '') {
-                    $p = Start-Process -FilePath $dest -ArgumentList $appArgs -Wait -PassThru -WindowStyle Hidden
-                } else {
-                    $p = Start-Process -FilePath $dest -Wait -PassThru -WindowStyle Hidden
-                }
-
-                if ($p.ExitCode -eq 0 -or $p.ExitCode -eq 3010) {
-                    $logBox.Items.Add("OK $name")
-                    $ok++
-                } else {
-                    $logBox.Items.Add("!! $name : exit " + $p.ExitCode)
-                    $failed++
-                }
-            } catch {
-                $logBox.Items.Add("X  $name : install failed")
-                $failed++
-            }
-            $logBox.TopIndex = $logBox.Items.Count - 1
-        }
-
-        $i++
-        $progress.Value = [int][math]::Round(($i / $total) * 100)
-        $form.Refresh()
-        [System.Windows.Forms.Application]::DoEvents()
-    }
-
-    if ($failed -eq 0) {
-        $statusLabel.Text = "All done! $ok of $total installed."
-        $statusLabel.ForeColor = $accentColor
-    } else {
-        $statusLabel.Text = "Done: $ok installed, $failed failed"
-        $statusLabel.ForeColor = $warnColor
-    }
-    $subtitle.Text = "You can close this window."
-    $closeBtn.Text = "Close"
-    $closeBtn.BackColor = $accentColor
-    $closeBtn.ForeColor = [System.Drawing.Color]::Black
-    $closeBtn.Enabled = $true
-    $form.Refresh()
-
-    Remove-Item -Recurse -Force $temp -ErrorAction SilentlyContinue
-})
-
-[System.Windows.Forms.Application]::Run($form)
-`;
-
-function buildPowerShell(apps) {
-  var lines = [];
-  lines.push("$ErrorActionPreference = 'SilentlyContinue'");
-  lines.push("Add-Type -AssemblyName System.Windows.Forms");
-  lines.push("Add-Type -AssemblyName System.Drawing");
-  lines.push("");
-  lines.push("$apps = @(");
-  apps.forEach(function (app) {
-    var name = String(app.name).replace(/\|/g, '-');
-    var url = String(app.url).replace(/\|/g, '%7C');
-    var file = deriveFile(app).replace(/\|/g, '-');
-    var type = app.installer;
-    var args = String(app.args || '').replace(/\|/g, ' ');
-    lines.push('"' + name + '|' + url + '|' + file + '|' + type + '|' + args + '"');
-  });
-  lines.push(")");
-  lines.push("");
-  lines.push(PS_BODY);
-  return lines.join('\r\n');
-}
-
-function psToBase64Utf16Le(script) {
-  var buf = new ArrayBuffer(2 + script.length * 2);
-  var view = new Uint8Array(buf);
-  view[0] = 0xFF;
-  view[1] = 0xFE;
-  for (var i = 0; i < script.length; i++) {
-    var code = script.charCodeAt(i);
-    view[2 + i * 2] = code & 0xFF;
-    view[2 + i * 2 + 1] = (code >> 8) & 0xFF;
-  }
-  var binary = '';
-  for (var j = 0; j < view.length; j++) binary += String.fromCharCode(view[j]);
-  return btoa(binary);
-}
-
-function chunkBase64(b64, size) {
-  var chunks = [];
-  for (var i = 0; i < b64.length; i += size) chunks.push(b64.slice(i, i + size));
-  return chunks;
-}
-
-function buildBat(psScript) {
-  var b64 = psToBase64Utf16Le(psScript);
-  var lines = chunkBase64(b64, 76);
-  var echoLines = lines.map(function (l) { return 'echo ' + l; }).join('\r\n');
-
-  return [
-    '@echo off',
-    'setlocal enabledelayedexpansion',
-    '',
-    'net session >nul 2>&1',
-    'if %errorLevel% neq 0 (',
-    '    powershell -Command "Start-Process -FilePath \'%~f0\' -Verb RunAs"',
-    '    exit /b',
-    ')',
-    '',
-    'set "TMPD=%TEMP%\\taratari_%RANDOM%_%RANDOM%"',
-    'mkdir "!TMPD!" 2>nul',
-    '',
-    '(',
-    echoLines,
-    ') > "!TMPD!\\s.b64"',
-    '',
-    'powershell -WindowStyle Hidden -NoProfile -ExecutionPolicy Bypass -Command "[IO.File]::WriteAllBytes(\'!TMPD!\\s.ps1\', [Convert]::FromBase64String(((Get-Content -Raw \'!TMPD!\\s.b64\') -replace \'\\s\',\'\')))"',
-    'powershell -WindowStyle Hidden -NoProfile -ExecutionPolicy Bypass -File "!TMPD!\\s.ps1"',
-    '',
-    'rmdir /s /q "!TMPD!" 2>nul',
-    'exit'
-  ].join('\r\n');
-}
 
 function debounce(fn, wait) {
   var timer;
