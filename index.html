@@ -260,7 +260,7 @@ a:hover { text-decoration: underline; }
 .cta-btn--sm .material-symbols-rounded { font-size: 17px; }
 
 /* =========================================================
-   HEADER with sliding indicator
+   HEADER
    ========================================================= */
 .header {
   position: sticky;
@@ -283,7 +283,6 @@ a:hover { text-decoration: underline; }
 .logo img { height: 32px; width: auto; border-radius: 6px; }
 .logo__spacer { flex: 1; }
 
-/* Sliding indicator nav */
 .nav {
   position: relative;
   display: flex;
@@ -361,7 +360,7 @@ a:hover { text-decoration: underline; }
 .icon-btn .material-symbols-rounded { font-size: 20px; }
 
 /* =========================================================
-   SLIDESHOW — with horizontal slide animation
+   SLIDESHOW
    ========================================================= */
 .home-hero {
   padding: 28px 0 8px;
@@ -630,9 +629,34 @@ a:hover { text-decoration: underline; }
 .tool-card__icon .material-symbols-rounded { font-size: 22px; color: var(--accent); }
 .tool-card__body { flex: 1; min-width: 0; }
 .tool-card__name {
-  font-size: 14px; font-weight: 600; color: var(--text);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
   margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+}
+.tool-card__name > span:first-child {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.rec-chip {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 6px;
+  background: var(--accent-bright);
+  color: #000;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  border-radius: 3px;
+  text-transform: uppercase;
+  line-height: 1.4;
 }
 .tool-card__cat { font-size: 11px; color: var(--text-dim); margin-bottom: 6px; }
 .tool-card__desc {
@@ -651,9 +675,6 @@ a:hover { text-decoration: underline; }
 }
 .platform-badge img { width: 10px; height: 10px; }
 
-/* =========================================================
-   ABOUT
-   ========================================================= */
 .about {
   padding: 40px 0;
   border-top: 1px solid var(--border);
@@ -989,7 +1010,7 @@ a:hover { text-decoration: underline; }
 .footer p { font-size: 13px; color: var(--text-dim); }
 
 /* =========================================================
-   BOTTOM NAV (MOBILE)
+   BOTTOM NAV
    ========================================================= */
 .bottom-nav {
   display: none;
@@ -1300,47 +1321,12 @@ a:hover { text-decoration: underline; }
 
         <div class="stepper-step" id="stepPlaybook" hidden></div>
 
-        <div class="ps-section">
-          <h2 class="optimize-section__title">
-            <img src="https://api.winstall.app/icons/Devolutions.UniGetUI.png" alt="" onerror="this.remove()">
-            Set up UniGetUI
-          </h2>
-          <p class="optimize-section__desc">UniGetUI is the modern GUI for WinGet, Chocolatey, Scoop and more. Install WinGet first, then grab UniGetUI from the App Store below.</p>
-
-          <div class="ps-card">
-            <div class="ps-card__head">
-              <span class="material-symbols-rounded">download</span>
-              <strong>WinGet installer script</strong>
-            </div>
-            <div class="ps-card__bar">
-              <span class="ps-card__dot ps-card__dot--r"></span>
-              <span class="ps-card__dot ps-card__dot--y"></span>
-              <span class="ps-card__dot ps-card__dot--g"></span>
-              <span class="ps-card__label">PowerShell (Admin)</span>
-            </div>
-            <div class="ps-card__body">
-              <span class="ps-card__prompt">PS&gt;</span>
-              <code>Install-Script -Name winget-install -RequiredVersion 5.3.1</code>
-              <button class="copy-btn" data-copy="Install-Script -Name winget-install -RequiredVersion 5.3.1">Copy</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="optimize-section">
-          <h2 class="optimize-section__title">
-            <span class="material-symbols-rounded">store</span>
-            App Store
-          </h2>
-          <p class="optimize-section__desc">Graphical front-ends for WinGet. Install apps in bulk without touching the terminal.</p>
-          <div class="tools-grid" id="appStoreGrid"></div>
-        </div>
-
         <div class="optimize-section">
           <h2 class="optimize-section__title">
             <span class="material-symbols-rounded">cleaning_services</span>
             Optimization Tools
           </h2>
-          <p class="optimize-section__desc">Dedicated cleaners and Windows tweakers. Lightweight alternatives to the full playbook.</p>
+          <p class="optimize-section__desc">Cache cleaners, debloaters and Windows tweakers. Lightweight alternatives to the full playbook.</p>
           <div class="tools-grid" id="optimizationToolsGrid"></div>
         </div>
 
@@ -1363,7 +1349,7 @@ a:hover { text-decoration: underline; }
           <div class="ps-card">
             <div class="ps-card__head">
               <span class="material-symbols-rounded">build</span>
-              <strong>Chris Titus Windows Utility</strong>
+              <strong>WinUtil by Chris Titus</strong>
             </div>
             <div class="ps-card__bar">
               <span class="ps-card__dot ps-card__dot--r"></span>
@@ -1376,6 +1362,10 @@ a:hover { text-decoration: underline; }
               <code>irm christitus.com/win | iex</code>
               <button class="copy-btn" data-copy="irm christitus.com/win | iex">Copy</button>
             </div>
+          </div>
+          <div class="note note--warn">
+            <span class="material-symbols-rounded">warning</span>
+            <span><strong>Windows 10 is not supported by WinUtil.</strong> Windows 10 reached the end of support on October 14, 2025.</span>
           </div>
 
           <div class="ps-card">
@@ -1395,6 +1385,34 @@ a:hover { text-decoration: underline; }
               <button class="copy-btn" data-copy='&amp; ([scriptblock]::Create((irm "https://raw.githubusercontent.com/corbindavenport/just-the-browser/main/main.ps1")))'>Copy</button>
             </div>
           </div>
+        </div>
+
+        <div class="ps-section">
+          <h2 class="optimize-section__title">
+            <img src="https://api.winstall.app/icons/Devolutions.UniGetUI.png" alt="" onerror="this.remove()">
+            WinGet tools
+          </h2>
+          <p class="optimize-section__desc">WinGet is the official Windows package manager. Install it first, then use Winstall or UniGetUI for a GUI.</p>
+
+          <div class="ps-card">
+            <div class="ps-card__head">
+              <span class="material-symbols-rounded">download</span>
+              <strong>WinGet installer script</strong>
+            </div>
+            <div class="ps-card__bar">
+              <span class="ps-card__dot ps-card__dot--r"></span>
+              <span class="ps-card__dot ps-card__dot--y"></span>
+              <span class="ps-card__dot ps-card__dot--g"></span>
+              <span class="ps-card__label">PowerShell (Admin)</span>
+            </div>
+            <div class="ps-card__body">
+              <span class="ps-card__prompt">PS&gt;</span>
+              <code>Install-Script -Name winget-install -RequiredVersion 5.3.1</code>
+              <button class="copy-btn" data-copy="Install-Script -Name winget-install -RequiredVersion 5.3.1">Copy</button>
+            </div>
+          </div>
+
+          <div class="tools-grid" id="wingetToolsGrid" style="margin-top: 16px;"></div>
         </div>
       </div>
 
@@ -1637,8 +1655,11 @@ a:hover { text-decoration: underline; }
    TOOL DATABASE
    ========================================================= */
 const toolsDatabase = [
+  { id: 79, name: "TaraTari Installer", url: "https://tarataritools.github.io/installer/", iconSymbol: "download", category: "TaraTari Tools", platforms: ["Windows", "Android"], desc: "Install all your apps in one click. Curated list, no bundles, no surprises.", recommended: true },
+  { id: 80, name: "TaraTari Ditch", url: "https://tarataritools.github.io/ditch", iconSymbol: "swap_horiz", category: "TaraTari Tools", platforms: ["Web"], desc: "Ditch big tech. Find open source alternatives for Adobe, Microsoft, Google and more." },
   { id: 1, name: "7-Zip", url: "https://7-zip.org/download.html", icon: "https://7-zip.org/7ziplogo.png", category: "Archive / Compression", platforms: ["Windows", "Linux"], desc: "High compression file archiver." },
   { id: 2, name: "PeaZip", url: "https://peazip.github.io/", icon: "https://img.alternativeto.net/icons/280/peazip_237831.svg", category: "Archive / Compression", platforms: ["Windows", "Linux"], desc: "Cross-platform archive manager." },
+  { id: 68, name: "ZArchiver", url: "https://play.google.com/store/apps/details?id=ru.zdevs.zarchiver", icon: "https://gocmod.net/wp-content/uploads/2025/08/logo-zarchiver-apk.jpg", category: "Archive / Compression", platforms: ["Android"], desc: "Powerful archive manager for Android. Handles RAR, ZIP, 7z and more." },
   { id: 3, name: "OBS Studio", url: "https://obsproject.com/", icon: "https://obsproject.com/assets/images/new_icon_small-r.png", category: "Video / Media", platforms: ["Windows", "Linux", "macOS"], desc: "Open source streaming and recording." },
   { id: 4, name: "VLC", url: "https://www.videolan.org/vlc/", icon: "https://img.alternativeto.net/icons/280/vlc-media-player_233348.svg", category: "Video / Media", platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Plays everything, lightweight." },
   { id: 5, name: "MPV Player", url: "https://mpv.io/installation/", icon: "https://img.alternativeto.net/icons/280/mpv_248928.svg", category: "Video / Media", platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Minimal, scriptable video player." },
@@ -1674,6 +1695,7 @@ const toolsDatabase = [
   { id: 19, name: "qBittorrent", url: "https://www.qbittorrent.org/download.php", icon: "https://media.sys.truenas.net/apps/qbittorrent/icons/icon.png", category: "Torrent", platforms: ["Windows", "Linux"], desc: "Free, ad-free BitTorrent client." },
   { id: 20, name: "SumatraPDF", url: "https://www.sumatrapdfreader.org/download-free-pdf-viewer", icon: "https://img.alternativeto.net/icons/140/avif/sumatra-pdf_205324.png", category: "PDF", platforms: ["Windows", "Linux"], desc: "Minimal, fast PDF reader." },
   { id: 55, name: "PdfCraft", url: "https://getartcraft.com/apps/pdfcraft", icon: "https://getartcraft.com/images/apps/pdfcraft/icon.webp", category: "PDF", platforms: ["Windows", "Linux", "macOS"], desc: "Open source Acrobat alternative. Read, organize, split and secure PDFs." },
+  { id: 70, name: "MJ PDF", url: "https://gitlab.com/mudlej_android/mj_pdf_reader", icon: "https://img.icons8.com/color/96/pdf-2.png", category: "PDF", platforms: ["Android"], desc: "Fast, minimal PDF viewer for Android. No ads, no tracking." },
   { id: 21, name: "Bitwarden", url: "https://bitwarden.com/download/", icon: "https://img.alternativeto.net/icons/140/bitwarden--free-password-manager_233375.svg", category: "Password Managers", platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Encrypted password manager." },
   { id: 22, name: "Proton Pass", url: "https://proton.me/pass/download", icon: "https://img.alternativeto.net/icons/140/proton-pass_237644.svg", category: "Password Managers", platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Privacy-first password manager." },
   { id: 23, name: "Greenshot", url: "https://getgreenshot.org/downloads/", icon: "https://img.alternativeto.net/icons/280/greenshot_252998.svg", category: "Screenshots", platforms: ["Windows"], desc: "Lightweight screenshot tool." },
@@ -1687,15 +1709,18 @@ const toolsDatabase = [
   { id: 31, name: "Monect", url: "https://www.monect.com/", icon: "https://images.sftcdn.net/images/t_app-icon-m/p/26a4fc82-7d40-467b-81de-334cb944e4e2/1851832726/monect-pc-remote-Monect%20PC%20Remote-icon.png", category: "Controller / Phone Tools", platforms: ["Windows", "Android", "iOS"], desc: "Use your phone as a PC remote and gamepad." },
   { id: 32, name: "123apps", url: "https://123apps.com/", icon: "https://img.alternativeto.net/icons/140/avif/http--123apps-com-_254932.png", category: "Online Tools", platforms: ["Web"], desc: "Online tools for audio, video and PDF." },
   { id: 73, name: "Utils", url: "https://utils.com/", icon: "https://utils.com/static/imgs/utils.svg", category: "Online Tools", platforms: ["Web"], desc: "All-in-one web utility toolkit. Converters, generators and handy tools in one place." },
+  { id: 69, name: "Ente Photos", url: "https://ente.io/", icon: "https://ente.io/favicon.ico", category: "Cloud", platforms: ["Android", "iOS", "Web", "Windows", "macOS", "Linux"], desc: "Privacy-first photo backup. 10GB free. End-to-end encrypted." },
   { id: 33, name: "Android Debloat Package", url: "https://drive.google.com/file/d/1DhQJJ6nKDwgWNordT8tmv7r_-oxDnpAr/view?usp=sharing", icon: "https://img.icons8.com/color/48/000000/android-os.png", category: "System / Android Tools", platforms: ["Windows", "Linux"], desc: "Remove Android bloatware safely via ADB." },
   { id: 35, name: "Gator", url: "https://play.google.com/store/apps/details?id=com.mitigator.gator", icon: "https://images.sftcdn.net/images/t_app-icon-m/p/358f34a5-301c-4c51-b50b-561de35f2457/2686083238/gator-system-cleaning-tool-logo", category: "System / Android Tools", platforms: ["Android"], desc: "System cleaning and optimization tool for Android." },
   { id: 42, name: "Shizuku", url: "https://shizuku.rikka.app/", icon: "https://shizuku.rikka.app/logo.png", category: "System / Android Tools", platforms: ["Android"], desc: "Grants apps root-like API access, no root needed." },
   { id: 43, name: "Canta", url: "https://samolego.github.io/Canta/", icon: "https://raw.githubusercontent.com/samolego/Canta/master/androidApp/src/main/res/mipmap-xxxhdpi/ic_launcher.png", category: "System / Android Tools", platforms: ["Android"], desc: "Uninstall bloatware without root, via Shizuku." },
-  { id: 68, name: "ZArchiver", url: "https://play.google.com/store/apps/details?id=ru.zdevs.zarchiver", icon: "https://gocmod.net/wp-content/uploads/2025/08/logo-zarchiver-apk.jpg", category: "Archive / Compression", platforms: ["Android"], desc: "Powerful archive manager for Android. Handles RAR, ZIP, 7z and more." },
-  { id: 69, name: "Ente Photos", url: "https://ente.io/", icon: "https://ente.io/favicon.ico", category: "Cloud", platforms: ["Android", "iOS", "Web", "Windows", "macOS", "Linux"], desc: "Privacy-first photo backup. 10GB free. End-to-end encrypted." },
-  { id: 70, name: "MJ PDF", url: "https://gitlab.com/mudlej_android/mj_pdf_reader", icon: "https://img.icons8.com/color/96/pdf-2.png", category: "PDF", platforms: ["Android"], desc: "Fast, minimal PDF viewer for Android. No ads, no tracking." },
+  { id: 74, name: "BleachBit", url: "https://github.com/bleachbit/bleachbit", icon: "https://img.alternativeto.net/icons/70/avif/bleachbit_324211.png", category: "System / Utilities", platforms: ["Windows", "Linux"], desc: "Free cache, log and temp file cleaner. Also shreds files securely." },
   { id: 36, name: "Kudu", url: "https://usekudu.com/download", icon: "https://usekudu.com/favicon.ico", category: "System / Utilities", platforms: ["Windows", "macOS", "Linux"], desc: "Free system cleaner and browser cache remover." },
   { id: 37, name: "WinHance", url: "https://winhance.net/", icon: "https://winhance.net/favicon.ico", category: "System / Utilities", platforms: ["Windows"], desc: "Open source Windows optimizer. Remove bloat and customize settings." },
+  { id: 75, name: "WinUtil", url: "https://winutil.christitus.com/", icon: "https://img.alternativeto.net/icons/70/avif/chris-titus-tech-s-windows-utility_329573.png", category: "System / Utilities", platforms: ["Windows"], desc: "Chris Titus's all-in-one Windows utility. Debloat, tweak and install apps. Windows 11 only." },
+  { id: 76, name: "RemoveWindowsAI", url: "https://github.com/zoicware/RemoveWindowsAI", icon: "https://img.alternativeto.net/icons/70/avif/removewindowsai_266368.png", category: "System / Utilities", platforms: ["Windows"], desc: "Removes Copilot and AI features from Windows 11. Windows 11 only." },
+  { id: 77, name: "OptimizerDuck", url: "https://github.com/itsfatduck/optimizerDuck", icon: "https://img.alternativeto.net/icons/70/avif/optimizerduck_286081.png", category: "System / Utilities", platforms: ["Windows"], desc: "Privacy-focused Windows optimizer. Disable telemetry and bloat." },
+  { id: 78, name: "Mem Reduct", url: "https://github.com/henrypp/memreduct", icon: "https://img.alternativeto.net/icons/70/avif/mem-reduct_100031.png", category: "System / Utilities", platforms: ["Windows"], desc: "Lightweight memory cleaner. Frees up RAM instantly." },
   { id: 61, name: "CADCraft", url: "https://getartcraft.com/apps/cadcraft", icon: "https://getartcraft.com/images/apps/cadcraft/icon.webp", category: "System / Utilities", platforms: ["Windows", "Linux", "macOS"], desc: "Open source AutoCAD alternative. CAD and drafting with layers." },
   { id: 64, name: "Ventoy", url: "https://www.ventoy.net/en/index.html", icon: "https://static1.xdaimages.com/wordpress/wp-content/uploads/2024/08/ventoy-logo.png", category: "System / Utilities", platforms: ["Windows", "Linux"], desc: "Create a bootable USB from multiple ISOs at once." },
   { id: 38, name: "Winstall", url: "https://winstall.app/", icon: "https://winstall.app/assets/logo.svg", category: "Package Managers", platforms: ["Windows"], desc: "Bulk install apps via winget with a clean UI." },
@@ -1712,7 +1737,7 @@ const toolsDatabase = [
   { id: 47, name: "Windows 7 SP1", url: "https://buzzheavier.com/wru8ac6nwk17", icon: "https://img.icons8.com/color/96/windows-logo.png", category: "Operating Systems", platforms: [], isOS: true, desc: "Windows 7 Service Pack 1, x64 and x86, English." }
 ];
 
-const CATEGORY_ORDER = ["Archive / Compression","Video / Media","Design & Graphics","Display / Utilities","Office / Productivity","Browsers","Download Managers","Torrent","PDF","Password Managers","Screenshots","File Sharing","Communication","Gaming","Controller / Phone Tools","Online Tools","Cloud","System / Android Tools","System / Utilities","Package Managers","Operating Systems"];
+const CATEGORY_ORDER = ["TaraTari Tools","Archive / Compression","Video / Media","Design & Graphics","Display / Utilities","Office / Productivity","Browsers","Download Managers","Torrent","PDF","Password Managers","Screenshots","File Sharing","Communication","Gaming","Controller / Phone Tools","Online Tools","Cloud","System / Android Tools","System / Utilities","Package Managers","Operating Systems"];
 
 const PLATFORM_META = {
   Windows: { label: "Windows", icon: "https://cdn.simpleicons.org/windows/e8eaed", type: "img" },
@@ -1749,11 +1774,12 @@ function renderToolCard(tool) {
   const icon = tool.iconSymbol
     ? `<span class="material-symbols-rounded">${tool.iconSymbol}</span>`
     : `<img src="${escapeHtml(tool.icon)}" alt="${escapeHtml(tool.name)} icon" loading="lazy" onerror="this.src='https://placehold.co/40x40/26262b/4ade80?text=?'">`;
+  const recChip = tool.recommended ? '<span class="rec-chip">Recommended</span>' : '';
   return `
     <a class="tool-card" href="${escapeHtml(tool.url)}" target="_blank" rel="noopener noreferrer">
       <div class="tool-card__icon">${icon}</div>
       <div class="tool-card__body">
-        <div class="tool-card__name">${escapeHtml(tool.name)}</div>
+        <div class="tool-card__name"><span>${escapeHtml(tool.name)}</span>${recChip}</div>
         <div class="tool-card__cat">${escapeHtml(tool.category)}</div>
         <div class="tool-card__desc">${escapeHtml(tool.desc)}</div>
         ${renderPlatformBadges(tool)}
@@ -1769,7 +1795,8 @@ const SYNONYMS = {
   "after effects": "EffectCraft", "indesign": "DesignCraft", "pro tools": "SoundCraft",
   "usb tool": "Ventoy", "bootable usb": "Ventoy", "google keep": "OpenKeep",
   "texture": "TextureCraft", "material": "MaterialCraft", "revolt": "Stoat",
-  "photo backup": "Ente Photos", "photos": "Ente Photos", "zip": "ZArchiver"
+  "photo backup": "Ente Photos", "photos": "Ente Photos", "zip": "ZArchiver",
+  "winget": "WinGet", "wingetui": "UniGetUI", "chris titus": "WinUtil"
 };
 
 function resolveSynonym(token) {
@@ -1869,13 +1896,28 @@ function renderHome() {
 }
 
 function renderOptimizeSubsections() {
-  const appStore = [38, 39].map(id => toolsDatabase.find(t => t.id === id)).filter(Boolean);
-  const optTools = [36, 37].map(id => toolsDatabase.find(t => t.id === id)).filter(Boolean);
-  const starter = [38, 41].map(id => toolsDatabase.find(t => t.id === id)).filter(Boolean);
-  document.getElementById('appStoreGrid').innerHTML = appStore.map(renderToolCard).join('');
+  // Optimization Tools — expanded
+  const optTools = [74, 36, 37, 75, 76, 77, 78]
+    .map(id => toolsDatabase.find(t => t.id === id))
+    .filter(Boolean);
   document.getElementById('optimizationToolsGrid').innerHTML = optTools.map(renderToolCard).join('');
+
+  // Windows Installer Pack — TaraTari Installer (rec), Ninite
+  const starter = [79, 41]
+    .map(id => toolsDatabase.find(t => t.id === id))
+    .filter(Boolean);
   document.getElementById('starterPackGrid').innerHTML = starter.map(renderToolCard).join('');
-  const debloat = [33].map(id => toolsDatabase.find(t => t.id === id)).filter(Boolean);
+
+  // WinGet tools (last) — Winstall, UniGetUI, WinGet
+  const wingetTools = [38, 39, 40]
+    .map(id => toolsDatabase.find(t => t.id === id))
+    .filter(Boolean);
+  document.getElementById('wingetToolsGrid').innerHTML = wingetTools.map(renderToolCard).join('');
+
+  // Android debloat
+  const debloat = [33]
+    .map(id => toolsDatabase.find(t => t.id === id))
+    .filter(Boolean);
   document.getElementById('androidDebloatGrid').innerHTML = debloat.map(renderToolCard).join('');
 }
 
@@ -2154,7 +2196,11 @@ function goInternal(target) {
 
 function goExternal(url) {
   showLoader();
-  setTimeout(() => { window.location.href = url; }, 250);
+  setTimeout(() => {
+    // Hide loader before navigating so bfcache snapshots a "hidden" state
+    hideLoader();
+    window.location.href = url;
+  }, 250);
 }
 
 // Nav click handler
@@ -2172,12 +2218,11 @@ document.querySelectorAll('.nav__item, .bottom-nav__item').forEach(el => {
       navBusy = true;
 
       const oldActive = document.querySelector('.nav__item.active');
-      // Immediately set active on new button — text turns black instantly
+      // Instant black text on the clicked item
       if (this !== oldActive) this.classList.add('active');
 
       positionIndicator(this, true);
 
-      // Remove active from old button AFTER the slide completes
       setTimeout(() => {
         if (oldActive && oldActive !== this) oldActive.classList.remove('active');
         navBusy = false;
@@ -2194,7 +2239,7 @@ document.querySelectorAll('.nav__item, .bottom-nav__item').forEach(el => {
         return;
       }
     } else {
-      // Mobile bottom nav — no animation, instant
+      // Mobile bottom nav — instant
       if (isLink) {
         e.preventDefault();
         goExternal(href);
@@ -2217,7 +2262,25 @@ document.querySelectorAll('.icon-btn[data-target]').forEach(el => {
 });
 
 /* =========================================================
-   SLIDESHOW — horizontal slide animation, 4s per slide
+   FIX: browser back button — bfcache safety net
+   ========================================================= */
+window.addEventListener('pageshow', function(event) {
+  if (event.persisted) {
+    // Page restored from bfcache — reset transient state
+    hideLoader();
+    navBusy = false;
+    userChoseOptTab = false;
+  }
+});
+
+// Also reset on pagehide in case we're going to bfcache
+window.addEventListener('pagehide', function() {
+  // Ensure loader is hidden in the snapshot
+  hideLoader();
+});
+
+/* =========================================================
+   SLIDESHOW
    ========================================================= */
 const slides = document.querySelectorAll('.slide');
 const slideshowEl = document.getElementById('slideshow');
@@ -2225,12 +2288,10 @@ const dotsContainer = document.getElementById('slideDots');
 let currentSlide = 0;
 let slideTimer = null;
 
-// Build dots
 dotsContainer.innerHTML = Array.from(slides).map((_, i) =>
   `<button class="slide-dot${i === 0 ? ' is-active' : ''}" data-index="${i}" aria-label="Go to slide ${i+1}"></button>`
 ).join('');
 
-// Initialize slide states
 slides.forEach((s, idx) => {
   s.classList.remove('is-active', 'is-past', 'is-future');
   s.classList.add(idx === 0 ? 'is-active' : 'is-future');
@@ -2241,11 +2302,6 @@ function showSlide(newIndex) {
   newIndex = ((newIndex % total) + total) % total;
   if (newIndex === currentSlide) return;
 
-  // Update each slide's state based on its index relative to newIndex.
-  // This handles direction automatically:
-  //   slides before newIndex → is-past (off left)
-  //   slide at newIndex → is-active (center)
-  //   slides after newIndex → is-future (off right)
   slides.forEach((s, idx) => {
     s.classList.remove('is-active', 'is-past', 'is-future');
     if (idx === newIndex) {
@@ -2292,7 +2348,6 @@ dotsContainer.querySelectorAll('.slide-dot').forEach(dot => {
 slideshowEl.addEventListener('mouseenter', () => clearInterval(slideTimer));
 slideshowEl.addEventListener('mouseleave', resetSlideTimer);
 
-// Touch swipe
 let touchStartX = 0;
 let touchStartY = 0;
 slideshowEl.addEventListener('touchstart', (e) => {
@@ -2307,7 +2362,6 @@ slideshowEl.addEventListener('touchend', (e) => {
   }
 }, { passive: true });
 
-// Slide clicks
 slides.forEach(slide => {
   slide.addEventListener('click', function(e) {
     if (e.target.closest('.slide-nav') || e.target.closest('.slide-dot')) return;
