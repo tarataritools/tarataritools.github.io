@@ -14,16 +14,20 @@
 })();
 </script>
 
-<title>TaraTariTools — Free Open Source Software, Privacy Apps & Starter Packs</title>
-<meta name="description" content="TaraTariTools is a hand-picked catalog of free open source software, privacy tools, starter packs and Windows optimizers. Download apps for Windows, Linux, macOS, Android and iOS.">
-<meta name="keywords" content="tarataritools, open source software, privacy tools, free software, starter pack, linux apps, android apps, macos software, debloat android, shizuku, canta">
+<title>TaraTariTools — Free Open Source Software, Privacy Apps & Installers</title>
+<meta name="description" content="TaraTariTools is a hand-picked catalog of free open source software, privacy tools, installers and Windows optimizers. Download apps for Windows, Linux, macOS, Android and iOS.">
+<meta name="keywords" content="tarataritools, open source software, privacy tools, free software, installer, linux apps, android apps, macos software, debloat android, shizuku, canta">
 <link rel="canonical" href="https://tarataritools.github.io/">
 
 <meta property="og:title" content="TaraTariTools — Free Open Source Software & Privacy Apps">
 <meta property="og:description" content="A hand-picked catalog of free open source software and privacy tools for every platform.">
 <meta property="og:url" content="https://tarataritools.github.io/">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://raw.githubusercontent.com/tarataritools/tarataritools.github.io/main/images/TaraTariToolsLogo.png">
 <meta name="theme-color" content="#09090b">
+
+<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/tarataritools/tarataritools.github.io/main/images/TaraTariToolsLogo.png">
+<link rel="apple-touch-icon" href="https://raw.githubusercontent.com/tarataritools/tarataritools.github.io/main/images/TaraTariToolsLogo.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,12 +54,10 @@
   --warn: #f59e0b;
   --warn-soft: rgba(245, 158, 11, 0.10);
   --warn-text: #fcd34d;
-  --danger: #ef4444;
   --header-bg: rgba(9, 9, 11, 0.85);
   --bottom-nav-bg: rgba(9, 9, 11, 0.95);
   --code-text: #c7d2fe;
   --code-bar-bg: rgba(255, 255, 255, 0.02);
-  --iso-tool-text: #93c5fd;
   --radius: 10px;
   --radius-lg: 14px;
   --radius-full: 999px;
@@ -86,7 +88,6 @@
   --bottom-nav-bg: rgba(250, 250, 250, 0.96);
   --code-text: #1e40af;
   --code-bar-bg: rgba(0, 0, 0, 0.03);
-  --iso-tool-text: #1d4ed8;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -117,6 +118,18 @@ a:hover { text-decoration: underline; }
   vertical-align: middle;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* =========================================================
    PAGE LOADER
    ========================================================= */
@@ -127,7 +140,7 @@ a:hover { text-decoration: underline; }
   z-index: 9999;
   display: grid;
   place-items: center;
-  transition: opacity 0.4s ease, visibility 0.4s ease;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
 }
 .page-loader.done { opacity: 0; visibility: hidden; pointer-events: none; }
 
@@ -179,10 +192,8 @@ a:hover { text-decoration: underline; }
   justify-content: center;
   min-height: 180px;
   padding: 30px 0;
-  animation: fadeIn 0.2s ease;
 }
 .inline-loader .bolt-loader { --bl-size: 56px; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 /* =========================================================
    CTA BUTTON
@@ -229,9 +240,7 @@ a:hover { text-decoration: underline; }
   transform: skew(30deg) translateX(-250%);
   pointer-events: none;
 }
-.cta-btn.cta-pressed::before {
-  animation: cta-sweep 0.45s cubic-bezier(0.3, 1, 0.8, 1) forwards;
-}
+.cta-btn.cta-pressed::before { animation: cta-sweep 0.45s cubic-bezier(0.3, 1, 0.8, 1) forwards; }
 @keyframes cta-sweep {
   from { transform: skew(30deg) translateX(-250%); }
   to { transform: skew(30deg) translateX(250%); }
@@ -250,7 +259,9 @@ a:hover { text-decoration: underline; }
 .cta-btn--sm { padding: 0.6rem 1.4rem; font-size: 13px; letter-spacing: 0.02em; }
 .cta-btn--sm .material-symbols-rounded { font-size: 17px; }
 
-/* ---------- Header ---------- */
+/* =========================================================
+   HEADER with sliding indicator
+   ========================================================= */
 .header {
   position: sticky;
   top: 0;
@@ -270,57 +281,71 @@ a:hover { text-decoration: underline; }
 }
 .logo:hover { text-decoration: none; }
 .logo img { height: 32px; width: auto; border-radius: 6px; }
-.logo__text {
-  position: absolute;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
 .logo__spacer { flex: 1; }
 
-.nav { display: flex; align-items: center; gap: 4px; }
+/* Sliding indicator nav */
+.nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.nav__indicator {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 38px;
+  width: 80px;
+  background: var(--accent-bright);
+  border-radius: var(--radius);
+  transform: translateY(-50%);
+  transition: transform 0.28s cubic-bezier(0.34, 1.3, 0.64, 1),
+              width 0.28s cubic-bezier(0.34, 1.3, 0.64, 1),
+              background 0.25s ease;
+  z-index: 0;
+  pointer-events: none;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav__indicator { transition: none; }
+}
+
 .nav__item {
-  display: inline-flex; align-items: center; gap: 6px;
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   padding: 8px 14px;
   background: transparent;
-  border: 1px solid transparent;
+  border: none;
   color: var(--text-muted);
-  font-family: var(--font); font-size: 14px; font-weight: 500;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 500;
   border-radius: var(--radius);
   cursor: pointer;
-  transition: color 0.15s, background 0.15s, border-color 0.15s;
+  transition: none;
   text-decoration: none;
-  position: relative;
+  white-space: nowrap;
 }
-.nav__item:hover { color: var(--text); background: var(--surface-2); text-decoration: none; }
-.nav__item.active {
-  background: var(--accent-bright);
-  border-color: var(--accent-bright);
-  color: #000;
-  font-weight: 600;
-}
-.nav__item.active:hover {
-  color: #000;
-  background: var(--accent-bright-hover);
-  border-color: var(--accent-bright-hover);
-}
+.nav__item:hover { color: var(--text); text-decoration: none; }
+.nav__item.active { color: #000; font-weight: 600; }
 .nav__item .material-symbols-rounded { font-size: 18px; }
 
 .new-badge {
-  display: inline-flex; align-items: center;
-  padding: 2px 6px; margin-left: 2px;
-  background: rgba(0, 0, 0, 0.14);
-  color: inherit;
-  font-size: 9px; font-weight: 800;
-  border-radius: 999px;
-  letter-spacing: 0.06em; line-height: 1.2; text-transform: uppercase;
-}
-.nav__item:not(.active) .new-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  margin-left: 2px;
   background: var(--accent-bright);
   color: #000;
+  font-size: 9px;
+  font-weight: 800;
+  border-radius: 999px;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
 }
 
 .icon-btn {
@@ -335,34 +360,199 @@ a:hover { text-decoration: underline; }
 .icon-btn svg { width: 18px; height: 18px; fill: currentColor; }
 .icon-btn .material-symbols-rounded { font-size: 20px; }
 
-/* ---------- Hero ---------- */
-.hero {
-  padding: 56px 0 36px;
-  text-align: center;
+/* =========================================================
+   SLIDESHOW — with horizontal slide animation
+   ========================================================= */
+.home-hero {
+  padding: 28px 0 8px;
 }
-.hero h1 {
-  font-size: clamp(26px, 5vw, 44px);
+.slideshow {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  aspect-ratio: 2.6 / 1;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+@media (max-width: 768px) {
+  .slideshow { aspect-ratio: 1.6 / 1; border-radius: 12px; }
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 28px 40px;
+  background: linear-gradient(135deg, var(--surface), var(--surface-2));
+  opacity: 0;
+  transform: translateX(100%);
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+  will-change: transform, opacity;
+}
+.slide.is-active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+  z-index: 2;
+}
+.slide.is-past {
+  opacity: 0;
+  transform: translateX(-100%);
+  z-index: 1;
+}
+.slide.is-future {
+  opacity: 0;
+  transform: translateX(100%);
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide { transition: none; }
+}
+
+.slide__badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 3px 10px;
+  background: var(--accent-bright);
+  color: #000;
+  font-size: 10px;
   font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
-  margin-bottom: 14px;
+  letter-spacing: 0.06em;
+  border-radius: 999px;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.slide__icon {
+  flex-shrink: 0;
+  width: 96px;
+  height: 96px;
+  border-radius: 20px;
+  background: var(--surface-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.slide__icon img { width: 64px; height: 64px; object-fit: contain; }
+.slide__icon .material-symbols-rounded {
+  font-size: 52px;
+  color: var(--accent);
+}
+
+.slide__body { flex: 1; min-width: 0; }
+.slide__title {
+  font-size: clamp(18px, 2.6vw, 26px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
   color: var(--text);
+  line-height: 1.2;
 }
-.hero__sub {
-  font-size: clamp(14px, 2vw, 17px);
+.slide__desc {
+  font-size: 14px;
   color: var(--text-muted);
-  max-width: 620px;
-  margin: 0 auto 28px;
-  line-height: 1.6;
+  line-height: 1.55;
+  max-width: 520px;
 }
+
+@media (max-width: 768px) {
+  .slide {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 22px 20px;
+  }
+  .slide__icon { width: 68px; height: 68px; border-radius: 16px; }
+  .slide__icon img { width: 44px; height: 44px; }
+  .slide__icon .material-symbols-rounded { font-size: 36px; }
+  .slide__title { font-size: 17px; }
+  .slide__desc { font-size: 12.5px; }
+}
+
+.slide-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.2s, background 0.15s;
+}
+.slideshow:hover .slide-nav { opacity: 1; }
+.slide-nav:hover { background: var(--surface-2); }
+.slide-nav--prev { left: 14px; }
+.slide-nav--next { right: 14px; }
+@media (max-width: 768px) { .slide-nav { display: none; } }
+
+.slide-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+.slide-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: width 0.25s ease, background 0.25s ease;
+}
+.slide-dot.is-active {
+  width: 24px;
+  background: var(--accent-bright);
+  border-radius: 999px;
+}
+
+/* =========================================================
+   HOME CONTROLS
+   ========================================================= */
+.home-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 28px 0 24px;
+}
+
 .search {
-  display: flex; align-items: center; gap: 10px;
-  max-width: 560px; margin: 0 auto;
-  padding: 0 16px; height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 560px;
+  padding: 0 16px;
+  height: 52px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  transition: border-color 0.15s, box-shadow 0.15s, background 0.25s;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 .search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 .search .material-symbols-rounded { color: var(--text-dim); font-size: 20px; }
@@ -378,16 +568,14 @@ a:hover { text-decoration: underline; }
 }
 .search__clear:hover { color: var(--text); }
 
-/* ---------- Filters ---------- */
 .filters {
-  display: inline-flex; gap: 4px; padding: 4px;
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-full);
-  margin-bottom: 28px;
-  transition: background 0.25s;
 }
-.filters-wrap { text-align: center; }
 .filters__btn {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 8px 14px;
@@ -403,7 +591,9 @@ a:hover { text-decoration: underline; }
 .filters__btn.active { background: var(--accent-bright); color: #000; font-weight: 600; }
 .filters__btn .material-symbols-rounded { font-size: 16px; }
 
-/* ---------- Category section ---------- */
+/* =========================================================
+   CATEGORY & TOOL CARDS
+   ========================================================= */
 .category { margin-bottom: 36px; }
 .category__title {
   font-size: 15px; font-weight: 600; color: var(--text);
@@ -412,7 +602,6 @@ a:hover { text-decoration: underline; }
 }
 .category__count { font-size: 13px; font-weight: 400; color: var(--text-dim); }
 
-/* ---------- Tool cards ---------- */
 .tools-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -429,7 +618,6 @@ a:hover { text-decoration: underline; }
   color: inherit;
 }
 .tool-card:hover { border-color: var(--border-hover); background: var(--surface-2); text-decoration: none; }
-.tool-card:active { transform: scale(0.99); }
 .tool-card__icon {
   flex-shrink: 0;
   width: 40px; height: 40px;
@@ -463,7 +651,9 @@ a:hover { text-decoration: underline; }
 }
 .platform-badge img { width: 10px; height: 10px; }
 
-/* ---------- About ---------- */
+/* =========================================================
+   ABOUT
+   ========================================================= */
 .about {
   padding: 40px 0;
   border-top: 1px solid var(--border);
@@ -475,14 +665,15 @@ a:hover { text-decoration: underline; }
   max-width: 640px; font-size: 14px; line-height: 1.65;
 }
 
-/* ---------- Empty ---------- */
 .empty {
   text-align: center; padding: 48px 20px;
   color: var(--text-dim);
 }
 .empty .material-symbols-rounded { font-size: 40px; margin-bottom: 10px; display: block; }
 
-/* ---------- Pages ---------- */
+/* =========================================================
+   PAGES
+   ========================================================= */
 .page { display: none; }
 .page.active { display: block; }
 .page h2.section-heading {
@@ -496,41 +687,28 @@ a:hover { text-decoration: underline; }
   max-width: 640px; margin-bottom: 32px;
 }
 
-/* ---------- Optimize tabs ---------- */
 .optimize-tabs {
-  display: inline-flex;
-  gap: 4px;
-  padding: 4px;
+  display: inline-flex; gap: 4px; padding: 4px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-full);
   margin-bottom: 28px;
 }
 .optimize-tab {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  display: inline-flex; align-items: center; gap: 6px;
   padding: 8px 16px;
-  background: transparent;
-  border: none;
+  background: transparent; border: none;
   color: var(--text-muted);
-  font-family: var(--font);
-  font-size: 14px;
-  font-weight: 500;
+  font-family: var(--font); font-size: 14px; font-weight: 500;
   border-radius: var(--radius-full);
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
   white-space: nowrap;
 }
 .optimize-tab:hover { color: var(--text); }
-.optimize-tab.active {
-  background: var(--accent-bright);
-  color: #000;
-  font-weight: 600;
-}
+.optimize-tab.active { background: var(--accent-bright); color: #000; font-weight: 600; }
 .optimize-tab .material-symbols-rounded { font-size: 16px; }
 
-/* ---------- Stepper ---------- */
 .stepper-step { margin-bottom: 24px; }
 .os-cards {
   display: grid;
@@ -560,10 +738,8 @@ a:hover { text-decoration: underline; }
 .os-card small { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
 
 .playbook-select {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 20px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; margin-bottom: 20px;
 }
 @media (max-width: 560px) { .playbook-select { grid-template-columns: 1fr; } }
 
@@ -584,10 +760,8 @@ a:hover { text-decoration: underline; }
 .playbook-card p { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
 
 .dl-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin: 22px 0;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; margin: 22px 0;
 }
 @media (max-width: 560px) { .dl-actions { grid-template-columns: 1fr; } }
 .dl-actions .cta-btn { width: 100%; padding: 1.05rem 1.5rem; font-size: 14px; }
@@ -601,7 +775,6 @@ a:hover { text-decoration: underline; }
   font-weight: 700; font-size: 15px;
 }
 
-/* Notes */
 .note {
   display: flex; gap: 12px;
   padding: 14px 16px;
@@ -645,7 +818,6 @@ a:hover { text-decoration: underline; }
 }
 .back-btn:hover { color: var(--text); }
 
-/* Optimize: sub-sections */
 .optimize-section { margin-top: 48px; }
 .optimize-section:first-child { margin-top: 0; }
 .optimize-section__title {
@@ -662,7 +834,6 @@ a:hover { text-decoration: underline; }
   margin-bottom: 18px; max-width: 620px;
 }
 
-/* Android app card */
 .android-app-card {
   display: flex;
   gap: 14px;
@@ -680,21 +851,11 @@ a:hover { text-decoration: underline; }
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
 }
-.android-app-card__icon img {
-  width: 40px; height: 40px; object-fit: contain;
-}
+.android-app-card__icon img { width: 40px; height: 40px; object-fit: contain; }
 .android-app-card__body { flex: 1; min-width: 0; }
-.android-app-card__name {
-  font-size: 15px; font-weight: 700;
-  margin-bottom: 4px; color: var(--text);
-}
-.android-app-card__desc {
-  font-size: 13px; color: var(--text-muted);
-  line-height: 1.5; margin-bottom: 10px;
-}
-.android-app-card__actions {
-  display: flex; flex-wrap: wrap; gap: 8px;
-}
+.android-app-card__name { font-size: 15px; font-weight: 700; margin-bottom: 4px; color: var(--text); }
+.android-app-card__desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px; }
+.android-app-card__actions { display: flex; flex-wrap: wrap; gap: 8px; }
 
 .btn-mini {
   display: inline-flex; align-items: center; gap: 4px;
@@ -733,7 +894,6 @@ a:hover { text-decoration: underline; }
 }
 .btn-mini .material-symbols-rounded { font-size: 15px; }
 
-/* PowerShell */
 .ps-section { margin-top: 48px; }
 .ps-section:first-child { margin-top: 0; }
 .ps-card {
@@ -790,23 +950,16 @@ a:hover { text-decoration: underline; }
 .copy-btn:hover { background: var(--surface-2); color: var(--text); }
 .copy-btn.copied { background: var(--accent-bright); color: #000; }
 
-/* Starter page groups */
 .starter-group { margin-bottom: 40px; }
 .starter-group__title {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--text);
+  font-size: 15px; font-weight: 700; color: var(--text);
   margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  display: flex; align-items: center; gap: 8px;
 }
 .starter-group__title .material-symbols-rounded {
-  font-size: 18px;
-  color: var(--accent);
+  font-size: 18px; color: var(--accent);
 }
 
-/* GitHub page */
 .github-card {
   text-align: center; padding: 48px 24px;
   background: var(--surface);
@@ -827,7 +980,6 @@ a:hover { text-decoration: underline; }
 .github-card h2 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
 .github-card p { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6; }
 
-/* Footer */
 .footer {
   margin-top: 60px;
   padding: 28px 0 calc(28px + env(safe-area-inset-bottom, 0));
@@ -836,7 +988,9 @@ a:hover { text-decoration: underline; }
 }
 .footer p { font-size: 13px; color: var(--text-dim); }
 
-/* Bottom nav */
+/* =========================================================
+   BOTTOM NAV (MOBILE)
+   ========================================================= */
 .bottom-nav {
   display: none;
   position: fixed;
@@ -862,7 +1016,7 @@ a:hover { text-decoration: underline; }
   position: relative;
   -webkit-tap-highlight-color: transparent;
 }
-.bottom-nav__item:hover { text-decoration: none; color: var(--text-muted); }
+.bottom-nav__item:hover { text-decoration: none; }
 .bottom-nav__icon {
   position: relative;
   display: inline-flex; align-items: center; justify-content: center;
@@ -873,7 +1027,6 @@ a:hover { text-decoration: underline; }
 .bottom-nav__icon .material-symbols-rounded { font-size: 22px; }
 .bottom-nav__label { line-height: 1.2; }
 
-.bottom-nav__item.active { color: #000; }
 .bottom-nav__item.active .bottom-nav__icon {
   background: var(--accent-bright);
   color: #000;
@@ -882,7 +1035,13 @@ a:hover { text-decoration: underline; }
   color: #000;
   font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
 }
-.bottom-nav__item.active .bottom-nav__label { color: #000; }
+.bottom-nav__item.active .bottom-nav__label {
+  color: #fff;
+  font-weight: 600;
+}
+:root[data-theme="light"] .bottom-nav__item.active .bottom-nav__label {
+  color: var(--text);
+}
 
 .new-dot {
   position: absolute;
@@ -898,7 +1057,6 @@ a:hover { text-decoration: underline; }
   50% { opacity: 0.55; }
 }
 
-/* Back to top */
 .back-top {
   position: fixed;
   bottom: 24px; right: 20px;
@@ -917,11 +1075,7 @@ a:hover { text-decoration: underline; }
 .back-top:hover { background: var(--surface-3); }
 .back-top .material-symbols-rounded { font-size: 22px; }
 
-/* =========================================================
-   MOBILE
-   ========================================================= */
 @media (max-width: 768px) {
-  /* PERF: kill expensive blur filters on mobile */
   .header {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -939,17 +1093,17 @@ a:hover { text-decoration: underline; }
   .bottom-nav { display: flex; }
   main { padding-bottom: 84px; }
 
-  .hero { padding: 32px 0 24px; }
-  .hero h1 { font-size: clamp(24px, 7vw, 34px); letter-spacing: -0.02em; }
-  .hero__sub { font-size: 14px; margin-bottom: 22px; }
+  .home-hero { padding: 20px 0 4px; }
+  .home-controls { padding: 22px 0 18px; gap: 14px; }
+  .search { height: 46px; padding: 0 14px; }
+  .search input { font-size: 14px; }
+
   .tools-grid { grid-template-columns: 1fr; }
   .tool-card { padding: 14px 16px; gap: 14px; }
   .tool-card__icon { width: 44px; height: 44px; }
   .tool-card__icon img { width: 34px; height: 34px; }
   .filters { padding: 3px; gap: 2px; }
   .filters__btn { padding: 9px 12px; font-size: 12px; min-height: 38px; }
-  .search { height: 48px; padding: 0 14px; }
-  .search input { font-size: 14px; }
 
   .dl-actions { grid-template-columns: 1fr; }
   .dl-actions .cta-btn { padding: 1rem 1.25rem; min-height: 60px; }
@@ -972,20 +1126,14 @@ a:hover { text-decoration: underline; }
 
   .back-top { bottom: 88px; }
 
-  /* PERF: reduce transitions */
   body { transition: background-color 0.15s ease, color 0.15s ease; }
-  .tool-card, .ditch-card, .cta-btn { transition-duration: 0.1s; }
-}
-
-@media (max-width: 420px) {
-  .tools-grid { grid-template-columns: 1fr; }
+  .tool-card { transition-duration: 0.1s; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- ===== Page loader ===== -->
 <div class="page-loader" id="pageLoader" role="status" aria-label="Loading">
   <div class="bolt-loader">
     <svg class="bolt-loader__bolt" viewBox="0 0 24 24" aria-hidden="true">
@@ -994,15 +1142,15 @@ a:hover { text-decoration: underline; }
   </div>
 </div>
 
-<!-- Header -->
 <header class="header">
   <div class="container header__inner">
     <a href="#" class="logo" data-target="home" aria-label="TaraTariTools home">
       <img src="https://raw.githubusercontent.com/tarataritools/tarataritools.github.io/main/images/TaraTariToolsLogo.png" alt="TaraTariTools logo" onerror="this.remove()">
-      <span class="logo__text">TaraTariTools</span>
+      <span class="sr-only">TaraTariTools</span>
     </a>
     <span class="logo__spacer"></span>
-    <nav class="nav" aria-label="Primary">
+    <nav class="nav" aria-label="Primary" id="desktopNav">
+      <span class="nav__indicator" id="navIndicator"></span>
       <button class="nav__item active" data-target="home">
         <span class="material-symbols-rounded">home</span> Home
       </button>
@@ -1013,9 +1161,9 @@ a:hover { text-decoration: underline; }
         <span class="material-symbols-rounded">swap_horiz</span> TaraTariDitch
         <span class="new-badge">NEW</span>
       </a>
-      <button class="nav__item" data-target="starter">
-        <span class="material-symbols-rounded">inventory_2</span> Starter
-      </button>
+      <a href="https://tarataritools.github.io/installer/" class="nav__item">
+        <span class="material-symbols-rounded">download</span> Installer
+      </a>
     </nav>
     <button class="icon-btn" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
       <span class="material-symbols-rounded" id="themeIcon">dark_mode</span>
@@ -1027,12 +1175,69 @@ a:hover { text-decoration: underline; }
 </header>
 
 <main>
-  <!-- ============ HOME ============ -->
   <section class="page active" id="page-home">
     <div class="container">
-      <div class="hero">
+      <div class="sr-only">
         <h1>TaraTariTools: Faster way to get tools you need!</h1>
-        <p class="hero__sub">A hand-picked catalog of privacy tools, creative apps and clean software. Every app is free and safe to use. No ads, no trackers, no nonsense.</p>
+        <p>A hand-picked catalog of privacy tools, creative apps and clean software. Every app is free and safe to use. No ads, no trackers, no nonsense.</p>
+      </div>
+
+      <div class="home-hero">
+        <div class="slideshow" id="slideshow">
+          <div class="slide is-active" data-installer-slide>
+            <div class="slide__badge">NEW</div>
+            <div class="slide__icon"><span class="material-symbols-rounded">download</span></div>
+            <div class="slide__body">
+              <h2 class="slide__title">TaraTari Installer</h2>
+              <p class="slide__desc">Install all your apps in one click. Just like Ninite — but better.</p>
+            </div>
+          </div>
+          <div class="slide" data-href="https://tarataritools.github.io/ditch">
+            <div class="slide__icon"><span class="material-symbols-rounded">swap_horiz</span></div>
+            <div class="slide__body">
+              <h2 class="slide__title">TaraTari Ditch</h2>
+              <p class="slide__desc">Ditch big software. Real alternatives for Adobe, Microsoft, Google and more.</p>
+            </div>
+          </div>
+          <div class="slide" data-target="optimize">
+            <div class="slide__icon">
+              <img src="https://raw.githubusercontent.com/tarataritools/tarataritools.github.io/main/images/TaraTariOptimizerAppLogo.png" alt="TaraTari Optimize" onerror="this.style.display='none'">
+            </div>
+            <div class="slide__body">
+              <h2 class="slide__title">TaraTari Optimize</h2>
+              <p class="slide__desc">Speed up Windows PCs and Android phones. Easy peasy.</p>
+            </div>
+          </div>
+          <div class="slide" data-href="https://concat.standalones.org/">
+            <div class="slide__icon">
+              <img src="https://concat.standalones.org/_astro/mark.C_qCVBF__1gbCYt.webp" alt="ConCat" onerror="this.style.display='none'">
+            </div>
+            <div class="slide__body">
+              <h2 class="slide__title">ConCat</h2>
+              <p class="slide__desc">Free video editing tool. A solid Canva alternative with no watermarks.</p>
+            </div>
+          </div>
+          <div class="slide" data-href="https://getartcraft.com/apps/pdfcraft">
+            <div class="slide__icon">
+              <img src="https://getartcraft.com/images/apps/pdfcraft/icon.webp" alt="PdfCraft" onerror="this.style.display='none'">
+            </div>
+            <div class="slide__body">
+              <h2 class="slide__title">PdfCraft</h2>
+              <p class="slide__desc">Edit PDFs without Adobe Acrobat. Full PDF workbench.</p>
+            </div>
+          </div>
+
+          <button class="slide-nav slide-nav--prev" id="slidePrev" aria-label="Previous slide">
+            <span class="material-symbols-rounded">chevron_left</span>
+          </button>
+          <button class="slide-nav slide-nav--next" id="slideNext" aria-label="Next slide">
+            <span class="material-symbols-rounded">chevron_right</span>
+          </button>
+        </div>
+        <div class="slide-dots" id="slideDots"></div>
+      </div>
+
+      <div class="home-controls">
         <div class="search">
           <span class="material-symbols-rounded">search</span>
           <input type="text" id="searchInput" placeholder="Search tools, apps or categories…" aria-label="Search tools">
@@ -1040,9 +1245,6 @@ a:hover { text-decoration: underline; }
             <span class="material-symbols-rounded" style="font-size:18px;">close</span>
           </button>
         </div>
-      </div>
-
-      <div class="filters-wrap">
         <div class="filters" role="tablist" aria-label="Filter by platform">
           <button class="filters__btn active" data-platform="all">
             <span class="material-symbols-rounded">apps</span> All
@@ -1066,7 +1268,6 @@ a:hover { text-decoration: underline; }
     </div>
   </section>
 
-  <!-- ============ OPTIMIZE ============ -->
   <section class="page" id="page-optimize">
     <div class="container">
       <h2 class="section-heading">Optimize your device</h2>
@@ -1081,7 +1282,6 @@ a:hover { text-decoration: underline; }
         </button>
       </div>
 
-      <!-- PC panel -->
       <div class="optimize-panel" data-panel="pc">
         <div class="stepper-step" id="stepOs">
           <div class="os-cards">
@@ -1100,10 +1300,9 @@ a:hover { text-decoration: underline; }
 
         <div class="stepper-step" id="stepPlaybook" hidden></div>
 
-        <!-- Set up UniGetUI -->
         <div class="ps-section">
           <h2 class="optimize-section__title">
-            <img src="https://images-eds-ssl.xboxlive.com/image?url=4rt9.lXDC4H_93laV1_eHHFT949fUipzkiFOBH3fAiZZUCdYojwUyX2aTonS1aIwMrx6NUIsHfUHSLzjGJFxxnw8DVCREBQRVakddWo398MYEHNNwKo5Of1t7LjN2N52zi2Qc6fhtq5CnyYA5zmVOM8TgoLtn4hGJ8JptN_dL4I-&format=source&h=102" alt="" onerror="this.remove()">
+            <img src="https://api.winstall.app/icons/Devolutions.UniGetUI.png" alt="" onerror="this.remove()">
             Set up UniGetUI
           </h2>
           <p class="optimize-section__desc">UniGetUI is the modern GUI for WinGet, Chocolatey, Scoop and more. Install WinGet first, then grab UniGetUI from the App Store below.</p>
@@ -1127,7 +1326,6 @@ a:hover { text-decoration: underline; }
           </div>
         </div>
 
-        <!-- App Store -->
         <div class="optimize-section">
           <h2 class="optimize-section__title">
             <span class="material-symbols-rounded">store</span>
@@ -1137,7 +1335,6 @@ a:hover { text-decoration: underline; }
           <div class="tools-grid" id="appStoreGrid"></div>
         </div>
 
-        <!-- Optimization Tools -->
         <div class="optimize-section">
           <h2 class="optimize-section__title">
             <span class="material-symbols-rounded">cleaning_services</span>
@@ -1147,17 +1344,15 @@ a:hover { text-decoration: underline; }
           <div class="tools-grid" id="optimizationToolsGrid"></div>
         </div>
 
-        <!-- Windows Starter Pack -->
         <div class="optimize-section">
           <h2 class="optimize-section__title">
             <span class="material-symbols-rounded">inventory_2</span>
-            Windows Starter Pack
+            Windows Installer Pack
           </h2>
           <p class="optimize-section__desc">First time setting up Windows? Pick one to bulk-install your apps.</p>
           <div class="tools-grid" id="starterPackGrid"></div>
         </div>
 
-        <!-- PowerShell tweaks -->
         <div class="ps-section">
           <h2 class="optimize-section__title">
             <span class="material-symbols-rounded">code</span>
@@ -1203,7 +1398,6 @@ a:hover { text-decoration: underline; }
         </div>
       </div>
 
-      <!-- Android panel -->
       <div class="optimize-panel" data-panel="android" hidden>
         <div class="note note--info" style="margin-top: 0;">
           <span class="material-symbols-rounded">school</span>
@@ -1313,10 +1507,9 @@ a:hover { text-decoration: underline; }
     </div>
   </section>
 
-  <!-- ============ STARTER ============ -->
-  <section class="page" id="page-starter">
+  <section class="page" id="page-installer">
     <div class="container">
-      <h2 class="section-heading">Starter Pack</h2>
+      <h2 class="section-heading">Installer</h2>
       <p class="lead">Just reset your phone or bought a new PC? Start here. Pick what you need, install once, done.</p>
 
       <div class="starter-group">
@@ -1363,7 +1556,6 @@ a:hover { text-decoration: underline; }
     </div>
   </section>
 
-  <!-- ============ GITHUB ============ -->
   <section class="page" id="page-github">
     <div class="container">
       <div class="github-card">
@@ -1389,7 +1581,6 @@ a:hover { text-decoration: underline; }
   </div>
 </footer>
 
-<!-- Mobile bottom nav — 4 items -->
 <nav class="bottom-nav" aria-label="Primary mobile">
   <button class="bottom-nav__item active" data-target="home">
     <span class="bottom-nav__icon"><span class="material-symbols-rounded">home</span></span>
@@ -1406,9 +1597,9 @@ a:hover { text-decoration: underline; }
     </span>
     <span class="bottom-nav__label">Ditch</span>
   </a>
-  <button class="bottom-nav__item" data-target="starter">
-    <span class="bottom-nav__icon"><span class="material-symbols-rounded">inventory_2</span></span>
-    <span class="bottom-nav__label">Starter</span>
+  <button class="bottom-nav__item" data-target="installer">
+    <span class="bottom-nav__icon"><span class="material-symbols-rounded">download</span></span>
+    <span class="bottom-nav__label">Installer</span>
   </button>
 </nav>
 
@@ -1463,7 +1654,7 @@ const toolsDatabase = [
   { id: 9, name: "LibreOffice", url: "https://www.libreoffice.org/download/", icon: "https://img.alternativeto.net/icons/280/libreoffice_233404.svg", category: "Office / Productivity", platforms: ["Windows", "Linux"], desc: "Full open source office suite." },
   { id: 10, name: "ONLYOFFICE", url: "https://www.onlyoffice.com/download-desktop", icon: "https://img.alternativeto.net/icons/280/onlyoffice_245488.svg", category: "Office / Productivity", platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Free office suite. No activation needed." },
   { id: 11, name: "Anytype", url: "https://anytype.io/", icon: "https://img.alternativeto.net/icons/280/anytype_245495.svg", category: "Office / Productivity", platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Local-first encrypted workspace." },
-  { id: 49, name: "OpenKeep", url: "https://openkeep.net/", iconSymbol: "sticky_note_2", category: "Office / Productivity", platforms: ["Web", "Android"], desc: "Privacy-focused Google Keep alternative. Full data ownership." },
+  { id: 49, name: "OpenKeep", url: "https://openkeep.net/", icon: "https://img.icons8.com/fluency/96/google-keep.png", category: "Office / Productivity", platforms: ["Web", "Android"], desc: "Privacy-focused Google Keep alternative. Full data ownership." },
   { id: 59, name: "WordCraft", url: "https://getartcraft.com/apps/wordcraft", icon: "https://getartcraft.com/images/apps/wordcraft/icon.webp", category: "Office / Productivity", platforms: ["Windows", "Linux", "macOS"], desc: "Open source Word alternative. Word processor with .docx and tracked changes." },
   { id: 60, name: "DeckCraft", url: "https://getartcraft.com/apps/deckcraft", icon: "https://getartcraft.com/images/apps/deckcraft/icon.webp", category: "Office / Productivity", platforms: ["Windows", "Linux", "macOS"], desc: "Open source PowerPoint alternative. Presentations with themes and animations." },
   { id: 62, name: "GridCraft", url: "https://getartcraft.com/apps/gridcraft", icon: "https://getartcraft.com/images/apps/gridcraft/icon.webp", category: "Office / Productivity", platforms: ["Windows", "Linux", "macOS"], desc: "Open source Excel alternative. Spreadsheets with XLSX and pivot tables." },
@@ -1489,17 +1680,18 @@ const toolsDatabase = [
   { id: 24, name: "ShareX", url: "https://getsharex.com/downloads/", icon: "https://img.alternativeto.net/icons/280/sharex_233027.svg", category: "Screenshots", platforms: ["Windows", "Linux"], desc: "Advanced screen capture and annotation." },
   { id: 25, name: "Flameshot", url: "https://flameshot.org/#download", icon: "https://img.alternativeto.net/icons/140/flameshot_234680.svg", category: "Screenshots", platforms: ["Windows"], desc: "Powerful screenshot annotation tool." },
   { id: 26, name: "LocalSend", url: "https://localsend.org/", icon: "https://img.alternativeto.net/icons/280/localsend_251558.svg", category: "File Sharing", platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Cross-platform local file sharing." },
-  { id: 27, name: "Stoat", url: "https://stoat.chat/", icon: "https://stoat.chat/favicon.ico", category: "Communication", platforms: ["Windows", "Linux", "macOS"], desc: "Open source chat platform. Formerly Revolt." },
+  { id: 27, name: "Stoat", url: "https://stoat.chat/", icon: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/stoat.png", category: "Communication", platforms: ["Windows", "Linux", "macOS"], desc: "Open source chat platform. Formerly Revolt." },
   { id: 28, name: "Playnite", url: "https://playnite.link/", icon: "https://img.alternativeto.net/icons/140/playnite_233369.svg", category: "Gaming", platforms: ["Windows"], desc: "Unified video game library manager." },
   { id: 29, name: "Heroic Games Launcher", url: "https://heroicgameslauncher.com/", icon: "https://img.alternativeto.net/icons/140/heroic-games-launcher_238974.svg", category: "Gaming", platforms: ["Windows"], desc: "Open source Epic and GOG launcher." },
   { id: 30, name: "AntiMicroX", url: "https://github.com/AntiMicroX/antimicrox/releases", icon: "https://img.alternativeto.net/icons/140/avif/antimicrox_170260.png", category: "Gaming", platforms: ["Windows"], desc: "Map keyboard and mouse to a gamepad." },
   { id: 31, name: "Monect", url: "https://www.monect.com/", icon: "https://images.sftcdn.net/images/t_app-icon-m/p/26a4fc82-7d40-467b-81de-334cb944e4e2/1851832726/monect-pc-remote-Monect%20PC%20Remote-icon.png", category: "Controller / Phone Tools", platforms: ["Windows", "Android", "iOS"], desc: "Use your phone as a PC remote and gamepad." },
   { id: 32, name: "123apps", url: "https://123apps.com/", icon: "https://img.alternativeto.net/icons/140/avif/http--123apps-com-_254932.png", category: "Online Tools", platforms: ["Web"], desc: "Online tools for audio, video and PDF." },
+  { id: 73, name: "Utils", url: "https://utils.com/", icon: "https://utils.com/static/imgs/utils.svg", category: "Online Tools", platforms: ["Web"], desc: "All-in-one web utility toolkit. Converters, generators and handy tools in one place." },
   { id: 33, name: "Android Debloat Package", url: "https://drive.google.com/file/d/1DhQJJ6nKDwgWNordT8tmv7r_-oxDnpAr/view?usp=sharing", icon: "https://img.icons8.com/color/48/000000/android-os.png", category: "System / Android Tools", platforms: ["Windows", "Linux"], desc: "Remove Android bloatware safely via ADB." },
   { id: 35, name: "Gator", url: "https://play.google.com/store/apps/details?id=com.mitigator.gator", icon: "https://images.sftcdn.net/images/t_app-icon-m/p/358f34a5-301c-4c51-b50b-561de35f2457/2686083238/gator-system-cleaning-tool-logo", category: "System / Android Tools", platforms: ["Android"], desc: "System cleaning and optimization tool for Android." },
   { id: 42, name: "Shizuku", url: "https://shizuku.rikka.app/", icon: "https://shizuku.rikka.app/logo.png", category: "System / Android Tools", platforms: ["Android"], desc: "Grants apps root-like API access, no root needed." },
   { id: 43, name: "Canta", url: "https://samolego.github.io/Canta/", icon: "https://raw.githubusercontent.com/samolego/Canta/master/androidApp/src/main/res/mipmap-xxxhdpi/ic_launcher.png", category: "System / Android Tools", platforms: ["Android"], desc: "Uninstall bloatware without root, via Shizuku." },
-  { id: 68, name: "ZArchiver", url: "https://play.google.com/store/apps/details?id=ru.zdevs.zarchiver", icon: "https://zarchiver.net/favicon.ico", category: "Archive / Compression", platforms: ["Android"], desc: "Powerful archive manager for Android. Handles RAR, ZIP, 7z and more." },
+  { id: 68, name: "ZArchiver", url: "https://play.google.com/store/apps/details?id=ru.zdevs.zarchiver", icon: "https://gocmod.net/wp-content/uploads/2025/08/logo-zarchiver-apk.jpg", category: "Archive / Compression", platforms: ["Android"], desc: "Powerful archive manager for Android. Handles RAR, ZIP, 7z and more." },
   { id: 69, name: "Ente Photos", url: "https://ente.io/", icon: "https://ente.io/favicon.ico", category: "Cloud", platforms: ["Android", "iOS", "Web", "Windows", "macOS", "Linux"], desc: "Privacy-first photo backup. 10GB free. End-to-end encrypted." },
   { id: 70, name: "MJ PDF", url: "https://gitlab.com/mudlej_android/mj_pdf_reader", icon: "https://img.icons8.com/color/96/pdf-2.png", category: "PDF", platforms: ["Android"], desc: "Fast, minimal PDF viewer for Android. No ads, no tracking." },
   { id: 36, name: "Kudu", url: "https://usekudu.com/download", icon: "https://usekudu.com/favicon.ico", category: "System / Utilities", platforms: ["Windows", "macOS", "Linux"], desc: "Free system cleaner and browser cache remover." },
@@ -1507,10 +1699,12 @@ const toolsDatabase = [
   { id: 61, name: "CADCraft", url: "https://getartcraft.com/apps/cadcraft", icon: "https://getartcraft.com/images/apps/cadcraft/icon.webp", category: "System / Utilities", platforms: ["Windows", "Linux", "macOS"], desc: "Open source AutoCAD alternative. CAD and drafting with layers." },
   { id: 64, name: "Ventoy", url: "https://www.ventoy.net/en/index.html", icon: "https://static1.xdaimages.com/wordpress/wp-content/uploads/2024/08/ventoy-logo.png", category: "System / Utilities", platforms: ["Windows", "Linux"], desc: "Create a bootable USB from multiple ISOs at once." },
   { id: 38, name: "Winstall", url: "https://winstall.app/", icon: "https://winstall.app/assets/logo.svg", category: "Package Managers", platforms: ["Windows"], desc: "Bulk install apps via winget with a clean UI." },
-  { id: 39, name: "UniGetUI", url: "https://devolutions.net/download-center/#unigetui", icon: "https://devolutions.net/favicon.ico", category: "Package Managers", platforms: ["Windows"], desc: "Modern GUI for winget, chocolatey, scoop and more." },
+  { id: 39, name: "UniGetUI", url: "https://devolutions.net/download-center/#unigetui", icon: "https://api.winstall.app/icons/Devolutions.UniGetUI.png", category: "Package Managers", platforms: ["Windows"], desc: "Modern GUI for winget, chocolatey, scoop and more." },
   { id: 40, name: "WinGet", url: "https://learn.microsoft.com/en-us/windows/package-manager/winget/", iconSymbol: "terminal", category: "Package Managers", platforms: ["Windows"], desc: "Official Windows CLI package manager." },
   { id: 41, name: "Ninite", url: "https://ninite.com/", icon: "https://www.google.com/s2/favicons?sz=128&domain=ninite.com", category: "Package Managers", platforms: ["Windows"], desc: "One-click bulk installer for popular apps." },
   { id: 50, name: "ArtCraft Launcher", url: "https://getartcraft.com/apps", iconSymbol: "apps", category: "Package Managers", platforms: ["Windows", "macOS", "Linux"], desc: "Native launcher to install and update the ArtCraft suite." },
+  { id: 71, name: "TiddlyInstall", url: "https://robertsdotpm.github.io/_static/tiddlyinstall.html#home", iconSymbol: "download", category: "Package Managers", platforms: ["Windows", "Linux", "macOS"], desc: "No freezing and no bundlers that break. Installs your project's real runtime and dependencies into its own folder." },
+  { id: 72, name: "PowerShell Gallery", url: "https://www.powershellgallery.com/", icon: "https://c0.uidownload.com/pngpics/1125/2094/powershell-logo-windows-management-framework-icon-microsoft-scripting-language-symbol-powershell-computer-icon-tech-software-emblem-automation-tool-graphic-command-line-interface-visual.png", category: "Package Managers", platforms: ["Windows"], desc: "Official package repository for PowerShell modules and scripts. Install with Install-Module." },
   { id: 34, name: "Windows 10 ISO", url: "https://drive.google.com/file/d/1zl7Uv5VGzRsu0P5fFEcHyx-vmBkzc4S0/view?usp=sharing", icon: "https://img.icons8.com/color/48/000000/windows-10.png", category: "Operating Systems", platforms: [], isOS: true, desc: "Official Windows 10 installation image." },
   { id: 44, name: "Windows 11 25H2", url: "https://software-static.download.prss.microsoft.com/dbazure/888969d5-f34g-4e03-ac9d-1f9786c66749/26200.6584.250915-1905.25h2_ge_release_svc_refresh_CLIENT_CONSUMER_x64FRE_en-us.iso", icon: "https://img.icons8.com/color/48/000000/windows-11.png", category: "Operating Systems", platforms: [], isOS: true, desc: "Windows 11 25H2, build 26200.6584, x64, English (US)." },
   { id: 45, name: "Windows 11 LTSC", url: "https://oemsoc.download.prss.microsoft.com/dbazure/X23-81951_26100.1742.240906-0331.ge_release_svc_refresh_CLIENT_ENTERPRISES_OEM_x64FRE_en-us.iso_640de540-87c4-427f-be87-e6d53a3a60b4?t=2c3b664b-b119-4088-9db1-ccff72c6d22e&P1=102816950270&P2=601&P3=2&P4=OC448onxqdmdUsBUApAiE8pj1FZ%2bEPTU3%2bC6Quq29MVwMyyDUtR%2fsbiy7RdVoZOHaZRndvzeOOnIwJZ2x3%2bmP6YK9cjJSP41Lvs0SulF4SVyL5C0DdDmiWqh2QW%2bcDPj2Xp%2bMrI9NOeElSBS5kkOWP8Eiyf2VkkQFM3g5vIk3HJVvu5sWo6pFKpFv4lML%2bHaIiTSuwbPMs5xwEQTfScuTKfigNlUZPdHRMp1B3uKLgIA3r0IbRpZgHYMXEwXQ%2fSLMdDNQthpqQvz1PThVkx7ObD55CXgt0GNSAWRfjdURWb8ywWk1gT7ozAgpP%2fKNm56U5nh33WZSuMZIuO1SBM2vw%3d%3d", icon: "https://img.icons8.com/color/48/000000/windows-11.png", category: "Operating Systems", platforms: [], isOS: true, desc: "Windows 11 Enterprise LTSC, build 26100.1742, x64, English (US)." },
@@ -1567,9 +1761,6 @@ function renderToolCard(tool) {
     </a>`;
 }
 
-/* =========================================================
-   SEARCH
-   ========================================================= */
 const SYNONYMS = {
   "capcut": "OpenCut", "photoshop": "PhotoCraft", "excel": "GridCraft",
   "lightroom": "LightCraft", "illustrator": "VectorCraft", "keep": "OpenKeep",
@@ -1628,15 +1819,11 @@ function debounce(fn, wait) {
   };
 }
 
-/* =========================================================
-   MOBILE DETECTION
-   ========================================================= */
 const isMobileViewport = () => window.matchMedia('(max-width: 768px)').matches;
 
 /* =========================================================
    HOME RENDERING
    ========================================================= */
-// Auto-default filter: mobile tools on phones, all on desktops
 let currentFilter = isMobileViewport() ? 'mobile' : 'all';
 let currentQuery = '';
 
@@ -1681,9 +1868,6 @@ function renderHome() {
   }).join('');
 }
 
-/* =========================================================
-   OPTIMIZE SUB-SECTIONS
-   ========================================================= */
 function renderOptimizeSubsections() {
   const appStore = [38, 39].map(id => toolsDatabase.find(t => t.id === id)).filter(Boolean);
   const optTools = [36, 37].map(id => toolsDatabase.find(t => t.id === id)).filter(Boolean);
@@ -1691,15 +1875,11 @@ function renderOptimizeSubsections() {
   document.getElementById('appStoreGrid').innerHTML = appStore.map(renderToolCard).join('');
   document.getElementById('optimizationToolsGrid').innerHTML = optTools.map(renderToolCard).join('');
   document.getElementById('starterPackGrid').innerHTML = starter.map(renderToolCard).join('');
-
   const debloat = [33].map(id => toolsDatabase.find(t => t.id === id)).filter(Boolean);
   document.getElementById('androidDebloatGrid').innerHTML = debloat.map(renderToolCard).join('');
 }
 
-/* =========================================================
-   STARTER PAGE
-   ========================================================= */
-function renderStarter() {
+function renderInstaller() {
   const pick = ids => ids.map(id => toolsDatabase.find(t => t.id === id)).filter(Boolean).map(renderToolCard).join('');
   document.getElementById('starterPasswords').innerHTML = pick([21, 22]);
   document.getElementById('starterBrowsers').innerHTML = pick([13, 14]);
@@ -1713,6 +1893,7 @@ function renderStarter() {
    OPTIMIZE TABS
    ========================================================= */
 let currentOptTab = isMobileViewport() ? 'android' : 'pc';
+let userChoseOptTab = false;
 
 function setOptimizeTab(tab) {
   currentOptTab = tab;
@@ -1725,11 +1906,14 @@ function setOptimizeTab(tab) {
 }
 
 document.querySelectorAll('.optimize-tab').forEach(tab => {
-  tab.addEventListener('click', () => setOptimizeTab(tab.dataset.opt));
+  tab.addEventListener('click', () => {
+    userChoseOptTab = true;
+    setOptimizeTab(tab.dataset.opt);
+  });
 });
 
 /* =========================================================
-   PLAYBOOK STEPPER
+   PLAYBOOKS
    ========================================================= */
 const PLAYBOOKS = {
   atlas: {
@@ -1886,9 +2070,6 @@ function initOptimize() {
   });
 }
 
-/* =========================================================
-   CTA BUTTON
-   ========================================================= */
 function bindCtaButtons(root) {
   (root || document).querySelectorAll('.cta-btn').forEach(btn => {
     if (btn.dataset.ctaBound) return;
@@ -1902,42 +2083,256 @@ function bindCtaButtons(root) {
 }
 
 /* =========================================================
-   NAVIGATION
+   SLIDING NAV INDICATOR
+   ========================================================= */
+function positionIndicator(btn, animate) {
+  const indicator = document.getElementById('navIndicator');
+  if (!indicator || !btn) return;
+  if (!animate) indicator.style.transition = 'none';
+  indicator.style.width = btn.offsetWidth + 'px';
+  indicator.style.transform = `translateY(-50%) translateX(${btn.offsetLeft}px)`;
+  if (!animate) {
+    indicator.offsetHeight;
+    indicator.style.transition = '';
+  }
+}
+
+function initNavIndicator() {
+  const active = document.querySelector('.nav__item.active');
+  if (active) positionIndicator(active, false);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      const currentActive = document.querySelector('.nav__item.active');
+      if (currentActive) positionIndicator(currentActive, false);
+    });
+  }
+}
+
+window.addEventListener('resize', debounce(function() {
+  if (!userChoseOptTab) {
+    const shouldBe = isMobileViewport() ? 'android' : 'pc';
+    if (shouldBe !== currentOptTab) setOptimizeTab(shouldBe);
+  }
+  const active = document.querySelector('.nav__item.active');
+  if (active) positionIndicator(active, false);
+}, 200), { passive: true });
+
+/* =========================================================
+   PAGE NAVIGATION
    ========================================================= */
 const pageIds = {
   home: document.getElementById('page-home'),
   optimize: document.getElementById('page-optimize'),
-  starter: document.getElementById('page-starter'),
+  installer: document.getElementById('page-installer'),
   github: document.getElementById('page-github')
 };
 
-function switchPage(target) {
-  if (!pageIds[target]) return;
+function showLoader() { document.getElementById('pageLoader').classList.remove('done'); }
+function hideLoader() { document.getElementById('pageLoader').classList.add('done'); }
+
+function swapPage(target) {
   Object.values(pageIds).forEach(p => p.classList.remove('active'));
-  pageIds[target].classList.add('active');
-  document.querySelectorAll('[data-target]').forEach(el => {
+  if (pageIds[target]) pageIds[target].classList.add('active');
+  window.scrollTo(0, 0);
+  document.querySelectorAll('.nav__item, .bottom-nav__item').forEach(el => {
     el.classList.toggle('active', el.dataset.target === target);
   });
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  if (target === 'optimize') {
-    renderOptimizeSubsections();
-    setOptimizeTab(currentOptTab);
-  }
-  if (target === 'starter') renderStarter();
+  if (target === 'optimize') { renderOptimizeSubsections(); setOptimizeTab(currentOptTab); }
+  if (target === 'installer') renderInstaller();
   if (target === 'github') bindCtaButtons(pageIds.github);
+  const active = document.querySelector('.nav__item.active');
+  if (active) positionIndicator(active, false);
 }
 
-document.querySelectorAll('[data-target]').forEach(el => {
+function goInternal(target) {
+  showLoader();
+  setTimeout(() => {
+    swapPage(target);
+    setTimeout(hideLoader, 300);
+  }, 100);
+}
+
+function goExternal(url) {
+  showLoader();
+  setTimeout(() => { window.location.href = url; }, 250);
+}
+
+// Nav click handler
+let navBusy = false;
+
+document.querySelectorAll('.nav__item, .bottom-nav__item').forEach(el => {
   el.addEventListener('click', function(e) {
     const target = this.dataset.target;
-    if (!pageIds[target]) return;
-    e.preventDefault();
-    switchPage(target);
+    const href = this.getAttribute('href');
+    const isLink = this.tagName === 'A' && href && !href.startsWith('#');
+    const isDesktopNav = this.closest('.nav') !== null;
+
+    if (isDesktopNav) {
+      if (navBusy) { e.preventDefault(); return; }
+      navBusy = true;
+
+      const oldActive = document.querySelector('.nav__item.active');
+      // Immediately set active on new button — text turns black instantly
+      if (this !== oldActive) this.classList.add('active');
+
+      positionIndicator(this, true);
+
+      // Remove active from old button AFTER the slide completes
+      setTimeout(() => {
+        if (oldActive && oldActive !== this) oldActive.classList.remove('active');
+        navBusy = false;
+      }, 280);
+
+      if (isLink) {
+        e.preventDefault();
+        setTimeout(() => goExternal(href), 280);
+        return;
+      }
+      if (target && pageIds[target]) {
+        e.preventDefault();
+        setTimeout(() => goInternal(target), 280);
+        return;
+      }
+    } else {
+      // Mobile bottom nav — no animation, instant
+      if (isLink) {
+        e.preventDefault();
+        goExternal(href);
+        return;
+      }
+      if (target && pageIds[target]) {
+        e.preventDefault();
+        goInternal(target);
+        return;
+      }
+    }
+  });
+});
+
+document.querySelectorAll('.icon-btn[data-target]').forEach(el => {
+  el.addEventListener('click', function() {
+    const target = this.dataset.target;
+    if (target && pageIds[target]) goInternal(target);
   });
 });
 
 /* =========================================================
-   SEARCH / FILTER WIRING
+   SLIDESHOW — horizontal slide animation, 4s per slide
+   ========================================================= */
+const slides = document.querySelectorAll('.slide');
+const slideshowEl = document.getElementById('slideshow');
+const dotsContainer = document.getElementById('slideDots');
+let currentSlide = 0;
+let slideTimer = null;
+
+// Build dots
+dotsContainer.innerHTML = Array.from(slides).map((_, i) =>
+  `<button class="slide-dot${i === 0 ? ' is-active' : ''}" data-index="${i}" aria-label="Go to slide ${i+1}"></button>`
+).join('');
+
+// Initialize slide states
+slides.forEach((s, idx) => {
+  s.classList.remove('is-active', 'is-past', 'is-future');
+  s.classList.add(idx === 0 ? 'is-active' : 'is-future');
+});
+
+function showSlide(newIndex) {
+  const total = slides.length;
+  newIndex = ((newIndex % total) + total) % total;
+  if (newIndex === currentSlide) return;
+
+  // Update each slide's state based on its index relative to newIndex.
+  // This handles direction automatically:
+  //   slides before newIndex → is-past (off left)
+  //   slide at newIndex → is-active (center)
+  //   slides after newIndex → is-future (off right)
+  slides.forEach((s, idx) => {
+    s.classList.remove('is-active', 'is-past', 'is-future');
+    if (idx === newIndex) {
+      s.classList.add('is-active');
+    } else if (idx < newIndex) {
+      s.classList.add('is-past');
+    } else {
+      s.classList.add('is-future');
+    }
+  });
+
+  document.querySelectorAll('.slide-dot').forEach((d, idx) => {
+    d.classList.toggle('is-active', idx === newIndex);
+  });
+
+  currentSlide = newIndex;
+}
+
+function nextSlide() { showSlide(currentSlide + 1); resetSlideTimer(); }
+function prevSlide() { showSlide(currentSlide - 1); resetSlideTimer(); }
+
+function resetSlideTimer() {
+  clearInterval(slideTimer);
+  slideTimer = setInterval(() => showSlide(currentSlide + 1), 4000);
+}
+
+document.getElementById('slideNext').addEventListener('click', function(e) {
+  e.stopPropagation();
+  nextSlide();
+});
+document.getElementById('slidePrev').addEventListener('click', function(e) {
+  e.stopPropagation();
+  prevSlide();
+});
+
+dotsContainer.querySelectorAll('.slide-dot').forEach(dot => {
+  dot.addEventListener('click', function(e) {
+    e.stopPropagation();
+    showSlide(parseInt(this.dataset.index, 10));
+    resetSlideTimer();
+  });
+});
+
+slideshowEl.addEventListener('mouseenter', () => clearInterval(slideTimer));
+slideshowEl.addEventListener('mouseleave', resetSlideTimer);
+
+// Touch swipe
+let touchStartX = 0;
+let touchStartY = 0;
+slideshowEl.addEventListener('touchstart', (e) => {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+slideshowEl.addEventListener('touchend', (e) => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+    if (dx < 0) nextSlide(); else prevSlide();
+  }
+}, { passive: true });
+
+// Slide clicks
+slides.forEach(slide => {
+  slide.addEventListener('click', function(e) {
+    if (e.target.closest('.slide-nav') || e.target.closest('.slide-dot')) return;
+
+    if (this.hasAttribute('data-installer-slide')) {
+      if (isMobileViewport()) {
+        goInternal('installer');
+      } else {
+        goExternal('https://tarataritools.github.io/installer/');
+      }
+      return;
+    }
+
+    const href = this.dataset.href;
+    const target = this.dataset.target;
+
+    if (href) { goExternal(href); return; }
+    if (target && pageIds[target]) { goInternal(target); return; }
+  });
+});
+
+resetSlideTimer();
+
+/* =========================================================
+   SEARCH / FILTERS
    ========================================================= */
 const searchInput = document.getElementById('searchInput');
 const searchClear = document.getElementById('searchClear');
@@ -1998,7 +2393,7 @@ function fallbackCopy(text, cb) {
 }
 
 /* =========================================================
-   SCROLL — rAF throttled
+   SCROLL
    ========================================================= */
 const backTop = document.getElementById('backTop');
 let scrollPending = false;
@@ -2013,39 +2408,23 @@ window.addEventListener('scroll', function() {
 backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
 /* =========================================================
-   RESIZE — debounced, auto-switch optimize tab only when user hasn't chosen
-   ========================================================= */
-let userChoseOptTab = false;
-document.querySelectorAll('.optimize-tab').forEach(tab => {
-  tab.addEventListener('click', () => { userChoseOptTab = true; });
-});
-
-window.addEventListener('resize', debounce(function() {
-  if (userChoseOptTab) return;
-  const shouldBe = isMobileViewport() ? 'android' : 'pc';
-  if (shouldBe !== currentOptTab) setOptimizeTab(shouldBe);
-}, 300), { passive: true });
-
-/* =========================================================
    INIT
    ========================================================= */
 function init() {
   setFilterButtons();
   renderHome();
   renderOptimizeSubsections();
-  renderStarter();
+  renderInstaller();
   initOptimize();
   bindCtaButtons();
   setOptimizeTab(currentOptTab);
+  initNavIndicator();
 
   window.addEventListener('load', () => {
-    setTimeout(() => {
-      document.getElementById('pageLoader').classList.add('done');
-    }, 800);
+    setTimeout(hideLoader, 800);
   });
-  // Fallback if load already fired
   if (document.readyState === 'complete') {
-    setTimeout(() => document.getElementById('pageLoader').classList.add('done'), 800);
+    setTimeout(hideLoader, 800);
   }
 }
 
