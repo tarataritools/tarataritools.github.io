@@ -135,13 +135,31 @@ a:hover { text-decoration: underline; }
   transition: background-color 0.25s ease;
 }
 .header__inner { display: flex; align-items: center; gap: 12px; height: 60px; }
+
+/* =========================================
+   LOGO — bigger, fills more of the header
+   ========================================= */
 .logo {
-  display: flex; align-items: center; gap: 10px;
-  color: var(--text); font-weight: 700; font-size: 17px;
-  text-decoration: none; flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--text);
+  font-weight: 700;
+  font-size: 17px;
+  text-decoration: none;
+  flex-shrink: 0;
+  height: 100%;
 }
 .logo:hover { text-decoration: none; }
-.logo img { height: 32px; width: auto; border-radius: 6px; }
+.logo img {
+  height: 46px;
+  width: auto;
+  max-width: 170px;
+  object-fit: contain;
+  border-radius: 6px;
+  display: block;
+}
 .logo__spacer { flex: 1; }
 
 .nav {
@@ -185,8 +203,22 @@ a:hover { text-decoration: underline; }
   text-decoration: none;
   white-space: nowrap;
 }
-.nav__item:hover { color: var(--text); text-decoration: none; }
-.nav__item.active { color: #000; font-weight: 600; }
+/* Hover: text becomes black IMMEDIATELY (no transition on color) */
+.nav__item:hover {
+  color: #000;
+  font-weight: 600;
+  text-decoration: none;
+}
+.nav__item.active {
+  color: #000;
+  font-weight: 600;
+}
+/* When hovering over ANY nav item, dim the active one if it's not the hovered one
+   so only the hovered item (under the green bar) shows black text */
+.nav:has(.nav__item:hover) .nav__item.active:not(:hover) {
+  color: var(--text-muted);
+  font-weight: 500;
+}
 .nav__item .material-symbols-rounded { font-size: 18px; }
 
 .icon-btn {
@@ -414,7 +446,7 @@ a:hover { text-decoration: underline; }
   .header { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--bg); }
   .nav { display: none; }
   .header__inner { height: 56px; gap: 8px; }
-  .logo img { height: 28px; }
+  .logo img { height: 38px; max-width: 130px; }
   .hero { padding: 32px 0 24px; }
   .hero h1 { font-size: clamp(24px, 7vw, 36px); }
   .search { height: 48px; padding: 0 14px; }
@@ -443,7 +475,6 @@ a:hover { text-decoration: underline; }
     </a>
     <span class="logo__spacer"></span>
     
-    <!-- DESKTOP NAV WITH SLIDING ANIMATION -->
     <nav class="nav" aria-label="Primary" id="desktopNav">
       <span class="nav__indicator" id="navIndicator"></span>
       <a href="/" class="nav__item">
@@ -528,7 +559,6 @@ a:hover { text-decoration: underline; }
 'use strict';
 window.__taratariAppLoaded = true;
 
-/* --- NAV ANIMATION LOGIC --- */
 (function initNavIndicator() {
   const indicator = document.getElementById('navIndicator');
   const active = document.querySelector('.nav__item.active');
@@ -553,6 +583,17 @@ window.__taratariAppLoaded = true;
       indicator.style.transform = `translateY(-50%) translateX(${current.offsetLeft}px)`;
     }
   });
+
+  // Reposition after fonts load (widths might shift slightly)
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function() {
+      const cur = document.querySelector('.nav__item.active');
+      if (indicator && cur) {
+        indicator.style.width = cur.offsetWidth + 'px';
+        indicator.style.transform = `translateY(-50%) translateX(${cur.offsetLeft}px)`;
+      }
+    });
+  }
 })();
 
 (function initTheme() {
@@ -805,7 +846,6 @@ async function generateInstaller(apps) {
     var end = enc.encode('@@TARATARI_END@@');
     var json = enc.encode(JSON.stringify(payload));
 
-    // Combine EXE + App Data
     var total = exeBytes.length + start.length + json.length + end.length;
     var combined = new Uint8Array(total);
     var offset = 0;
@@ -814,7 +854,6 @@ async function generateInstaller(apps) {
     combined.set(json, offset); offset += json.length;
     combined.set(end, offset);
 
-    // Direct Download
     var blob = new Blob([combined], { type: 'application/octet-stream' });
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
