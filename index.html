@@ -274,13 +274,31 @@ a:hover { text-decoration: underline; }
 }
 .header__inner { display: flex; align-items: center; gap: 12px; height: 60px; }
 
+/* =========================================
+   LOGO — bigger, fills more of the header
+   ========================================= */
 .logo {
-  display: flex; align-items: center; gap: 10px;
-  color: var(--text); font-weight: 700; font-size: 17px;
-  letter-spacing: -0.01em; text-decoration: none; flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--text);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  flex-shrink: 0;
+  height: 100%;
 }
 .logo:hover { text-decoration: none; }
-.logo img { height: 32px; width: auto; border-radius: 6px; }
+.logo img {
+  height: 46px;
+  width: auto;
+  max-width: 170px;
+  object-fit: contain;
+  border-radius: 6px;
+  display: block;
+}
 .logo__spacer { flex: 1; }
 
 .nav {
@@ -328,8 +346,22 @@ a:hover { text-decoration: underline; }
   text-decoration: none;
   white-space: nowrap;
 }
-.nav__item:hover { color: var(--text); text-decoration: none; }
-.nav__item.active { color: #000; font-weight: 600; }
+/* Hover: text becomes black IMMEDIATELY (no transition on color) */
+.nav__item:hover {
+  color: #000;
+  font-weight: 600;
+  text-decoration: none;
+}
+.nav__item.active {
+  color: #000;
+  font-weight: 600;
+}
+/* When hovering any nav item, dim the active one if not being hovered
+   so only the hovered item (under the green bar) shows black text */
+.nav:has(.nav__item:hover) .nav__item.active:not(:hover) {
+  color: var(--text-muted);
+  font-weight: 500;
+}
 .nav__item .material-symbols-rounded { font-size: 18px; }
 
 .new-badge {
@@ -1110,7 +1142,7 @@ a:hover { text-decoration: underline; }
 
   .nav { display: none; }
   .header__inner { height: 56px; gap: 8px; }
-  .logo img { height: 28px; }
+  .logo img { height: 38px; max-width: 130px; }
   .bottom-nav { display: flex; }
   main { padding-bottom: 84px; }
 
@@ -1896,25 +1928,21 @@ function renderHome() {
 }
 
 function renderOptimizeSubsections() {
-  // Optimization Tools — expanded
   const optTools = [74, 36, 37, 75, 76, 77, 78]
     .map(id => toolsDatabase.find(t => t.id === id))
     .filter(Boolean);
   document.getElementById('optimizationToolsGrid').innerHTML = optTools.map(renderToolCard).join('');
 
-  // Windows Installer Pack — TaraTari Installer (rec), Ninite
   const starter = [79, 41]
     .map(id => toolsDatabase.find(t => t.id === id))
     .filter(Boolean);
   document.getElementById('starterPackGrid').innerHTML = starter.map(renderToolCard).join('');
 
-  // WinGet tools (last) — Winstall, UniGetUI, WinGet
   const wingetTools = [38, 39, 40]
     .map(id => toolsDatabase.find(t => t.id === id))
     .filter(Boolean);
   document.getElementById('wingetToolsGrid').innerHTML = wingetTools.map(renderToolCard).join('');
 
-  // Android debloat
   const debloat = [33]
     .map(id => toolsDatabase.find(t => t.id === id))
     .filter(Boolean);
@@ -2140,8 +2168,33 @@ function positionIndicator(btn, animate) {
 }
 
 function initNavIndicator() {
+  const indicator = document.getElementById('navIndicator');
+  const desktopNav = document.getElementById('desktopNav');
+
   const active = document.querySelector('.nav__item.active');
   if (active) positionIndicator(active, false);
+
+  // Hover: move indicator to hovered item
+  document.querySelectorAll('.nav__item').forEach(item => {
+    item.addEventListener('mouseenter', function() {
+      if (!indicator) return;
+      indicator.style.width = this.offsetWidth + 'px';
+      indicator.style.transform = `translateY(-50%) translateX(${this.offsetLeft}px)`;
+    });
+  });
+
+  // Leaving the nav returns indicator to the active item
+  if (desktopNav) {
+    desktopNav.addEventListener('mouseleave', function() {
+      if (navBusy) return;
+      const current = document.querySelector('.nav__item.active');
+      if (indicator && current) {
+        indicator.style.width = current.offsetWidth + 'px';
+        indicator.style.transform = `translateY(-50%) translateX(${current.offsetLeft}px)`;
+      }
+    });
+  }
+
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(() => {
       const currentActive = document.querySelector('.nav__item.active');
@@ -2197,7 +2250,6 @@ function goInternal(target) {
 function goExternal(url) {
   showLoader();
   setTimeout(() => {
-    // Hide loader before navigating so bfcache snapshots a "hidden" state
     hideLoader();
     window.location.href = url;
   }, 250);
@@ -2218,7 +2270,6 @@ document.querySelectorAll('.nav__item, .bottom-nav__item').forEach(el => {
       navBusy = true;
 
       const oldActive = document.querySelector('.nav__item.active');
-      // Instant black text on the clicked item
       if (this !== oldActive) this.classList.add('active');
 
       positionIndicator(this, true);
@@ -2239,7 +2290,6 @@ document.querySelectorAll('.nav__item, .bottom-nav__item').forEach(el => {
         return;
       }
     } else {
-      // Mobile bottom nav — instant
       if (isLink) {
         e.preventDefault();
         goExternal(href);
@@ -2266,16 +2316,16 @@ document.querySelectorAll('.icon-btn[data-target]').forEach(el => {
    ========================================================= */
 window.addEventListener('pageshow', function(event) {
   if (event.persisted) {
-    // Page restored from bfcache — reset transient state
     hideLoader();
     navBusy = false;
     userChoseOptTab = false;
+    // Reposition indicator after restore
+    const active = document.querySelector('.nav__item.active');
+    if (active) positionIndicator(active, false);
   }
 });
 
-// Also reset on pagehide in case we're going to bfcache
 window.addEventListener('pagehide', function() {
-  // Ensure loader is hidden in the snapshot
   hideLoader();
 });
 
