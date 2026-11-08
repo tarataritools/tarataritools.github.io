@@ -23,7 +23,11 @@
 <meta property="og:description" content="Pick a big tech app. Get a real, working open source alternative. No trackers, no subscriptions.">
 <meta property="og:url" content="https://tarataritools.github.io/ditch">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://raw.githubusercontent.com/tarataritools/tarataritools.github.io/main/images/TaraTariToolsLogo.png">
 <meta name="theme-color" content="#09090b">
+
+<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/tarataritools/tarataritools.github.io/main/images/TaraTariToolsLogo.png">
+<link rel="apple-touch-icon" href="https://raw.githubusercontent.com/tarataritools/tarataritools.github.io/main/images/TaraTariToolsLogo.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -191,7 +195,6 @@ a:hover { text-decoration: underline; }
 .logo:hover { text-decoration: none; }
 .logo img { height: 32px; width: auto; border-radius: 6px; }
 
-/* Visually hide the wordmark but keep it for SEO */
 .logo__text {
   position: absolute;
   width: 1px; height: 1px;
@@ -251,7 +254,7 @@ a:hover { text-decoration: underline; }
 
 /* ---------- Ditch hero ---------- */
 .ditch-hero {
-  padding: 64px 0 32px;
+  padding: 56px 0 28px;
   text-align: center;
   position: relative;
 }
@@ -287,9 +290,59 @@ a:hover { text-decoration: underline; }
   font-size: clamp(14px, 2vw, 17px);
   color: var(--text-muted);
   max-width: 560px;
-  margin: 0 auto 28px;
+  margin: 0 auto 24px;
   line-height: 1.55;
 }
+
+/* ---------- Windows / Android switcher ---------- */
+.os-switch {
+  position: relative;
+  display: inline-flex;
+  gap: 2px;
+  padding: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  margin: 0 auto 22px;
+}
+.os-switch__indicator {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  height: calc(100% - 8px);
+  width: 100px;
+  background: var(--accent-bright);
+  border-radius: var(--radius-full);
+  transition: transform 0.32s cubic-bezier(0.34, 1.3, 0.64, 1),
+              width 0.32s cubic-bezier(0.34, 1.3, 0.64, 1);
+  z-index: 0;
+  pointer-events: none;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+@media (prefers-reduced-motion: reduce) {
+  .os-switch__indicator { transition: none; }
+}
+.os-switch__btn {
+  position: relative;
+  z-index: 1;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 18px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: color 0.25s ease;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+.os-switch__btn:hover { color: var(--text); }
+.os-switch__btn.active { color: #000; }
+.os-switch__btn .material-symbols-rounded { font-size: 16px; }
+
 .search {
   display: flex; align-items: center; gap: 10px;
   max-width: 520px; margin: 0 auto;
@@ -315,7 +368,7 @@ a:hover { text-decoration: underline; }
 
 .hero-stats {
   display: flex; justify-content: center; gap: 18px;
-  margin-top: 20px;
+  margin-top: 18px;
   font-size: 12px; color: var(--text-dim);
   flex-wrap: wrap;
 }
@@ -408,7 +461,10 @@ a:hover { text-decoration: underline; }
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
 }
+/* White background override for icons that need it */
+.ditch-card__icon--white { background: #ffffff; }
 .ditch-card__icon img { width: 34px; height: 34px; object-fit: contain; }
+.ditch-card__icon .material-symbols-rounded { font-size: 26px; color: var(--accent); }
 .ditch-card__title { flex: 1; min-width: 0; }
 .ditch-card__name {
   font-size: 15px; font-weight: 700;
@@ -441,6 +497,17 @@ a:hover { text-decoration: underline; }
   margin-left: -6px;
 }
 .ditch-card__preview img:first-child { margin-left: 0; }
+.ditch-card__preview .material-symbols-rounded {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--surface-3);
+  border: 2px solid var(--surface);
+  font-size: 12px;
+  color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  margin-left: -6px;
+}
+.ditch-card__preview .material-symbols-rounded:first-child { margin-left: 0; }
 .ditch-card__more {
   font-size: 11px; font-weight: 600;
   color: var(--text-dim); margin-left: 8px;
@@ -507,7 +574,9 @@ a:hover { text-decoration: underline; }
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
 }
+.modal__icon--white { background: #ffffff; }
 .modal__icon img { width: 38px; height: 38px; object-fit: contain; }
+.modal__icon .material-symbols-rounded { font-size: 30px; color: var(--accent); }
 .modal__titles { flex: 1; min-width: 0; }
 .modal__titles h2 {
   font-size: 18px; font-weight: 700; line-height: 1.2; margin-bottom: 3px;
@@ -589,6 +658,7 @@ a:hover { text-decoration: underline; }
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
 }
+.alt-row__icon--white { background: #ffffff; }
 .alt-row__icon img { width: 28px; height: 28px; object-fit: contain; }
 .alt-row__icon .material-symbols-rounded { font-size: 22px; color: var(--accent); }
 .alt-row__body { flex: 1; min-width: 0; }
@@ -640,6 +710,16 @@ a:hover { text-decoration: underline; }
 :root[data-theme="light"] .tag--og {
   background: rgba(217, 119, 6, 0.10);
   color: #b45309;
+}
+.tag--ads {
+  background: rgba(245, 158, 11, 0.14);
+  color: #fcd34d;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+:root[data-theme="light"] .tag--ads {
+  background: rgba(217, 119, 6, 0.10);
+  color: #b45309;
+  border-color: rgba(217, 119, 6, 0.3);
 }
 .tag .material-symbols-rounded { font-size: 11px; }
 
@@ -746,15 +826,36 @@ a:hover { text-decoration: underline; }
 
 /* ---------- Mobile ---------- */
 @media (max-width: 768px) {
+  .header {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--bg);
+  }
+  .bottom-nav {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--bg);
+  }
+  .modal__backdrop {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(0, 0, 0, 0.72);
+  }
+  .ditch-hero::before { display: none; }
+
   .nav { display: none; }
   .header__inner { height: 56px; gap: 8px; }
   .logo img { height: 28px; }
   .bottom-nav { display: flex; }
   main { padding-bottom: 84px; }
 
-  .ditch-hero { padding: 40px 0 24px; }
+  .ditch-hero { padding: 32px 0 20px; }
   .ditch-hero h1 { font-size: clamp(28px, 9vw, 40px); letter-spacing: -0.03em; }
-  .ditch-hero__sub { font-size: 14px; margin-bottom: 22px; }
+  .ditch-hero__sub { font-size: 14px; margin-bottom: 18px; }
+
+  .os-switch { margin-bottom: 16px; }
+  .os-switch__btn { padding: 7px 14px; font-size: 12px; }
+
   .search { height: 48px; padding: 0 14px; }
   .search input { font-size: 14px; }
 
@@ -785,16 +886,20 @@ a:hover { text-decoration: underline; }
   .alt-row__icon img { width: 24px; height: 24px; }
 
   .back-top { bottom: 88px; }
+
+  body { transition: background-color 0.15s ease, color 0.15s ease; }
+  .ditch-card { transition: border-color 0.12s, background 0.12s; }
 }
 
 @media (max-width: 420px) {
   .ditch-grid { grid-template-columns: 1fr; }
-  .ditch-card__preview img:nth-child(n+4) { display: none; }
+  .ditch-card__preview img:nth-child(n+4),
+  .ditch-card__preview .material-symbols-rounded:nth-child(n+4) { display: none; }
 }
 </style>
 </head>
 
-<body>
+<body data-os="windows">
 
 <!-- Loader -->
 <div class="page-loader" id="pageLoader" role="status" aria-label="Loading">
@@ -836,6 +941,17 @@ a:hover { text-decoration: underline; }
     <div class="container">
       <h1>What do you want to ditch bro?</h1>
       <p class="ditch-hero__sub">Pick a big tech app. Get a real open source alternative that actually works. No subscriptions, no trackers, no nonsense.</p>
+
+      <div class="os-switch" role="tablist" aria-label="Choose platform">
+        <span class="os-switch__indicator" id="osSwitchIndicator"></span>
+        <button class="os-switch__btn active" data-os="windows" role="tab" aria-selected="true">
+          <span class="material-symbols-rounded">desktop_windows</span> Windows
+        </button>
+        <button class="os-switch__btn" data-os="android" role="tab" aria-selected="false">
+          <span class="material-symbols-rounded">android</span> Android
+        </button>
+      </div>
+
       <div class="search">
         <span class="material-symbols-rounded">search</span>
         <input type="text" id="ditchSearch" placeholder="Search apps or alternatives…" aria-label="Search apps and alternatives">
@@ -844,7 +960,7 @@ a:hover { text-decoration: underline; }
         </button>
       </div>
       <div class="hero-stats">
-        <span><span class="material-symbols-rounded">apps</span><span id="statApps">20</span> apps</span>
+        <span><span class="material-symbols-rounded">apps</span><span id="statApps">0</span> apps</span>
         <span><span class="material-symbols-rounded">swap_horiz</span><span id="statAlts">0</span> alternatives</span>
         <span><span class="material-symbols-rounded">verified_user</span>0 trackers</span>
       </div>
@@ -874,7 +990,6 @@ a:hover { text-decoration: underline; }
   </div>
 </footer>
 
-<!-- Mobile bottom nav — Home + Ditch only -->
 <nav class="bottom-nav" aria-label="Primary mobile">
   <a href="/" class="bottom-nav__item">
     <span class="bottom-nav__icon"><span class="material-symbols-rounded">home</span></span>
@@ -890,12 +1005,11 @@ a:hover { text-decoration: underline; }
   <span class="material-symbols-rounded">arrow_upward</span>
 </button>
 
-<!-- Modal -->
 <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div class="modal__backdrop" data-close></div>
   <div class="modal__panel">
     <div class="modal__head">
-      <div class="modal__icon"><img id="modalIcon" alt="" onerror="this.style.display='none'"></div>
+      <div class="modal__icon" id="modalIconWrap"><img id="modalIcon" alt="" onerror="this.style.display='none'"></div>
       <div class="modal__titles">
         <h2 id="modalTitle"></h2>
         <p id="modalCompany"></p>
@@ -936,6 +1050,9 @@ a:hover { text-decoration: underline; }
 
 /* =========================================================
    DITCH DATABASE
+   - platform omitted → both
+   - whiteIconBg → force white icon background
+   - tag can be string or array
    ========================================================= */
 const ditchDB = [
   /* ---------- ADOBE ACROBAT ---------- */
@@ -951,24 +1068,25 @@ const ditchDB = [
         label: "Viewers",
         icon: "visibility",
         alternatives: [
-          { name: "Koodo Reader", url: "https://www.koodoreader.com/en", icon: "https://www.koodoreader.com/favicon.ico", tag: "rec", note: "Modern PDF and ebook reader. Highlights, sync, dark mode, cross-platform." },
-          { name: "SumatraPDF", url: "https://www.sumatrapdfreader.org/free-pdf-reader", icon: "https://img.alternativeto.net/icons/140/avif/sumatra-pdf_205324.png", tag: "og", note: "Tiny, instant, no bloat. The classic. Loads a 500-page PDF in a blink." },
-          { name: "Firefox", url: "https://www.mozilla.org/firefox/new/", icon: "https://img.alternativeto.net/icons/280/firefox_232783.svg", note: "Firefox opens PDFs natively. No extra app needed." }
+          { name: "Koodo Reader", url: "https://www.koodoreader.com/en", icon: "https://www.koodoreader.com/favicon.ico", tag: "rec", note: "Modern PDF and ebook reader. Highlights, sync, dark mode, cross-platform.", platforms: ["windows"] },
+          { name: "SumatraPDF", url: "https://www.sumatrapdfreader.org/free-pdf-reader", icon: "https://img.alternativeto.net/icons/140/avif/sumatra-pdf_205324.png", tag: "og", note: "Tiny, instant, no bloat. The classic. Loads a 500-page PDF in a blink.", platforms: ["windows"] },
+          { name: "Firefox", url: "https://www.mozilla.org/firefox/new/", icon: "https://img.alternativeto.net/icons/280/firefox_232783.svg", note: "Firefox opens PDFs natively. No extra app needed.", platforms: ["windows"] }
         ]
       },
       {
         label: "Editors",
         icon: "edit_document",
         alternatives: [
-          { name: "PdfCraft", url: "https://getartcraft.com/apps/pdfcraft", icon: "https://getartcraft.com/images/apps/pdfcraft/icon.webp", tag: "oss", note: "Full PDF workbench. Read, organize, merge, split and secure." },
-          { name: "PDF24", url: "https://www.pdf24.org/", icon: "https://img.alternativeto.net/icons/140/avif/pdf24-creator_96417.png", tag: "closed", note: "Free desktop PDF suite. Merge, split, compress and OCR." }
+          { name: "PdfCraft", url: "https://getartcraft.com/apps/pdfcraft", icon: "https://getartcraft.com/images/apps/pdfcraft/icon.webp", tag: "oss", note: "Full PDF workbench. Read, organize, merge, split and secure.", platforms: ["windows"] },
+          { name: "PDF24", url: "https://www.pdf24.org/", icon: "https://img.alternativeto.net/icons/140/avif/pdf24-creator_96417.png", tag: "closed", note: "Free desktop PDF suite. Merge, split, compress and OCR.", platforms: ["windows"] },
+          { name: "MJ PDF", url: "https://gitlab.com/mudlej_android/mj_pdf_reader", icon: "https://img.icons8.com/color/96/pdf-2.png", tag: "oss", note: "Fast, minimal PDF viewer for Android. No ads, no tracking.", platforms: ["android"] }
         ]
       },
       {
         label: "Online editors",
         icon: "cloud",
         alternatives: [
-          { name: "iLovePDF", url: "https://www.ilovepdf.com/", icon: "https://www.ilovepdf.com/img/ilovepdf.svg", note: "Browser-based merge, split, compress and convert. No install." }
+          { name: "iLovePDF", url: "https://www.ilovepdf.com/", icon: "https://www.ilovepdf.com/img/ilovepdf.svg", whiteIconBg: true, note: "Browser-based merge, split, compress and convert. No install.", platforms: ["windows"] }
         ]
       }
     ],
@@ -994,19 +1112,21 @@ const ditchDB = [
         icon: "work",
         alternatives: [
           { name: "ONLYOFFICE", url: "https://www.onlyoffice.com/desktop", icon: "https://img.alternativeto.net/icons/140/onlyoffice_245488.svg", tag: "rec", note: "Closest to Microsoft Office. Opens .docx, .xlsx and .pptx with almost no formatting loss. Free, no activation." },
-          { name: "LibreOffice", url: "https://www.libreoffice.org/", icon: "https://img.alternativeto.net/icons/140/libreoffice_233404.svg", tag: "oss", note: "The classic open source office suite. Writer, Calc and Impress. Fully offline, fully free." }
+          { name: "LibreOffice", url: "https://www.libreoffice.org/", icon: "https://img.alternativeto.net/icons/140/libreoffice_233404.svg", tag: "oss", note: "The classic open source office suite. Writer, Calc and Impress. Fully offline, fully free.", platforms: ["windows"] },
+          { name: "Google Docs", url: "https://docs.google.com/", icon: "https://img.icons8.com/color/96/google-docs.png", tag: "closed", note: "Free, browser-based. No install. Works offline with Google Drive.", platforms: ["android"] }
         ]
       }
     ]
   },
 
-  /* ---------- ADOBE PHOTOSHOP ---------- */
+  /* ---------- ADOBE PHOTOSHOP (WINDOWS ONLY) ---------- */
   {
     id: "photoshop",
     name: "Adobe Photoshop",
     company: "Adobe",
     icon: "https://img.alternativeto.net/icons/40/adobe-photoshop_244565.svg",
     category: "Creative",
+    platforms: ["windows"],
     reason: "Creative Cloud costs more every year. The installer is huge, the subscription is mandatory, and you never own the software.",
     groups: [
       {
@@ -1020,13 +1140,14 @@ const ditchDB = [
     ]
   },
 
-  /* ---------- ADOBE ILLUSTRATOR ---------- */
+  /* ---------- ADOBE ILLUSTRATOR (WINDOWS ONLY) ---------- */
   {
     id: "illustrator",
     name: "Adobe Illustrator",
     company: "Adobe",
     icon: "https://img.icons8.com/color/96/adobe-illustrator.png",
     category: "Creative",
+    platforms: ["windows"],
     reason: "Same Creative Cloud subscription. Vector work gets expensive fast, and the file format lock-in is real.",
     groups: [
       {
@@ -1041,13 +1162,14 @@ const ditchDB = [
     ]
   },
 
-  /* ---------- AUTODESK AUTOCAD ---------- */
+  /* ---------- AUTODESK AUTOCAD (WINDOWS ONLY NOW) ---------- */
   {
     id: "autocad",
     name: "Autodesk AutoCAD",
     company: "Autodesk",
     icon: "https://img.alternativeto.net/icons/40/avif/autocad_248018.png",
     category: "Creative",
+    platforms: ["windows"],
     reason: "AutoCAD is subscription-only now. Prices climb every year. The .dwg lock-in is real and painful.",
     groups: [
       {
@@ -1063,13 +1185,14 @@ const ditchDB = [
     ]
   },
 
-  /* ---------- ADOBE PREMIERE PRO ---------- */
+  /* ---------- ADOBE PREMIERE PRO (WINDOWS ONLY) ---------- */
   {
     id: "premiere",
     name: "Adobe Premiere Pro",
     company: "Adobe",
     icon: "https://img.icons8.com/color/96/adobe-premiere-pro.png",
     category: "Video",
+    platforms: ["windows"],
     reason: "Subscription-only. Heavy install, heavy RAM, heavy price. The free alternatives are genuinely good now.",
     groups: [
       {
@@ -1096,9 +1219,10 @@ const ditchDB = [
         label: "Design tools",
         icon: "palette",
         alternatives: [
-          { name: "Penpot Desktop", url: "https://github.com/author-more/penpot-desktop", icon: "https://img.alternativeto.net/icons/140/penpot_247797.svg", tag: "rec", note: "Open source design tool. Desktop wrapper for Penpot. Works offline." },
+          { name: "Penpot Desktop", url: "https://github.com/author-more/penpot-desktop", icon: "https://img.alternativeto.net/icons/140/penpot_247797.svg", whiteIconBg: true, tag: "rec", note: "Open source design tool. Desktop wrapper for Penpot. Works offline." },
           { name: "Doory", url: "https://doory.art/", icon: "https://img.alternativeto.net/icons/140/avif/doory_325880.webp", note: "Free design tool. Social media, posters, thumbnails. No watermarks." },
-          { name: "Bento Slides", url: "https://bento.page/", icon: "https://img.alternativeto.net/icons/140/bento-slides_292898.svg", note: "Slides only. Clean, minimal presentation builder. No watermarks, no subscription." }
+          { name: "Bento Slides", url: "https://bento.page/", icon: "https://img.alternativeto.net/icons/140/bento-slides_292898.svg", note: "Slides only. Clean, minimal presentation builder. No watermarks, no subscription." },
+          { name: "Pixellab", url: "https://play.google.com/store/apps/details?id=com.imaginstudio.imagetools.pixellab", iconSymbol: "palette", tag: ["closed", "ads"], note: "Free pixel art and design app for mobile. Contains ads — use an ad blocker.", platforms: ["android"] }
         ]
       }
     ]
@@ -1119,7 +1243,7 @@ const ditchDB = [
         alternatives: [
           { name: "Firefox", url: "https://www.mozilla.org/firefox/new/", icon: "https://img.alternativeto.net/icons/280/firefox_232783.svg", tag: "rec", note: "Independent, open source, strong privacy defaults. The cleanest direct switch." },
           { name: "Brave", url: "https://brave.com/download/", icon: "https://brave.com/static-assets/images/brave-logo-sans-text.svg", tag: "oss", note: "Chromium with built-in ad blocking. Familiar if you're leaving Chrome." },
-          { name: "Helium", url: "https://helium.computer/", icon: "https://static0.makeuseofimages.com/wordpress/wp-content/uploads/2025/11/helium-browser-logo.png", tag: "oss", note: "Lightweight Chromium fork. No bloat, no noise, ad blocker built in." }
+          { name: "Helium", url: "https://helium.computer/", icon: "https://static0.makeuseofimages.com/wordpress/wp-content/uploads/2025/11/helium-browser-logo.png", tag: "oss", note: "Lightweight Chromium fork. No bloat, no noise, ad blocker built in.", platforms: ["windows"] }
         ]
       }
     ]
@@ -1138,9 +1262,10 @@ const ditchDB = [
         label: "Firefox forks and Chromium options",
         icon: "public",
         alternatives: [
-          { name: "Waterfox", url: "https://www.waterfox.com/", icon: "https://www.waterfox.com/favicon.ico", tag: "rec", note: "Firefox with telemetry stripped out. Same engine, same extensions, zero AI." },
-          { name: "LibreWolf", url: "https://librewolf.net/", icon: "https://librewolf.net/favicon.ico", tag: "oss", note: "Hardened Firefox fork. Maximum privacy out of the box, no sponsored content." },
-          { name: "Helium", url: "https://helium.computer/", icon: "https://static0.makeuseofimages.com/wordpress/wp-content/uploads/2025/11/helium-browser-logo.png", tag: "oss", note: "Chromium-based. For when you want to leave Gecko entirely without going back to Chrome." }
+          { name: "Waterfox", url: "https://www.waterfox.com/", icon: "https://vectorified.com/images/waterfox-icon-18.png", tag: "rec", note: "Firefox with telemetry stripped out. Same engine, same extensions, zero AI." },
+          { name: "LibreWolf", url: "https://librewolf.net/", icon: "https://librewolf.net/favicon.ico", tag: "oss", note: "Hardened Firefox fork. Maximum privacy out of the box, no sponsored content.", platforms: ["windows"] },
+          { name: "Helium", url: "https://helium.computer/", icon: "https://static0.makeuseofimages.com/wordpress/wp-content/uploads/2025/11/helium-browser-logo.png", tag: "oss", note: "Chromium-based. For when you want to leave Gecko entirely without going back to Chrome.", platforms: ["windows"] },
+          { name: "IronFox", url: "https://ironfoxoss.org/", icon: "https://ironfoxoss.org/favicon.ico", tag: "oss", note: "Hardened Firefox fork for Android. Privacy-first out of the box.", platforms: ["android"] }
         ]
       }
     ]
@@ -1202,9 +1327,9 @@ const ditchDB = [
         label: "Photo backups",
         icon: "photo_library",
         alternatives: [
-          { name: "Ente", url: "https://ente.io/", icon: "https://ente.io/favicon.ico", tag: "rec", note: "Privacy-first. 10GB free. End-to-end encrypted. Open source." },
+          { name: "Ente", url: "https://ente.io/", icon: "https://android.hcc.nl/images/Ente.png", tag: "rec", note: "Privacy-first. 10GB free. End-to-end encrypted. Open source." },
           { name: "MEGA", url: "https://mega.nz/", icon: "https://mega.nz/favicon.ico", note: "20GB free. Manual photo backup into an encrypted folder." },
-          { name: "Sia Storage", url: "https://sia.storage/", icon: "https://sia.storage/favicon.ico", note: "50GB free. Mobile only. Careful — decentralized network, keep local backups." }
+          { name: "Sia Storage", url: "https://sia.storage/", icon: "https://devs.sia.storage/logo.png", whiteIconBg: true, note: "50GB free. Mobile only. Careful — decentralized network, keep local backups." }
         ]
       }
     ],
@@ -1216,7 +1341,7 @@ const ditchDB = [
     id: "google-password",
     name: "Google Password Manager",
     company: "Google",
-    icon: "https://img.icons8.com/color/96/google-password.png",
+    icon: "https://cdn-1.webcatalog.io/catalog/google-passwords/google-passwords-icon-filled.png",
     category: "Password",
     reason: "Your passwords live in Google's vault, tied to your Google account. One compromise and everything is exposed.",
     groups: [
@@ -1231,13 +1356,14 @@ const ditchDB = [
     ]
   },
 
-  /* ---------- WINRAR ---------- */
+  /* ---------- WINRAR (WINDOWS ONLY) ---------- */
   {
     id: "winrar",
     name: "WinRAR",
     company: "RARLAB",
     icon: "https://img.icons8.com/3d-fluency/94/winrar.png",
     category: "Utilities",
+    platforms: ["windows"],
     reason: "The free trial never ends, but the nag screen does. It's also closed source, and you can't inspect what it does with your files.",
     groups: [
       {
@@ -1250,13 +1376,34 @@ const ditchDB = [
     ]
   },
 
-  /* ---------- INTERNET DOWNLOAD MANAGER ---------- */
+  /* ---------- FILE MANAGER (ANDROID ONLY) ---------- */
+  {
+    id: "filemanager",
+    name: "File Manager",
+    company: "Android / Google",
+    iconSymbol: "folder",
+    category: "Utilities",
+    platforms: ["android"],
+    reason: "Your phone's built-in file manager — Files by Google on stock Android, or your manufacturer's version. Often lacks archive support, bulk operations and cloud mounts.",
+    groups: [
+      {
+        label: "File managers",
+        icon: "folder",
+        alternatives: [
+          { name: "Gator", url: "https://play.google.com/store/apps/details?id=com.mitigator.gator", icon: "https://images.sftcdn.net/images/t_app-icon-m/p/358f34a5-301c-4c51-b50b-561de35f2457/2686083238/gator-system-cleaning-tool-logo", tag: "rec", note: "System cleaner and file manager. Cache cleanup, app management, storage insights." }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- IDM (WINDOWS ONLY) ---------- */
   {
     id: "idm",
     name: "Internet Download Manager",
     company: "Tonec",
     icon: "https://charjishop.com/image/cache/catalog/software/IDM-800x800.png",
     category: "Downloads",
+    platforms: ["windows"],
     reason: "Paid, closed source, and the trial is 30 days. The 'cracked' versions floating around are almost always malware.",
     groups: [
       {
@@ -1264,19 +1411,40 @@ const ditchDB = [
         icon: "download",
         alternatives: [
           { name: "Free Download Manager", url: "https://www.freedownloadmanager.org/", icon: "https://www.freedownloadmanager.org/favicon.ico", tag: "rec", note: "Free download accelerator. Windows, macOS, Linux and Android." },
-          { name: "AB Download Manager", url: "https://abdownloadmanager.com/", icon: "https://abdownloadmanager.com/favicon.ico", tag: "oss", note: "Fast, open source, cross-platform. Queues, schedulers and browser extensions." }
+          { name: "AB Download Manager", url: "https://abdownloadmanager.com/", icon: "https://addons.palemoon.org/datastore/addons/ab-download-manager/icon.png", tag: "oss", note: "Fast, open source, cross-platform. Queues, schedulers and browser extensions." }
         ]
       }
     ]
   },
 
-  /* ---------- SNIPPING TOOL ---------- */
+  /* ---------- 1DM (ANDROID ONLY) ---------- */
+  {
+    id: "1dm",
+    name: "1DM",
+    company: "AppNation",
+    iconSymbol: "download",
+    category: "Downloads",
+    platforms: ["android"],
+    reason: "Ad-supported and closed source. Bundles trackers and push notifications. The paid pro unlock gates basic features.",
+    groups: [
+      {
+        label: "Download managers",
+        icon: "download",
+        alternatives: [
+          { name: "Free Download Manager", url: "https://play.google.com/store/apps/details?id=org.freedownloadmanager.fdm", icon: "https://www.freedownloadmanager.org/favicon.ico", tag: "rec", note: "Free download accelerator for Android. Browser integration, torrents, no ads." }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- SNIPPING TOOL (WINDOWS ONLY) ---------- */
   {
     id: "snipping",
     name: "Snipping Tool",
     company: "Microsoft",
     icon: "https://svgstack.com/media/img/microsoft-snipping-tool-logo-oZO1970559.webp",
     category: "Screenshots",
+    platforms: ["windows"],
     reason: "Basic capture with few annotation tools. Windows-only, closed source, and the workflow is slow.",
     groups: [
       {
@@ -1285,7 +1453,7 @@ const ditchDB = [
         alternatives: [
           { name: "Greenshot", url: "https://getgreenshot.org/", icon: "https://getgreenshot.org/favicon.ico", tag: "rec", note: "Lightweight Windows screenshot tool. Print Screen to capture, annotate and upload." },
           { name: "ShareX", url: "https://getsharex.com/", icon: "https://getsharex.com/favicon.ico", tag: "oss", note: "The power-user option. 80+ capture modes, auto-upload and workflows." },
-          { name: "Flameshot", url: "https://flameshot.org/", icon: "https://flameshot.org/favicon.ico", tag: "oss", note: "Cross-platform screenshot tool. Great annotation, works on Linux too." }
+          { name: "Flameshot", url: "https://flameshot.org/", icon: "https://icons.iconarchive.com/icons/papirus-team/papirus-apps/256/flameshot-icon.png", tag: "oss", note: "Cross-platform screenshot tool. Great annotation, works on Linux too." }
         ]
       }
     ]
@@ -1304,7 +1472,7 @@ const ditchDB = [
         label: "Chat platforms",
         icon: "forum",
         alternatives: [
-          { name: "Stoat", url: "https://stoat.chat/", icon: "https://stoat.chat/favicon.ico", tag: "rec", note: "Open source, self-hostable Discord alternative. Text, voice and servers. Formerly Revolt." }
+          { name: "Stoat", url: "https://stoat.chat/", icon: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/stoat.png", tag: "rec", note: "Open source, self-hostable Discord alternative. Text, voice and servers. Formerly Revolt." }
         ]
       }
     ]
@@ -1342,7 +1510,7 @@ const ditchDB = [
         label: "Workspaces",
         icon: "workspaces",
         alternatives: [
-          { name: "Anytype", url: "https://anytype.io/", icon: "https://anytype.io/favicon.ico", tag: "rec", note: "Encrypted, local-first workspace. You own the encryption keys." },
+          { name: "Anytype", url: "https://anytype.io/", icon: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/anytype.png", tag: "rec", note: "Encrypted, local-first workspace. You own the encryption keys." },
           { name: "AppFlowy", url: "https://appflowy.io/", icon: "https://cdn.jsdelivr.net/gh/selfhst/icons/png/appflowy.png", tag: "oss", note: "Local-first Notion clone. Projects, wikis, databases and AI, all on your device." }
         ]
       }
@@ -1362,8 +1530,34 @@ const ditchDB = [
         label: "Video editors",
         icon: "movie_edit",
         alternatives: [
-          { name: "ConCat", url: "https://concat.standalones.org/", icon: "https://concat.standalones.org/_astro/mark.C_qCVBF__1gbCYt.webp", tag: "rec", note: "Free, open source, local-first. AI subtitles, background removal, 4K export, no watermark." },
-          { name: "OpenCut", url: "https://opencut.app/", icon: "https://opencut.app/favicon.ico", tag: "oss", note: "Web, desktop and mobile. Timeline editing, no watermark, no subscription." }
+          { name: "ConCat", url: "https://concat.standalones.org/", icon: "https://concat.standalones.org/_astro/mark.C_qCVBF__1gbCYt.webp", tag: "rec", note: "Free, open source, local-first. AI subtitles, background removal, 4K export, no watermark.", platforms: ["windows"] },
+          { name: "OpenCut", url: "https://opencut.app/", icon: "https://opencut.app/favicon.ico", tag: "oss", note: "Web, desktop and mobile. Timeline editing, no watermark, no subscription." },
+          { name: "Edits by Instagram", url: "https://play.google.com/store/apps/details?id=com.instagram.basel", icon: "https://ph-files.imgix.net/ec58f174-f4e3-46da-8388-d028cdaf1bf3.webp", tag: "rec", note: "No watermark, 4K export. From Meta — still tracks you, but the editing is genuinely good.", platforms: ["android"] },
+          { name: "KwaiCut", url: "https://play.google.com/store/apps/details?id=com.kwai.editor", icon: "https://dl.memuplay.com/new_market/img/com.kwai.editor.icon.2025-01-02-03-08-29.png", tag: "closed", note: "Free, no watermark. Kwai's own mobile editor.", platforms: ["android"] },
+          { name: "VN Video Editor", url: "https://play.google.com/store/apps/details?id=com.frontrow.vlog", icon: "https://ctkruger.com/wp-content/uploads/2022/03/VN-Icon-e1648162187540.png", tag: "closed", note: "Free, no watermark. All-in-one editor for TikTok, Reels and Shorts.", platforms: ["android"] },
+          { name: "YouCut", url: "https://play.google.com/store/apps/details?id=com.camerasideas.trimmer", iconSymbol: "movie", tag: ["closed", "ads"], note: "Free, no watermark. Contains ads — use an ad blocker.", platforms: ["android"] }
+        ]
+      }
+    ]
+  },
+
+  /* ---------- CAMSCANNER (ANDROID ONLY) ---------- */
+  {
+    id: "camscanner",
+    name: "CamScanner",
+    company: "INTSIG",
+    icon: "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/df/8d/37/df8d3782-ab79-b626-3bb3-82be8f9a2433/AppIconLite-0-1x_U007ephone-0-6-0-0-P3-85-220-0.png/246x0w.webp",
+    category: "PDF",
+    platforms: ["android"],
+    reason: "Watermarks on exports unless you pay. Adds ads and telemetry. Your scans live on CamScanner's cloud.",
+    groups: [
+      {
+        label: "PDF scanners",
+        icon: "document_scanner",
+        alternatives: [
+          { name: "OSS Document Scanner", url: "https://github.com/Akylas/OSS-DocumentScanner", icon: "https://docstore.indusappstore.com/public/external/indus-images/preview_images/icon_dce32814-095a-4f77-bcf9-0f919a53e03b.webp", tag: "rec", note: "Open source document scanner. No ads, no watermarks, offline OCR. Also on Play Store." },
+          { name: "FairScan", url: "https://f-droid.org/packages/org.fairscan.app/", icon: "https://f-droid.org/repo/org.fairscan.app/en-US/icon_jXreg-23j73Q35sj5mioXnOD8m6Y9V6kLjX037gxq00=.png", tag: "oss", note: "Privacy-first scanner from F-Droid. PDF-only, no cloud, no tracking." },
+          { name: "Scandroid", url: "https://play.google.com/store/apps/details?id=com.ikurek.scandroid", icon: "https://play-lh.googleusercontent.com/pFOU3npvqrq1XzeqtBrIAl_XUKLNt2kaUnEj9kXvCpl_CB_5CSZeaY8lMyhP-OPcjrXy", tag: "oss", note: "Open source scanner. Light, fast, no ads." }
         ]
       }
     ]
@@ -1379,17 +1573,30 @@ function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]);
 }
 
+function appVisible(app) {
+  return !app.platforms || app.platforms.includes(currentOS);
+}
+function altVisible(alt) {
+  return !alt.platforms || alt.platforms.includes(currentOS);
+}
+function visibleAlternatives(app) {
+  return app.groups.flatMap(g => g.alternatives.filter(altVisible));
+}
 function countAlts(app) {
-  return app.groups.reduce((n, g) => n + g.alternatives.length, 0);
+  return visibleAlternatives(app).length;
 }
 
 function tagHTML(tag) {
   if (!tag) return '';
-  if (tag === 'rec') return '<span class="tag tag--rec"><span class="material-symbols-rounded">star</span>TaraTari Recommended</span>';
-  if (tag === 'oss') return '<span class="tag tag--oss">Open source</span>';
-  if (tag === 'closed') return '<span class="tag tag--closed">Not open source</span>';
-  if (tag === 'og') return '<span class="tag tag--og">OG</span>';
-  return '';
+  const tags = Array.isArray(tag) ? tag : [tag];
+  return tags.map(t => {
+    if (t === 'rec') return '<span class="tag tag--rec"><span class="material-symbols-rounded">star</span>TaraTari Recommended</span>';
+    if (t === 'oss') return '<span class="tag tag--oss">Open source</span>';
+    if (t === 'closed') return '<span class="tag tag--closed">Not open source</span>';
+    if (t === 'og') return '<span class="tag tag--og">OG</span>';
+    if (t === 'ads') return '<span class="tag tag--ads"><span class="material-symbols-rounded">warning</span>Contains ads</span>';
+    return '';
+  }).join('');
 }
 
 /* =========================================================
@@ -1397,14 +1604,75 @@ function tagHTML(tag) {
    ========================================================= */
 let activeCategory = 'all';
 let query = '';
+let currentOS = 'windows';
+
+function getInitialOS() {
+  try {
+    const stored = localStorage.getItem('taratan_ditch_os');
+    if (stored === 'windows' || stored === 'android') return stored;
+  } catch (e) {}
+  return window.matchMedia('(max-width: 768px)').matches ? 'android' : 'windows';
+}
+
+/* =========================================================
+   OS SWITCH
+   ========================================================= */
+function positionOsIndicator(btn, animate) {
+  const indicator = document.getElementById('osSwitchIndicator');
+  if (!indicator || !btn) return;
+  if (!animate) indicator.style.transition = 'none';
+  indicator.style.width = btn.offsetWidth + 'px';
+  indicator.style.transform = `translateX(${btn.offsetLeft - 4}px)`;
+  if (!animate) {
+    indicator.offsetHeight;
+    indicator.style.transition = '';
+  }
+}
+
+function setOS(os, animate) {
+  if (os === currentOS && animate) return;
+  currentOS = os;
+  document.body.setAttribute('data-os', os);
+  try { localStorage.setItem('taratan_ditch_os', os); } catch(e) {}
+
+  const btns = document.querySelectorAll('.os-switch__btn');
+  btns.forEach(b => {
+    const active = b.dataset.os === os;
+    b.classList.toggle('active', active);
+    b.setAttribute('aria-selected', active ? 'true' : 'false');
+  });
+  const activeBtn = document.querySelector('.os-switch__btn.active');
+  if (activeBtn) positionOsIndicator(activeBtn, animate);
+
+  if (modal.classList.contains('open')) closeModal();
+
+  const counts = {};
+  ditchDB.filter(appVisible).forEach(app => {
+    counts[app.category] = (counts[app.category] || 0) + 1;
+  });
+  if (activeCategory !== 'all' && !counts[activeCategory]) {
+    activeCategory = 'all';
+  }
+
+  renderChips();
+  renderGrid();
+  renderStats();
+}
+
+document.querySelectorAll('.os-switch__btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    setOS(this.dataset.os, true);
+  });
+});
 
 /* =========================================================
    RENDER CHIPS
    ========================================================= */
 function renderChips() {
   const container = document.getElementById('chips');
-  const counts = { all: ditchDB.length };
-  ditchDB.forEach(app => { counts[app.category] = (counts[app.category] || 0) + 1; });
+  const visibleApps = ditchDB.filter(appVisible);
+  const counts = { all: visibleApps.length };
+  visibleApps.forEach(app => { counts[app.category] = (counts[app.category] || 0) + 1; });
 
   const chips = [{ key: 'all', label: 'All', icon: 'apps' }].concat(
     CATEGORY_ORDER.filter(c => counts[c]).map(c => {
@@ -1441,11 +1709,12 @@ function renderChips() {
 function filterApps() {
   const q = query.trim().toLowerCase();
   return ditchDB.filter(app => {
+    if (!appVisible(app)) return false;
     if (activeCategory !== 'all' && app.category !== activeCategory) return false;
     if (!q) return true;
     const haystack = [
       app.name, app.company, app.category, app.reason,
-      ...app.groups.flatMap(g => [g.label, ...g.alternatives.map(a => a.name + ' ' + (a.note || ''))])
+      ...app.groups.flatMap(g => [g.label, ...g.alternatives.filter(altVisible).map(a => a.name + ' ' + (a.note || ''))])
     ].join(' ').toLowerCase();
     return haystack.includes(q);
   });
@@ -1468,21 +1737,23 @@ function renderGrid() {
   }
 
   grid.innerHTML = list.map(app => {
-    const alts = app.groups.flatMap(g => g.alternatives);
+    const alts = visibleAlternatives(app);
     const preview = alts.slice(0, 4).map(a => {
-      const icon = a.iconSymbol
-        ? `<span class="material-symbols-rounded" style="font-size:12px;color:var(--accent);">${a.iconSymbol}</span>`
+      return a.iconSymbol
+        ? `<span class="material-symbols-rounded">${a.iconSymbol}</span>`
         : `<img src="${escapeHtml(a.icon)}" alt="" loading="lazy" onerror="this.style.display='none'">`;
-      return icon;
     }).join('');
     const more = alts.length > 4 ? `<span class="ditch-card__more">+${alts.length - 4}</span>` : '';
+
+    const mainIcon = app.iconSymbol
+      ? `<span class="material-symbols-rounded">${app.iconSymbol}</span>`
+      : `<img src="${escapeHtml(app.icon)}" alt="" loading="lazy" onerror="this.style.display='none'">`;
+    const whiteClass = app.whiteIconBg ? ' ditch-card__icon--white' : '';
 
     return `
       <button class="ditch-card" data-ditch="${app.id}" aria-label="See alternatives for ${escapeHtml(app.name)}">
         <div class="ditch-card__top">
-          <div class="ditch-card__icon">
-            <img src="${escapeHtml(app.icon)}" alt="" loading="lazy" onerror="this.style.display='none'">
-          </div>
+          <div class="ditch-card__icon${whiteClass}">${mainIcon}</div>
           <div class="ditch-card__title">
             <div class="ditch-card__name">${escapeHtml(app.name)}</div>
             <div class="ditch-card__company">${escapeHtml(app.company)} · ${escapeHtml(app.category)}</div>
@@ -1510,7 +1781,7 @@ function renderGrid() {
    MODAL
    ========================================================= */
 const modal = document.getElementById('modal');
-const modalIcon = document.getElementById('modalIcon');
+const modalIconWrap = document.getElementById('modalIconWrap');
 const modalTitle = document.getElementById('modalTitle');
 const modalCompany = document.getElementById('modalCompany');
 const modalBody = document.getElementById('modalBody');
@@ -1521,9 +1792,10 @@ function openModal(id) {
   if (!app) return;
   lastFocused = document.activeElement;
 
-  modalIcon.src = app.icon;
-  modalIcon.alt = app.name;
-  modalIcon.style.display = '';
+  modalIconWrap.className = 'modal__icon' + (app.whiteIconBg ? ' modal__icon--white' : '');
+  modalIconWrap.innerHTML = app.iconSymbol
+    ? `<span class="material-symbols-rounded">${app.iconSymbol}</span>`
+    : `<img src="${escapeHtml(app.icon)}" alt="${escapeHtml(app.name)}" onerror="this.style.display='none'">`;
   modalTitle.textContent = app.name;
   modalCompany.textContent = app.company + ' · ' + app.category;
 
@@ -1545,19 +1817,22 @@ function openModal(id) {
   html += `<div class="modal__reason">${escapeHtml(app.reason)}</div>`;
 
   app.groups.forEach(group => {
+    const visibleAlts = group.alternatives.filter(altVisible);
+    if (visibleAlts.length === 0) return;
     html += `
       <div class="alt-group">
         <div class="alt-group__label">
           <span class="material-symbols-rounded">${group.icon || 'swap_horiz'}</span>
           ${escapeHtml(group.label)}
         </div>
-        ${group.alternatives.map(alt => {
+        ${visibleAlts.map(alt => {
           const iconHTML = alt.iconSymbol
             ? `<span class="material-symbols-rounded">${alt.iconSymbol}</span>`
             : `<img src="${escapeHtml(alt.icon)}" alt="" loading="lazy" onerror="this.style.display='none'">`;
+          const whiteClass = alt.whiteIconBg ? ' alt-row__icon--white' : '';
           return `
           <a class="alt-row" href="${escapeHtml(alt.url)}" target="_blank" rel="noopener noreferrer">
-            <div class="alt-row__icon">${iconHTML}</div>
+            <div class="alt-row__icon${whiteClass}">${iconHTML}</div>
             <div class="alt-row__body">
               <div class="alt-row__top">
                 <span class="alt-row__name">${escapeHtml(alt.name)}</span>
@@ -1646,8 +1921,9 @@ backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smo
    STATS
    ========================================================= */
 function renderStats() {
-  const totalAlts = ditchDB.reduce((sum, app) => sum + countAlts(app), 0);
-  document.getElementById('statApps').textContent = ditchDB.length;
+  const visibleApps = ditchDB.filter(appVisible);
+  const totalAlts = visibleApps.reduce((sum, app) => sum + countAlts(app), 0);
+  document.getElementById('statApps').textContent = visibleApps.length;
   document.getElementById('statAlts').textContent = totalAlts;
 }
 
@@ -1655,9 +1931,31 @@ function renderStats() {
    INIT
    ========================================================= */
 function init() {
+  currentOS = getInitialOS();
+  document.body.setAttribute('data-os', currentOS);
+  document.querySelectorAll('.os-switch__btn').forEach(b => {
+    const active = b.dataset.os === currentOS;
+    b.classList.toggle('active', active);
+    b.setAttribute('aria-selected', active ? 'true' : 'false');
+  });
+
   renderChips();
   renderGrid();
   renderStats();
+
+  const activeBtn = document.querySelector('.os-switch__btn.active');
+  if (activeBtn) positionOsIndicator(activeBtn, false);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      const btn = document.querySelector('.os-switch__btn.active');
+      if (btn) positionOsIndicator(btn, false);
+    });
+  }
+
+  window.addEventListener('resize', debounce(function() {
+    const btn = document.querySelector('.os-switch__btn.active');
+    if (btn) positionOsIndicator(btn, false);
+  }, 200));
 
   window.addEventListener('load', () => {
     setTimeout(() => {
