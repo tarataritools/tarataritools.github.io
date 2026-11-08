@@ -187,20 +187,39 @@ a:hover { text-decoration: underline; }
 }
 .header__inner { display: flex; align-items: center; gap: 12px; height: 60px; }
 
+/* =========================================
+   LOGO — bigger, fills more of the header
+   ========================================= */
 .logo {
-  display: flex; align-items: center; gap: 10px;
-  color: var(--text); font-weight: 700; font-size: 17px;
-  letter-spacing: -0.01em; text-decoration: none; flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--text);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  flex-shrink: 0;
+  height: 100%;
 }
 .logo:hover { text-decoration: none; }
-.logo img { height: 32px; width: auto; border-radius: 6px; }
+.logo img {
+  height: 46px;
+  width: auto;
+  max-width: 170px;
+  object-fit: contain;
+  border-radius: 6px;
+  display: block;
+}
 
+/* Visually hide the wordmark but keep it for SEO */
 .logo__text {
   position: absolute;
   width: 1px; height: 1px;
   padding: 0; margin: -1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip: 0, 0, 0, 0;
   white-space: nowrap;
   border: 0;
 }
@@ -217,17 +236,40 @@ a:hover { text-decoration: underline; }
   font-family: var(--font); font-size: 14px; font-weight: 500;
   border-radius: var(--radius);
   cursor: pointer;
-  transition: color 0.15s, background 0.15s, border-color 0.15s;
+  transition: none;
   text-decoration: none; position: relative;
 }
-.nav__item:hover { color: var(--text); background: var(--surface-2); text-decoration: none; }
+
+/* Hover: text becomes black IMMEDIATELY + green bg (like active) */
+.nav__item:hover {
+  background: var(--accent-bright);
+  border-color: var(--accent-bright);
+  color: #000;
+  font-weight: 600;
+  text-decoration: none;
+}
+
 .nav__item.active {
   background: var(--accent-bright);
   border-color: var(--accent-bright);
   color: #000;
   font-weight: 600;
 }
-.nav__item.active:hover { color: #000; background: var(--accent-bright-hover); border-color: var(--accent-bright-hover); }
+.nav__item.active:hover {
+  background: var(--accent-bright-hover);
+  border-color: var(--accent-bright-hover);
+  color: #000;
+}
+
+/* When hovering ANY nav item, dim the active one if not being hovered
+   so only the item under the cursor shows the green+black state */
+.nav:has(.nav__item:hover) .nav__item.active:not(:hover) {
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
 .nav__item .material-symbols-rounded { font-size: 18px; }
 
 .new-badge {
@@ -461,7 +503,6 @@ a:hover { text-decoration: underline; }
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
 }
-/* White background override for icons that need it */
 .ditch-card__icon--white { background: #ffffff; }
 .ditch-card__icon img { width: 34px; height: 34px; object-fit: contain; }
 .ditch-card__icon .material-symbols-rounded { font-size: 26px; color: var(--accent); }
@@ -687,30 +728,12 @@ a:hover { text-decoration: underline; }
   letter-spacing: 0.04em; text-transform: uppercase;
   line-height: 1.3; white-space: nowrap;
 }
-.tag--rec {
-  background: var(--accent-bright);
-  color: #000;
-}
-.tag--oss {
-  background: rgba(96, 165, 250, 0.14);
-  color: #93c5fd;
-}
-:root[data-theme="light"] .tag--oss {
-  background: rgba(37, 99, 235, 0.10);
-  color: #1d4ed8;
-}
-.tag--closed {
-  background: var(--surface-3);
-  color: var(--text-muted);
-}
-.tag--og {
-  background: rgba(245, 158, 11, 0.14);
-  color: #fcd34d;
-}
-:root[data-theme="light"] .tag--og {
-  background: rgba(217, 119, 6, 0.10);
-  color: #b45309;
-}
+.tag--rec { background: var(--accent-bright); color: #000; }
+.tag--oss { background: rgba(96, 165, 250, 0.14); color: #93c5fd; }
+:root[data-theme="light"] .tag--oss { background: rgba(37, 99, 235, 0.10); color: #1d4ed8; }
+.tag--closed { background: var(--surface-3); color: var(--text-muted); }
+.tag--og { background: rgba(245, 158, 11, 0.14); color: #fcd34d; }
+:root[data-theme="light"] .tag--og { background: rgba(217, 119, 6, 0.10); color: #b45309; }
 .tag--ads {
   background: rgba(245, 158, 11, 0.14);
   color: #fcd34d;
@@ -845,7 +868,7 @@ a:hover { text-decoration: underline; }
 
   .nav { display: none; }
   .header__inner { height: 56px; gap: 8px; }
-  .logo img { height: 28px; }
+  .logo img { height: 38px; max-width: 130px; }
   .bottom-nav { display: flex; }
   main { padding-bottom: 84px; }
 
@@ -926,6 +949,9 @@ a:hover { text-decoration: underline; }
         <span class="material-symbols-rounded">swap_horiz</span> TaraTariDitch
         <span class="new-badge">NEW</span>
       </a>
+      <a href="https://tarataritools.github.io/installer/" class="nav__item">
+        <span class="material-symbols-rounded">download</span> Installer
+      </a>
     </nav>
     <button class="icon-btn" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
       <span class="material-symbols-rounded" id="themeIcon">dark_mode</span>
@@ -990,6 +1016,7 @@ a:hover { text-decoration: underline; }
   </div>
 </footer>
 
+<!-- Mobile bottom nav — Home + Ditch only -->
 <nav class="bottom-nav" aria-label="Primary mobile">
   <a href="/" class="bottom-nav__item">
     <span class="bottom-nav__icon"><span class="material-symbols-rounded">home</span></span>
@@ -1005,6 +1032,7 @@ a:hover { text-decoration: underline; }
   <span class="material-symbols-rounded">arrow_upward</span>
 </button>
 
+<!-- Modal -->
 <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div class="modal__backdrop" data-close></div>
   <div class="modal__panel">
@@ -1050,9 +1078,6 @@ a:hover { text-decoration: underline; }
 
 /* =========================================================
    DITCH DATABASE
-   - platform omitted → both
-   - whiteIconBg → force white icon background
-   - tag can be string or array
    ========================================================= */
 const ditchDB = [
   /* ---------- ADOBE ACROBAT ---------- */
@@ -1162,7 +1187,7 @@ const ditchDB = [
     ]
   },
 
-  /* ---------- AUTODESK AUTOCAD (WINDOWS ONLY NOW) ---------- */
+  /* ---------- AUTODESK AUTOCAD (WINDOWS ONLY) ---------- */
   {
     id: "autocad",
     name: "Autodesk AutoCAD",
