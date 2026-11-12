@@ -274,9 +274,6 @@ a:hover { text-decoration: underline; }
 }
 .header__inner { display: flex; align-items: center; gap: 12px; height: 60px; }
 
-/* =========================================
-   LOGO — bigger, fills more of the header
-   ========================================= */
 .logo {
   display: flex;
   align-items: center;
@@ -346,7 +343,6 @@ a:hover { text-decoration: underline; }
   text-decoration: none;
   white-space: nowrap;
 }
-/* Hover: text becomes black IMMEDIATELY (no transition on color) */
 .nav__item:hover {
   color: #000;
   font-weight: 600;
@@ -356,8 +352,6 @@ a:hover { text-decoration: underline; }
   color: #000;
   font-weight: 600;
 }
-/* When hovering any nav item, dim the active one if not being hovered
-   so only the hovered item (under the green bar) shows black text */
 .nav:has(.nav__item:hover) .nav__item.active:not(:hover) {
   color: var(--text-muted);
   font-weight: 500;
@@ -686,6 +680,21 @@ a:hover { text-decoration: underline; }
   font-size: 9px;
   font-weight: 800;
   letter-spacing: 0.04em;
+  border-radius: 3px;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+.new-chip {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 6px;
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
   border-radius: 3px;
   text-transform: uppercase;
   line-height: 1.4;
@@ -1261,6 +1270,16 @@ a:hover { text-decoration: underline; }
               <p class="slide__desc">Speed up Windows PCs and Android phones. Easy peasy.</p>
             </div>
           </div>
+          <div class="slide" data-href="https://github.com/InlitX/GymMane">
+            <div class="slide__badge">NEW</div>
+            <div class="slide__icon">
+              <img src="https://github.com/InlitX/GymMane/raw/main/docs/screenshots/icon.png" alt="GymMane" onerror="this.style.display='none'">
+            </div>
+            <div class="slide__body">
+              <h2 class="slide__title">New private Android apps</h2>
+              <p class="slide__desc">GymMane, Tellyscope and Streak — no ads, no accounts, no tracking. Gym log, TV control, habit tracker.</p>
+            </div>
+          </div>
           <div class="slide" data-href="https://concat.standalones.org/">
             <div class="slide__icon">
               <img src="https://concat.standalones.org/_astro/mark.C_qCVBF__1gbCYt.webp" alt="ConCat" onerror="this.style.display='none'">
@@ -1694,7 +1713,7 @@ const toolsDatabase = [
   { id: 68, name: "ZArchiver", url: "https://play.google.com/store/apps/details?id=ru.zdevs.zarchiver", icon: "https://gocmod.net/wp-content/uploads/2025/08/logo-zarchiver-apk.jpg", category: "Archive / Compression", platforms: ["Android"], desc: "Powerful archive manager for Android. Handles RAR, ZIP, 7z and more." },
   { id: 3, name: "OBS Studio", url: "https://obsproject.com/", icon: "https://obsproject.com/assets/images/new_icon_small-r.png", category: "Video / Media", platforms: ["Windows", "Linux", "macOS"], desc: "Open source streaming and recording." },
   { id: 4, name: "VLC", url: "https://www.videolan.org/vlc/", icon: "https://img.alternativeto.net/icons/280/vlc-media-player_233348.svg", category: "Video / Media", platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Plays everything, lightweight." },
-  { id: 5, name: "MPV Player", url: "https://mpv.io/installation/", icon: "https://img.alternativeto.net/icons/280/mpv_248928.svg", category: "Video / Media", platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Minimal, scriptable video player." },
+  { id: 5, name: "MPV Player", url: "https://github.com/zhongfly/mpv-winbuild", icon: "https://img.alternativeto.net/icons/140/mpv_248928.svg?theme=light", category: "Video / Media", platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Lightweight, scriptable media player. A solid alternative to Microsoft's default video player." },
   { id: 48, name: "OpenCut", url: "https://opencut.app/projects", icon: "https://opencut.app/favicon.ico", category: "Video / Media", platforms: ["Windows", "Linux", "macOS", "Web"], desc: "Open source CapCut alternative. Free, private video editor with no watermarks." },
   { id: 51, name: "PhotoCraft", url: "https://getartcraft.com/apps/photocraft", icon: "https://getartcraft.com/images/apps/photocraft/icon.webp", category: "Video / Media", platforms: ["Windows", "Linux", "macOS"], desc: "Open source Photoshop alternative. Layered editor with masks and PSD support." },
   { id: 53, name: "FilmCraft", url: "https://getartcraft.com/apps/filmcraft", icon: "https://getartcraft.com/images/apps/filmcraft/icon.webp", category: "Video / Media", platforms: ["Windows", "Linux", "macOS"], desc: "Open source Premiere Pro alternative. Non-linear editor with color grading." },
@@ -1704,6 +1723,7 @@ const toolsDatabase = [
   { id: 6, name: "Twinkle Tray", url: "https://twinkletray.com/", icon: "https://raw.githubusercontent.com/xanderfrangos/twinkle-tray/master/src/assets/logo.png", category: "Display / Utilities", platforms: ["Windows"], desc: "Multi-monitor brightness control." },
   { id: 7, name: "Everything", url: "https://www.voidtools.com/downloads/", icon: "https://images.sftcdn.net/images/t_app-icon-m/p/d799b3be-96d4-11e6-9fb5-00163ed833e7/1046586710/everything-download-Everything.jpg", category: "Display / Utilities", platforms: ["Windows"], desc: "Instant file search by name." },
   { id: 8, name: "WinGet UI", url: "https://www.marticliment.com/wingetui/", icon: "https://img.alternativeto.net/icons/140/avif/wingetui_285145.png", category: "Display / Utilities", platforms: ["Windows"], desc: "Graphical interface for WinGet." },
+  { id: 82, name: "qView", url: "https://github.com/jurplel/qView", icon: "https://img.alternativeto.net/icons/140/qview_250845.svg?theme=light", category: "Display / Utilities", platforms: ["Windows", "Linux", "macOS"], desc: "Minimal, fast image viewer. A solid alternative to Microsoft Photos." },
   { id: 9, name: "LibreOffice", url: "https://www.libreoffice.org/download/", icon: "https://img.alternativeto.net/icons/280/libreoffice_233404.svg", category: "Office / Productivity", platforms: ["Windows", "Linux"], desc: "Full open source office suite." },
   { id: 10, name: "ONLYOFFICE", url: "https://www.onlyoffice.com/download-desktop", icon: "https://img.alternativeto.net/icons/280/onlyoffice_245488.svg", category: "Office / Productivity", platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Free office suite. No activation needed." },
   { id: 11, name: "Anytype", url: "https://anytype.io/", icon: "https://img.alternativeto.net/icons/280/anytype_245495.svg", category: "Office / Productivity", platforms: ["Windows", "Linux", "macOS", "Android", "iOS"], desc: "Local-first encrypted workspace." },
@@ -1741,7 +1761,10 @@ const toolsDatabase = [
   { id: 31, name: "Monect", url: "https://www.monect.com/", icon: "https://images.sftcdn.net/images/t_app-icon-m/p/26a4fc82-7d40-467b-81de-334cb944e4e2/1851832726/monect-pc-remote-Monect%20PC%20Remote-icon.png", category: "Controller / Phone Tools", platforms: ["Windows", "Android", "iOS"], desc: "Use your phone as a PC remote and gamepad." },
   { id: 32, name: "123apps", url: "https://123apps.com/", icon: "https://img.alternativeto.net/icons/140/avif/http--123apps-com-_254932.png", category: "Online Tools", platforms: ["Web"], desc: "Online tools for audio, video and PDF." },
   { id: 73, name: "Utils", url: "https://utils.com/", icon: "https://utils.com/static/imgs/utils.svg", category: "Online Tools", platforms: ["Web"], desc: "All-in-one web utility toolkit. Converters, generators and handy tools in one place." },
+  { id: 83, name: "GymMane", url: "https://github.com/InlitX/GymMane", icon: "https://github.com/InlitX/GymMane/raw/main/docs/screenshots/icon.png", category: "Health & Fitness", platforms: ["Android"], showInAll: true, isNew: true, desc: "Offline gym log for Android. No account, no ads, no internet." },
+  { id: 85, name: "Streak", url: "https://github.com/InlitX/streak", icon: "https://github.com/InlitX/streak/raw/main/assets/icon.svg", category: "Health & Fitness", platforms: ["Android"], showInAll: true, isNew: true, desc: "Minimal, private, ad-free habit tracker. No accounts, no tracking." },
   { id: 69, name: "Ente Photos", url: "https://ente.io/", icon: "https://ente.io/favicon.ico", category: "Cloud", platforms: ["Android", "iOS", "Web", "Windows", "macOS", "Linux"], desc: "Privacy-first photo backup. 10GB free. End-to-end encrypted." },
+  { id: 84, name: "Tellyscope", url: "https://github.com/man15h/tellyscope", icon: "https://github.com/man15h/tellyscope/raw/main/docs/logo/icon.svg", category: "System / Android Tools", platforms: ["Android"], showInAll: true, isNew: true, desc: "Debloat and control your Android TV. Remove bloat, block ads, sideload apps." },
   { id: 33, name: "Android Debloat Package", url: "https://drive.google.com/file/d/1DhQJJ6nKDwgWNordT8tmv7r_-oxDnpAr/view?usp=sharing", icon: "https://img.icons8.com/color/48/000000/android-os.png", category: "System / Android Tools", platforms: ["Windows", "Linux"], desc: "Remove Android bloatware safely via ADB." },
   { id: 35, name: "Gator", url: "https://play.google.com/store/apps/details?id=com.mitigator.gator", icon: "https://images.sftcdn.net/images/t_app-icon-m/p/358f34a5-301c-4c51-b50b-561de35f2457/2686083238/gator-system-cleaning-tool-logo", category: "System / Android Tools", platforms: ["Android"], desc: "System cleaning and optimization tool for Android." },
   { id: 42, name: "Shizuku", url: "https://shizuku.rikka.app/", icon: "https://shizuku.rikka.app/logo.png", category: "System / Android Tools", platforms: ["Android"], desc: "Grants apps root-like API access, no root needed." },
@@ -1769,7 +1792,7 @@ const toolsDatabase = [
   { id: 47, name: "Windows 7 SP1", url: "https://buzzheavier.com/wru8ac6nwk17", icon: "https://img.icons8.com/color/96/windows-logo.png", category: "Operating Systems", platforms: [], isOS: true, desc: "Windows 7 Service Pack 1, x64 and x86, English." }
 ];
 
-const CATEGORY_ORDER = ["TaraTari Tools","Archive / Compression","Video / Media","Design & Graphics","Display / Utilities","Office / Productivity","Browsers","Download Managers","Torrent","PDF","Password Managers","Screenshots","File Sharing","Communication","Gaming","Controller / Phone Tools","Online Tools","Cloud","System / Android Tools","System / Utilities","Package Managers","Operating Systems"];
+const CATEGORY_ORDER = ["TaraTari Tools","Archive / Compression","Video / Media","Design & Graphics","Display / Utilities","Office / Productivity","Browsers","Download Managers","Torrent","PDF","Password Managers","Screenshots","File Sharing","Communication","Gaming","Controller / Phone Tools","Online Tools","Health & Fitness","Cloud","System / Android Tools","System / Utilities","Package Managers","Operating Systems"];
 
 const PLATFORM_META = {
   Windows: { label: "Windows", icon: "https://cdn.simpleicons.org/windows/e8eaed", type: "img" },
@@ -1807,11 +1830,12 @@ function renderToolCard(tool) {
     ? `<span class="material-symbols-rounded">${tool.iconSymbol}</span>`
     : `<img src="${escapeHtml(tool.icon)}" alt="${escapeHtml(tool.name)} icon" loading="lazy" onerror="this.src='https://placehold.co/40x40/26262b/4ade80?text=?'">`;
   const recChip = tool.recommended ? '<span class="rec-chip">Recommended</span>' : '';
+  const newChip = tool.isNew ? '<span class="new-chip">NEW</span>' : '';
   return `
     <a class="tool-card" href="${escapeHtml(tool.url)}" target="_blank" rel="noopener noreferrer">
       <div class="tool-card__icon">${icon}</div>
       <div class="tool-card__body">
-        <div class="tool-card__name"><span>${escapeHtml(tool.name)}</span>${recChip}</div>
+        <div class="tool-card__name"><span>${escapeHtml(tool.name)}</span>${recChip}${newChip}</div>
         <div class="tool-card__cat">${escapeHtml(tool.category)}</div>
         <div class="tool-card__desc">${escapeHtml(tool.desc)}</div>
         ${renderPlatformBadges(tool)}
@@ -1828,7 +1852,9 @@ const SYNONYMS = {
   "usb tool": "Ventoy", "bootable usb": "Ventoy", "google keep": "OpenKeep",
   "texture": "TextureCraft", "material": "MaterialCraft", "revolt": "Stoat",
   "photo backup": "Ente Photos", "photos": "Ente Photos", "zip": "ZArchiver",
-  "winget": "WinGet", "wingetui": "UniGetUI", "chris titus": "WinUtil"
+  "winget": "WinGet", "wingetui": "UniGetUI", "chris titus": "WinUtil",
+  "video player": "MPV Player", "photo viewer": "qView", "image viewer": "qView",
+  "gym": "GymMane", "workout": "GymMane", "habit": "Streak", "tv": "Tellyscope"
 };
 
 function resolveSynonym(token) {
@@ -1894,8 +1920,8 @@ function setFilterButtons() {
 
 function filteredTools() {
   let base = toolsDatabase;
-  if (currentFilter === 'pc') base = base.filter(isPCTool);
-  else if (currentFilter === 'mobile') base = base.filter(isMobileTool);
+  if (currentFilter === 'pc') base = base.filter(t => isPCTool(t) || t.showInAll);
+  else if (currentFilter === 'mobile') base = base.filter(t => isMobileTool(t) || t.showInAll);
   if (currentQuery.trim()) base = searchTools(base, currentQuery);
   return base;
 }
@@ -2174,7 +2200,6 @@ function initNavIndicator() {
   const active = document.querySelector('.nav__item.active');
   if (active) positionIndicator(active, false);
 
-  // Hover: move indicator to hovered item
   document.querySelectorAll('.nav__item').forEach(item => {
     item.addEventListener('mouseenter', function() {
       if (!indicator) return;
@@ -2183,7 +2208,6 @@ function initNavIndicator() {
     });
   });
 
-  // Leaving the nav returns indicator to the active item
   if (desktopNav) {
     desktopNav.addEventListener('mouseleave', function() {
       if (navBusy) return;
@@ -2255,7 +2279,6 @@ function goExternal(url) {
   }, 250);
 }
 
-// Nav click handler
 let navBusy = false;
 
 document.querySelectorAll('.nav__item, .bottom-nav__item').forEach(el => {
@@ -2320,7 +2343,6 @@ window.addEventListener('pageshow', function(event) {
     navBusy = false;
     userChoseOptTab = false;
 
-    // Sync nav active state with visible page
     const visiblePage = document.querySelector('.page.active');
     if (visiblePage) {
       const pageTarget = visiblePage.id.replace('page-', '');
@@ -2329,7 +2351,6 @@ window.addEventListener('pageshow', function(event) {
       });
     }
 
-    // Ensure there's always an active nav item; fall back to Home
     let active = document.querySelector('.nav__item.active');
     if (!active) {
       const home = document.querySelector('.nav__item[data-target="home"]');
@@ -2442,7 +2463,6 @@ slides.forEach(slide => {
       return;
     }
 
-    // Optimize slide: mobile → internal page, desktop → external optimize site
     if (this.dataset.target === 'optimize') {
       if (isMobileViewport()) {
         goInternal('optimize');
