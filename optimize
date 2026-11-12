@@ -1,0 +1,2600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<script>
+(function() {
+  try {
+    if (localStorage.getItem('taratan_theme') === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  } catch (e) {}
+})();
+</script>
+
+<title>Optimize Windows — Step-by-Step Guide | TaraTariTools</title>
+<meta name="description" content="Optimize Windows the right way. Step-by-step guide: reset Windows, download clean ISOs, apply Atlas or ReviOS playbooks, and debloat with the best tools.">
+<meta name="keywords" content="optimize windows, windows optimizer, atlas os, revios, windows iso, debloat windows, ventoy, rufus">
+<link rel="canonical" href="https://tarataritools.github.io/optimize/">
+
+<meta property="og:title" content="Optimize Windows — Step-by-Step Guide | TaraTariTools">
+<meta property="og:description" content="Reset, download clean ISOs, apply Atlas or ReviOS playbooks, and debloat with the best tools.">
+<meta property="og:url" content="https://tarataritools.github.io/optimize/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://raw.githubusercontent.com/tarataritools/tarataritools.github.io/main/images/TaraTariToolsLogo.png">
+<meta name="theme-color" content="#09090b">
+
+<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/tarataritools/tarataritools.github.io/main/images/TaraTariToolsLogo.png">
+<link rel="apple-touch-icon" href="https://raw.githubusercontent.com/tarataritools/tarataritools.github.io/main/images/TaraTariToolsLogo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #09090b;
+  --surface: #131316;
+  --surface-2: #1c1c20;
+  --surface-3: #26262b;
+  --border: #27272a;
+  --border-hover: #3f3f46;
+  --text: #e4e4e7;
+  --text-muted: #a1a1aa;
+  --text-dim: #71717a;
+  --accent: #4ade80;
+  --accent-hover: #22c55e;
+  --accent-bright: #66ff66;
+  --accent-bright-hover: #85ff85;
+  --accent-soft: rgba(74, 222, 128, 0.12);
+  --on-accent: #000000;
+  --warn: #f59e0b;
+  --warn-soft: rgba(245, 158, 11, 0.10);
+  --warn-text: #fcd34d;
+  --header-bg: rgba(9, 9, 11, 0.85);
+  --bottom-nav-bg: rgba(9, 9, 11, 0.95);
+  --code-text: #c7d2fe;
+  --code-bar-bg: rgba(255, 255, 255, 0.02);
+  --radius: 10px;
+  --radius-lg: 14px;
+  --radius-full: 999px;
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+}
+
+:root[data-theme="light"] {
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --surface-2: #f4f4f5;
+  --surface-3: #e4e4e7;
+  --border: #e4e4e7;
+  --border-hover: #d4d4d8;
+  --text: #18181b;
+  --text-muted: #52525b;
+  --text-dim: #71717a;
+  --accent: #16a34a;
+  --accent-hover: #15803d;
+  --accent-bright: #4ade80;
+  --accent-bright-hover: #86efac;
+  --accent-soft: rgba(22, 163, 74, 0.10);
+  --on-accent: #000000;
+  --warn: #d97706;
+  --warn-soft: rgba(217, 119, 6, 0.10);
+  --warn-text: #92400e;
+  --header-bg: rgba(250, 250, 250, 0.88);
+  --bottom-nav-bg: rgba(250, 250, 250, 0.96);
+  --code-text: #1e40af;
+  --code-bar-bg: rgba(0, 0, 0, 0.03);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+.material-symbols-rounded {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-size: 20px;
+  line-height: 1;
+  user-select: none;
+  vertical-align: middle;
+}
+
+/* =========================================================
+   PAGE LOADER
+   ========================================================= */
+.page-loader {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+.page-loader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.bolt-loader {
+  --bl-size: 96px;
+  --bl-green: var(--accent-bright, #66ff66);
+  --bl-glow: rgba(102, 255, 102, 0.55);
+  position: relative;
+  width: var(--bl-size);
+  height: var(--bl-size);
+  display: grid;
+  place-items: center;
+  animation: bl-breathe 2.4s ease-in-out infinite;
+}
+:root[data-theme="light"] .bolt-loader { --bl-glow: rgba(74, 222, 128, 0.45); }
+.bolt-loader::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+  border-top-color: var(--bl-green);
+  filter: drop-shadow(0 0 5px var(--bl-glow));
+  animation: bl-spin 1.4s linear infinite;
+}
+.bolt-loader__bolt {
+  width: 40%;
+  height: 40%;
+  fill: var(--bl-green);
+  filter: drop-shadow(0 0 6px var(--bl-glow));
+  animation: bl-zap 2.4s ease-in-out infinite;
+}
+@keyframes bl-spin { to { transform: rotate(360deg); } }
+@keyframes bl-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+@keyframes bl-zap {
+  0%, 88%, 100% { opacity: 1; }
+  90% { opacity: 0.25; }
+  92% { opacity: 1; }
+  94% { opacity: 0.4; }
+  96% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bolt-loader, .bolt-loader::before, .bolt-loader__bolt { animation: none !important; }
+}
+
+.inline-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  padding: 30px 0;
+}
+.inline-loader .bolt-loader { --bl-size: 56px; }
+
+/* =========================================================
+   CTA BUTTON
+   ========================================================= */
+.cta-btn {
+  outline: none;
+  cursor: pointer;
+  border: none;
+  padding: 0.9rem 2rem;
+  margin: 0;
+  font-family: var(--font);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.03em;
+  font-weight: 700;
+  font-size: 15px;
+  border-radius: 500px;
+  overflow: hidden;
+  background: var(--accent-bright);
+  color: var(--on-accent);
+  text-decoration: none;
+  gap: 8px;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+  isolation: isolate;
+}
+.cta-btn > span {
+  position: relative;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+}
+.cta-btn::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  background: rgba(255, 255, 255, 0.6);
+  transform: skew(30deg) translateX(-250%);
+  pointer-events: none;
+}
+.cta-btn.cta-pressed::before { animation: cta-sweep 0.45s cubic-bezier(0.3, 1, 0.8, 1) forwards; }
+@keyframes cta-sweep {
+  from { transform: skew(30deg) translateX(-250%); }
+  to { transform: skew(30deg) translateX(250%); }
+}
+.cta-btn:hover {
+  background: var(--accent-bright-hover);
+  box-shadow: 0 0 22px rgba(102, 255, 102, 0.4);
+  text-decoration: none;
+}
+:root[data-theme="light"] .cta-btn:hover {
+  box-shadow: 0 4px 18px rgba(74, 222, 128, 0.45);
+}
+.cta-btn:active { transform: scale(0.98); }
+.cta-btn:focus-visible { box-shadow: 0 0 0 3px rgba(102, 255, 102, 0.55); }
+.cta-btn .material-symbols-rounded { font-size: 20px; color: inherit; }
+.cta-btn--sm { padding: 0.6rem 1.4rem; font-size: 13px; letter-spacing: 0.02em; }
+.cta-btn--sm .material-symbols-rounded { font-size: 17px; }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0.85rem 1.8rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 500px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  text-decoration: none;
+}
+.btn-secondary:hover { background: var(--surface-3); border-color: var(--border-hover); text-decoration: none; }
+.btn-secondary .material-symbols-rounded { font-size: 18px; }
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--header-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.25s ease;
+}
+.header__inner { display: flex; align-items: center; gap: 12px; height: 60px; }
+
+.logo {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; color: var(--text); font-weight: 700; font-size: 17px;
+  text-decoration: none; flex-shrink: 0; height: 100%;
+}
+.logo:hover { text-decoration: none; }
+.logo img {
+  height: 46px;
+  width: auto;
+  max-width: 170px;
+  object-fit: contain;
+  border-radius: 6px;
+  display: block;
+}
+.logo__spacer { flex: 1; }
+
+.nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.nav__indicator {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 38px;
+  width: 80px;
+  background: var(--accent-bright);
+  border-radius: var(--radius);
+  transform: translateY(-50%);
+  transition: transform 0.28s cubic-bezier(0.34, 1.3, 0.64, 1),
+              width 0.28s cubic-bezier(0.34, 1.3, 0.64, 1);
+  z-index: 0;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav__indicator { transition: none; }
+}
+
+.nav__item {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: none;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.nav__item:hover {
+  color: #000;
+  font-weight: 600;
+  text-decoration: none;
+}
+.nav__item.active { color: #000; font-weight: 600; }
+.nav:has(.nav__item:hover) .nav__item.active:not(:hover) {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.nav__item .material-symbols-rounded { font-size: 18px; }
+
+.new-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  margin-left: 2px;
+  background: var(--accent-bright);
+  color: #000;
+  font-size: 9px;
+  font-weight: 800;
+  border-radius: 999px;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--surface-2); border: 1px solid var(--border);
+  color: var(--text); cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.icon-btn:hover { background: var(--surface-3); border-color: var(--border-hover); }
+.icon-btn svg { width: 18px; height: 18px; fill: currentColor; }
+.icon-btn .material-symbols-rounded { font-size: 20px; }
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.opt-hero {
+  padding: 56px 0 24px;
+  text-align: center;
+}
+.opt-hero h1 {
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+.opt-hero p {
+  font-size: clamp(14px, 2vw, 17px);
+  color: var(--text-muted);
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+/* =========================================================
+   TABS
+   ========================================================= */
+.optimize-tabs {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  margin-bottom: 32px;
+}
+.opt-tabs-wrap { text-align: center; }
+.optimize-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.optimize-tab:hover { color: var(--text); }
+.optimize-tab.active { background: var(--accent-bright); color: #000; font-weight: 600; }
+.optimize-tab .material-symbols-rounded { font-size: 16px; }
+
+.optimize-panel { display: block; }
+.optimize-panel[hidden] { display: none; }
+
+/* =========================================================
+   COLLAPSED GUIDE STRIP
+   ========================================================= */
+.opt-guide-strip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 18px 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 32px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  text-align: left;
+  color: var(--text);
+  font-family: var(--font);
+  overflow: hidden;
+}
+.opt-guide-strip::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 3px;
+  background: var(--accent-bright);
+}
+.opt-guide-strip:hover {
+  border-color: var(--border-hover);
+  background: var(--surface-2);
+}
+.opt-guide-strip:hover .opt-guide-strip__chev {
+  color: var(--accent);
+  transform: translateX(3px);
+}
+.opt-guide-strip__icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.opt-guide-strip__icon .material-symbols-rounded { font-size: 22px; }
+.opt-guide-strip__text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.opt-guide-strip__text strong {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.25;
+}
+.opt-guide-strip__text small {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.3;
+}
+.opt-guide-strip__chev {
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: color 0.15s, transform 0.15s;
+}
+.opt-guide-strip__chev .material-symbols-rounded { font-size: 22px; }
+
+/* =========================================================
+   GUIDED WIZARD (expanded)
+   ========================================================= */
+.opt-guide {
+  position: relative;
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+.opt-guide[hidden] { display: none; }
+.opt-guide::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-bright), var(--accent));
+}
+
+.opt-guide__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.opt-guide__head > div { flex: 1; min-width: 0; }
+
+.opt-guide__tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  background: var(--accent-bright);
+  color: #000;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  border-radius: 999px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+.opt-guide h2 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+.opt-guide__sub {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.opt-guide__progress {
+  display: grid;
+  grid-template-columns: 32px 1fr 32px 1fr 32px;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+.opt-guide__dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--surface-3);
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 800;
+  flex-shrink: 0;
+  transition: background 0.25s, color 0.25s;
+}
+.opt-guide__dot.is-active {
+  background: var(--accent-bright);
+  color: #000;
+}
+.opt-guide__dot.is-done {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.opt-guide__line {
+  height: 2px;
+  background: var(--border);
+  border-radius: 2px;
+  transition: background 0.25s;
+}
+.opt-guide__line.is-done { background: var(--accent); }
+
+.opt-guide__slide { display: none; }
+.opt-guide__slide.is-active {
+  display: block;
+  animation: guide-slide-in 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
+}
+@keyframes guide-slide-in {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .opt-guide__slide.is-active { animation: none; }
+}
+
+.opt-guide__slide h3 {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.guide-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.opt-guide__text {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.65;
+  margin-bottom: 22px;
+  max-width: 680px;
+}
+
+.opt-guide__h4 {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  margin: 24px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.opt-guide__h4:first-of-type { margin-top: 20px; }
+
+.opt-guide__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  align-items: center;
+}
+
+/* Guide warnings */
+.guide-warning {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 16px;
+}
+.guide-warning__icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--warn-soft);
+  color: var(--warn);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.guide-warning__icon .material-symbols-rounded { font-size: 22px; }
+.guide-warning > div:last-child { flex: 1; min-width: 0; }
+.guide-warning h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.guide-warning p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+.guide-warning p:last-of-type { margin-bottom: 12px; }
+.guide-warning strong { color: var(--text); font-weight: 600; }
+.guide-warning__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+.optimize-section { margin-bottom: 48px; }
+.optimize-section__title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.optimize-section__title .material-symbols-rounded { font-size: 22px; color: var(--accent); }
+.optimize-section__title img {
+  width: 24px; height: 24px; object-fit: contain; flex-shrink: 0;
+}
+.optimize-section__desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+  max-width: 640px;
+}
+
+/* Sub-categories inside Optimization Tools */
+.opt-subgroup { margin-bottom: 32px; }
+.opt-subgroup:last-child { margin-bottom: 0; }
+.opt-subgroup__title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.opt-subgroup__title .material-symbols-rounded {
+  font-size: 16px;
+  color: var(--accent);
+}
+
+/* =========================================================
+   OS CARDS
+   ========================================================= */
+.os-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  max-width: 560px;
+  margin-bottom: 20px;
+}
+@media (max-width: 480px) { .os-cards { grid-template-columns: 1fr; } }
+
+.os-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 20px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  color: var(--text);
+  font-family: var(--font);
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s;
+  min-height: 100px;
+}
+.os-card:hover { border-color: var(--border-hover); }
+.os-card.selected { border-color: var(--accent); background: var(--accent-soft); }
+.os-card .material-symbols-rounded { font-size: 26px; color: var(--text-muted); margin-bottom: 6px; }
+.os-card strong { font-size: 15px; font-weight: 600; }
+.os-card small { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
+
+/* Playbook cards */
+.playbook-select {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+@media (max-width: 560px) { .playbook-select { grid-template-columns: 1fr; } }
+
+.playbook-card {
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  color: var(--text);
+  font-family: var(--font);
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s;
+}
+.playbook-card:hover { border-color: var(--border-hover); }
+.playbook-card.selected { border-color: var(--accent); background: var(--accent-soft); }
+.playbook-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.playbook-card p { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+/* Download block */
+.playbook-detail { margin-top: 20px; }
+.playbook-detail h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.playbook-detail > p { font-size: 14px; color: var(--text-muted); margin-bottom: 4px; }
+
+.dl-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 22px 0;
+}
+@media (max-width: 560px) { .dl-actions { grid-template-columns: 1fr; } }
+.dl-actions .cta-btn { width: 100%; padding: 1.05rem 1.5rem; font-size: 14px; }
+.dl-actions .cta-btn > span {
+  flex-direction: column; align-items: flex-start;
+  gap: 2px; text-align: left; width: 100%;
+}
+.dl-actions .cta-btn .dl-meta { font-size: 11px; font-weight: 500; opacity: 0.75; letter-spacing: 0.02em; }
+.dl-actions .cta-btn .dl-icon-row {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-weight: 700; font-size: 15px;
+}
+
+.legacy-toggle {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 8px 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.legacy-toggle:hover { color: var(--text); }
+.legacy-content { display: none; margin-top: 16px; }
+.legacy-content.open { display: block; }
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 20px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px 0;
+}
+.back-btn:hover { color: var(--text); }
+
+/* =========================================================
+   NOTES
+   ========================================================= */
+.note {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  line-height: 1.55;
+  margin: 16px 0;
+}
+.note .material-symbols-rounded { flex-shrink: 0; font-size: 20px; margin-top: 1px; }
+.note--warn { background: var(--warn-soft); color: var(--warn-text); border-left: 3px solid var(--warn); }
+.note--warn .material-symbols-rounded { color: var(--warn); }
+.note--info { background: var(--accent-soft); color: var(--text); border-left: 3px solid var(--accent); }
+.note--info .material-symbols-rounded { color: var(--accent); }
+
+.steps-list {
+  margin: 16px 0;
+  padding-left: 20px;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+.steps-list li { margin-bottom: 4px; }
+
+/* =========================================================
+   TOOL CARDS
+   ========================================================= */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
+}
+.tool-card {
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  text-decoration: none;
+  color: inherit;
+}
+.tool-card:hover { border-color: var(--border-hover); background: var(--surface-2); text-decoration: none; }
+.tool-card__icon {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border-radius: 8px;
+  background: var(--surface-3);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.tool-card__icon img { width: 32px; height: 32px; object-fit: contain; }
+.tool-card__icon .material-symbols-rounded { font-size: 22px; color: var(--accent); }
+.tool-card__body { flex: 1; min-width: 0; }
+.tool-card__name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+}
+.tool-card__name > span:first-child {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.rec-chip {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 6px;
+  background: var(--accent-bright);
+  color: #000;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  border-radius: 3px;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+.tool-card__cat { font-size: 11px; color: var(--text-dim); margin-bottom: 6px; }
+.tool-card__desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.tool-card__badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+.platform-badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 2px 6px;
+  background: var(--surface-3);
+  border-radius: 4px;
+  font-size: 10px; font-weight: 500;
+  color: var(--text-muted);
+}
+.platform-badge img { width: 10px; height: 10px; }
+
+/* =========================================================
+   POWERSHELL / CODE
+   ========================================================= */
+.ps-section { margin-bottom: 48px; }
+.ps-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.ps-card__head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.ps-card__head .material-symbols-rounded { color: var(--accent); font-size: 20px; }
+.ps-card__head strong { font-size: 14px; font-weight: 600; }
+.ps-card__bar {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px;
+  background: var(--code-bar-bg);
+  border-bottom: 1px solid var(--border);
+}
+.ps-card__dot { width: 8px; height: 8px; border-radius: 50%; }
+.ps-card__dot--r { background: #ff5f57; }
+.ps-card__dot--y { background: #febc2e; }
+.ps-card__dot--g { background: #28c840; }
+.ps-card__label {
+  font-size: 10px; color: var(--text-dim); margin-left: 6px;
+  text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;
+}
+.ps-card__body {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px;
+  font-family: var(--mono); font-size: 12px;
+  color: var(--code-text);
+  overflow-x: auto; word-break: break-all;
+  -webkit-overflow-scrolling: touch;
+}
+.ps-card__prompt { color: var(--accent); font-weight: 700; flex-shrink: 0; }
+.ps-card__body code { flex: 1; min-width: 0; }
+.copy-btn {
+  flex-shrink: 0;
+  background: var(--surface-3);
+  border: none;
+  color: var(--text-muted);
+  padding: 6px 12px;
+  min-height: 32px;
+  border-radius: var(--radius-full);
+  font-family: var(--font); font-size: 11px; font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.copy-btn:hover { background: var(--surface-2); color: var(--text); }
+.copy-btn.copied { background: var(--accent-bright); color: #000; }
+
+/* =========================================================
+   ANDROID APP CARDS
+   ========================================================= */
+.android-app-card {
+  display: flex;
+  gap: 14px;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 10px;
+}
+.android-app-card__icon {
+  flex-shrink: 0;
+  width: 52px; height: 52px;
+  border-radius: 12px;
+  background: var(--surface-3);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.android-app-card__icon img { width: 40px; height: 40px; object-fit: contain; }
+.android-app-card__body { flex: 1; min-width: 0; }
+.android-app-card__name { font-size: 15px; font-weight: 700; margin-bottom: 4px; color: var(--text); }
+.android-app-card__desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px; }
+.android-app-card__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.btn-mini {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 6px 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font); font-size: 12px; font-weight: 600;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn-mini:hover { background: var(--surface-3); border-color: var(--border-hover); text-decoration: none; }
+.btn-mini--filled {
+  background: var(--accent-bright);
+  border-color: var(--accent-bright);
+  color: #000;
+}
+.btn-mini--filled:hover {
+  background: var(--accent-bright-hover);
+  border-color: var(--accent-bright-hover);
+}
+.btn-mini--text {
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-muted);
+  padding: 4px 6px;
+  font-size: 11px;
+  font-weight: 500;
+}
+.btn-mini--text:hover {
+  color: var(--text);
+  background: transparent;
+  border-color: transparent;
+  text-decoration: underline;
+}
+.btn-mini .material-symbols-rounded { font-size: 15px; }
+.btn-mini img { width: 14px; height: 14px; object-fit: contain; }
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer {
+  margin-top: 60px;
+  padding: 28px 0 calc(28px + env(safe-area-inset-bottom, 0));
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.footer p { font-size: 13px; color: var(--text-dim); }
+
+/* =========================================================
+   BOTTOM NAV
+   ========================================================= */
+.bottom-nav {
+  display: none;
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 100;
+  background: var(--bottom-nav-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid var(--border);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.bottom-nav__item {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 3px;
+  padding: 8px 0 10px;
+  background: none; border: none;
+  color: var(--text-dim);
+  font-family: var(--font); font-size: 10px; font-weight: 500;
+  cursor: pointer;
+  transition: color 0.15s;
+  text-decoration: none;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+.bottom-nav__item:hover { text-decoration: none; }
+.bottom-nav__icon {
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 52px; height: 28px;
+  border-radius: 999px;
+  transition: background 0.2s;
+}
+.bottom-nav__icon .material-symbols-rounded { font-size: 22px; }
+.bottom-nav__label { line-height: 1.2; }
+
+.bottom-nav__item.active .bottom-nav__icon {
+  background: var(--accent-bright);
+  color: #000;
+}
+.bottom-nav__item.active .bottom-nav__icon .material-symbols-rounded {
+  color: #000;
+  font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+}
+.bottom-nav__item.active .bottom-nav__label {
+  color: #fff;
+  font-weight: 600;
+}
+:root[data-theme="light"] .bottom-nav__item.active .bottom-nav__label {
+  color: var(--text);
+}
+
+.back-top {
+  position: fixed;
+  bottom: 24px; right: 20px;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s, background 0.15s;
+  z-index: 90;
+}
+.back-top.visible { opacity: 1; visibility: visible; }
+.back-top:hover { background: var(--surface-3); }
+.back-top .material-symbols-rounded { font-size: 22px; }
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+@media (max-width: 768px) {
+  .header {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--bg);
+  }
+  .bottom-nav {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--bg);
+  }
+  .nav { display: none; }
+  .header__inner { height: 56px; gap: 8px; }
+  .logo img { height: 38px; max-width: 130px; }
+  .bottom-nav { display: flex; }
+  main { padding-bottom: 84px; }
+
+  .opt-hero { padding: 32px 0 16px; }
+  .optimize-tabs { width: 100%; max-width: 400px; }
+  .opt-tabs-wrap { padding: 0 20px; margin-bottom: 20px; }
+  .optimize-tab { flex: 1; justify-content: center; font-size: 13px; padding: 9px 10px; }
+
+  .opt-guide-strip { padding: 14px 16px; gap: 12px; }
+  .opt-guide-strip__icon { width: 38px; height: 38px; }
+  .opt-guide-strip__text strong { font-size: 14px; }
+  .opt-guide-strip__text small { font-size: 11px; }
+
+  .opt-guide { padding: 20px; }
+  .opt-guide h2 { font-size: 18px; }
+  .opt-guide__slide h3 { font-size: 17px; }
+  .opt-guide__text { font-size: 13px; }
+  .opt-guide__progress { grid-template-columns: 28px 1fr 28px 1fr 28px; gap: 6px; }
+  .opt-guide__dot { width: 28px; height: 28px; font-size: 12px; }
+
+  .opt-guide__actions { flex-direction: column; align-items: stretch; }
+  .opt-guide__actions .cta-btn,
+  .opt-guide__actions .btn-secondary { width: 100%; }
+
+  .guide-warning { flex-direction: column; gap: 12px; padding: 16px; }
+  .guide-warning__icon { width: 36px; height: 36px; }
+
+  .tools-grid { grid-template-columns: 1fr; }
+  .tool-card { padding: 14px 16px; gap: 14px; }
+  .tool-card__icon { width: 44px; height: 44px; }
+  .tool-card__icon img { width: 34px; height: 34px; }
+
+  .optimize-section__title { font-size: 18px; }
+  .dl-actions { grid-template-columns: 1fr; }
+  .dl-actions .cta-btn { padding: 1rem 1.25rem; min-height: 60px; }
+
+  .android-app-card { flex-direction: column; gap: 12px; padding: 16px; }
+  .android-app-card__icon { width: 48px; height: 48px; align-self: flex-start; }
+  .android-app-card__icon img { width: 36px; height: 36px; }
+  .android-app-card__actions { gap: 6px; }
+  .btn-mini { font-size: 11px; padding: 6px 10px; }
+
+  .ps-card__body { font-size: 11px; padding: 10px 12px; }
+
+  .back-top { bottom: 88px; }
+
+  body { transition: background-color 0.15s ease, color 0.15s ease; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Loader -->
+<div class="page-loader" id="pageLoader" role="status" aria-label="Loading">
+  <div class="bolt-loader">
+    <svg class="bolt-loader__bolt" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z"/>
+    </svg>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="container header__inner">
+    <a href="/" class="logo" aria-label="TaraTariTools home">
+      <img src="https://raw.githubusercontent.com/tarataritools/tarataritools.github.io/main/images/TaraTariToolsLogo.png" alt="TaraTariTools logo" onerror="this.remove()">
+    </a>
+    <span class="logo__spacer"></span>
+    <nav class="nav" aria-label="Primary" id="desktopNav">
+      <span class="nav__indicator" id="navIndicator"></span>
+      <a href="/" class="nav__item">
+        <span class="material-symbols-rounded">home</span> Home
+      </a>
+      <a href="/optimize/" class="nav__item active">
+        <span class="material-symbols-rounded">bolt</span> Optimize
+      </a>
+      <a href="/ditch" class="nav__item">
+        <span class="material-symbols-rounded">swap_horiz</span> TaraTariDitch
+        <span class="new-badge">NEW</span>
+      </a>
+      <a href="/installer/" class="nav__item">
+        <span class="material-symbols-rounded">download</span> Installer
+      </a>
+    </nav>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+      <span class="material-symbols-rounded" id="themeIcon">dark_mode</span>
+    </button>
+    <a class="icon-btn" href="https://github.com/tarataritools/tarataritools.github.io" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+    </a>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="opt-hero">
+      <h1>Optimize Windows</h1>
+      <p>Follow the guided wizard or jump straight to the tools below. Clean ISOs, debloat scripts, package managers and step-by-step playbooks.</p>
+    </div>
+
+    <div class="opt-tabs-wrap">
+      <div class="optimize-tabs" role="tablist" aria-label="Choose platform">
+        <button class="optimize-tab active" data-opt="pc" role="tab">
+          <span class="material-symbols-rounded">desktop_windows</span> Windows
+        </button>
+        <button class="optimize-tab" data-opt="android" role="tab">
+          <span class="material-symbols-rounded">android</span> Android
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================================================
+         PC PANEL
+         ================================================== -->
+    <div class="optimize-panel" data-panel="pc">
+
+      <!-- ======================================
+           COLLAPSED GUIDE STRIP (default view)
+           ====================================== -->
+      <button class="opt-guide-strip" id="winGuideOpen" aria-label="Open TaraTari Windows Optimize Guide">
+        <div class="opt-guide-strip__icon">
+          <span class="material-symbols-rounded">auto_awesome</span>
+        </div>
+        <div class="opt-guide-strip__text">
+          <strong>TaraTari Windows Optimize Guide</strong>
+          <small>3 steps · reset, prepare, apply</small>
+        </div>
+        <span class="opt-guide-strip__chev">
+          <span class="material-symbols-rounded">chevron_right</span>
+        </span>
+      </button>
+
+      <!-- ======================================
+           FULL WINDOWS GUIDE
+           ====================================== -->
+      <div class="opt-guide" id="winGuide" hidden>
+        <div class="opt-guide__head">
+          <div>
+            <span class="opt-guide__tag">GUIDED</span>
+            <h2>Step-by-Step Optimization Guide</h2>
+            <p class="opt-guide__sub">by TaraTari Tools · Windows</p>
+          </div>
+          <button class="icon-btn" id="winGuideClose" aria-label="Close guide" title="Close guide">
+            <span class="material-symbols-rounded">close</span>
+          </button>
+        </div>
+
+        <div class="opt-guide__progress">
+          <span class="opt-guide__dot is-active" data-dot="1">1</span>
+          <span class="opt-guide__line" data-line="1"></span>
+          <span class="opt-guide__dot" data-dot="2">2</span>
+          <span class="opt-guide__line" data-line="2"></span>
+          <span class="opt-guide__dot" data-dot="3">3</span>
+        </div>
+
+        <div class="opt-guide__body">
+
+          <!-- STEP 1 -->
+          <div class="opt-guide__slide is-active" data-slide="1">
+            <h3>Step 1 — Reset Windows first <span class="guide-badge">Recommended</span></h3>
+            <p class="opt-guide__text">For maximum performance, start fresh. Reinstall Windows with a clean ISO, then apply the optimization. If you skip this, optimization still works — but it may not reach the same peak performance.</p>
+
+            <h4 class="opt-guide__h4">
+              <span class="material-symbols-rounded" style="font-size:16px;">album</span>
+              Download a clean Windows ISO
+            </h4>
+            <div class="tools-grid" id="guideIsoGrid"></div>
+
+            <h4 class="opt-guide__h4">
+              <span class="material-symbols-rounded" style="font-size:16px;">usb</span>
+              Make a bootable USB
+            </h4>
+            <div class="tools-grid" id="guideUsbGrid"></div>
+
+            <div class="note note--info">
+              <span class="material-symbols-rounded">info</span>
+              <span>After reinstalling Windows, come back to this page and continue the guide. The rest of the sections below will still be here.</span>
+            </div>
+
+            <div class="opt-guide__actions">
+              <button class="cta-btn" data-guide-next data-guide-from="1">
+                <span>Skip — I won't reset</span>
+              </button>
+              <button class="btn-secondary" data-guide-next data-guide-from="1">
+                I already reset
+                <span class="material-symbols-rounded">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 2 -->
+          <div class="opt-guide__slide" data-slide="2">
+            <h3>Step 2 — Before you run the playbook</h3>
+            <p class="opt-guide__text">Two things to know before applying an optimization playbook.</p>
+
+            <div class="guide-warning">
+              <div class="guide-warning__icon">
+                <span class="material-symbols-rounded">shield</span>
+              </div>
+              <div>
+                <h4>Windows Defender warning</h4>
+                <p>Playbooks can disable Windows Defender to squeeze out more performance. If you're new to Windows and don't know how to spot bad links or malware, <strong>do NOT disable Defender</strong>. Leave it on during playbook installation.</p>
+                <p>Advanced users can disable Defender and use Malwarebytes instead. Scan occasionally. Always browse safely.</p>
+                <a href="https://www.malwarebytes.com/" target="_blank" rel="noopener" class="btn-mini">
+                  <span class="material-symbols-rounded">open_in_new</span> Get Malwarebytes
+                </a>
+              </div>
+            </div>
+
+            <div class="guide-warning">
+              <div class="guide-warning__icon">
+                <span class="material-symbols-rounded">public</span>
+              </div>
+              <div>
+                <h4>Skip Edge and Chrome</h4>
+                <p>Chrome eats RAM and uses 8GB+ of storage for its bundled Gemini models. Edge is not much better. Switch to <strong>Firefox</strong> or <strong>Brave</strong>.</p>
+                <p>If those feel heavy, try <strong>Helium</strong> (Chromium-based) or <strong>Waterfox</strong> (Firefox-based). For maximum privacy: <strong>LibreWolf</strong>.</p>
+                <div class="guide-warning__links">
+                  <a href="https://www.mozilla.org/firefox/new/" target="_blank" rel="noopener" class="btn-mini">
+                    <img src="https://img.alternativeto.net/icons/280/firefox_232783.svg" alt=""> Firefox
+                  </a>
+                  <a href="https://brave.com/download/" target="_blank" rel="noopener" class="btn-mini">
+                    <img src="https://brave.com/static-assets/images/brave-logo-sans-text.svg" alt=""> Brave
+                  </a>
+                  <a href="https://helium.computer/" target="_blank" rel="noopener" class="btn-mini">
+                    <img src="https://static0.makeuseofimages.com/wordpress/wp-content/uploads/2025/11/helium-browser-logo.png" alt=""> Helium
+                  </a>
+                  <a href="https://www.waterfox.com/" target="_blank" rel="noopener" class="btn-mini">
+                    <img src="https://vectorified.com/images/waterfox-icon-18.png" alt=""> Waterfox
+                  </a>
+                  <a href="https://librewolf.net/" target="_blank" rel="noopener" class="btn-mini">
+                    <img src="https://librewolf.net/favicon.ico" alt=""> LibreWolf
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="opt-guide__actions">
+              <button class="cta-btn" data-guide-next data-guide-from="2">
+                <span>Skip</span>
+              </button>
+              <button class="btn-secondary" data-guide-next data-guide-from="2">
+                Got it, next
+                <span class="material-symbols-rounded">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 3 -->
+          <div class="opt-guide__slide" data-slide="3">
+            <h3>Step 3 — Apply the optimization</h3>
+            <p class="opt-guide__text">Pick your Windows version and download the AME Wizard plus a playbook. Both files are required.</p>
+
+            <div id="wizardStepOs"></div>
+            <div id="wizardStepPlaybook" hidden></div>
+
+            <div class="opt-guide__actions">
+              <button class="btn-secondary" data-guide-back>
+                <span class="material-symbols-rounded">arrow_back</span>
+                Back
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ======================================
+           OPTIMIZER TOOLS (3 sub-categories)
+           ====================================== -->
+      <div class="optimize-section">
+        <h2 class="optimize-section__title">
+          <span class="material-symbols-rounded">cleaning_services</span>
+          Optimizer Tools
+        </h2>
+        <p class="optimize-section__desc">Lightweight scripts and utilities that debloat, tidy up and tune your Windows install.</p>
+
+        <div class="opt-subgroup">
+          <h3 class="opt-subgroup__title">
+            <span class="material-symbols-rounded">build</span>
+            General optimization tools
+          </h3>
+          <div class="tools-grid" id="generalToolsGrid"></div>
+        </div>
+
+        <div class="opt-subgroup">
+          <h3 class="opt-subgroup__title">
+            <span class="material-symbols-rounded">memory</span>
+            RAM cleaners
+          </h3>
+          <div class="tools-grid" id="ramToolsGrid"></div>
+        </div>
+
+        <div class="opt-subgroup">
+          <h3 class="opt-subgroup__title">
+            <span class="material-symbols-rounded">delete_sweep</span>
+            Cache cleaners
+          </h3>
+          <div class="tools-grid" id="cacheToolsGrid"></div>
+        </div>
+      </div>
+
+      <!-- ======================================
+           TARATARI WINDOWS OPTIMIZE PLAYBOOK
+           ====================================== -->
+      <div class="optimize-section">
+        <h2 class="optimize-section__title">
+          <span class="material-symbols-rounded">auto_fix_high</span>
+          TaraTari Windows Optimize Playbook
+        </h2>
+        <p class="optimize-section__desc">Pick your Windows version and download the AME Wizard + playbook. Both files are required to run the optimization.</p>
+        <div id="stepOs"></div>
+        <div id="stepPlaybook" hidden></div>
+      </div>
+
+      <!-- ======================================
+           BULK APP INSTALLER
+           ====================================== -->
+      <div class="optimize-section">
+        <h2 class="optimize-section__title">
+          <span class="material-symbols-rounded">inventory_2</span>
+          Bulk App Installer
+        </h2>
+        <p class="optimize-section__desc">Install all your apps in one click. Pick one — no bundles, no surprises.</p>
+        <div class="tools-grid" id="starterPackGrid"></div>
+      </div>
+
+      <!-- ======================================
+           WINDOWS ISOs
+           ====================================== -->
+      <div class="optimize-section">
+        <h2 class="optimize-section__title">
+          <span class="material-symbols-rounded">album</span>
+          Windows ISOs
+        </h2>
+        <p class="optimize-section__desc">Clean Windows images. Use Ventoy or Rufus to make a bootable USB, then reinstall to get peak performance.</p>
+        <div class="tools-grid" id="isoToolsGrid"></div>
+        <div class="note note--warn" style="margin-top: 16px;">
+          <span class="material-symbols-rounded">verified</span>
+          <span>Always verify the SHA‑256 hash of an ISO before installing. Community mirrors are provided as-is.</span>
+        </div>
+      </div>
+
+      <!-- ======================================
+           POWERSHELL TWEAKS
+           ====================================== -->
+      <div class="ps-section">
+        <h2 class="optimize-section__title">
+          <span class="material-symbols-rounded">code</span>
+          Quick PowerShell tweaks
+        </h2>
+        <p class="optimize-section__desc">Not ready for a full playbook? Paste one of these commands into an elevated PowerShell window.</p>
+
+        <div class="ps-card">
+          <div class="ps-card__head">
+            <span class="material-symbols-rounded">build</span>
+            <strong>WinUtil by Chris Titus</strong>
+          </div>
+          <div class="ps-card__bar">
+            <span class="ps-card__dot ps-card__dot--r"></span>
+            <span class="ps-card__dot ps-card__dot--y"></span>
+            <span class="ps-card__dot ps-card__dot--g"></span>
+            <span class="ps-card__label">PowerShell (Admin)</span>
+          </div>
+          <div class="ps-card__body">
+            <span class="ps-card__prompt">PS&gt;</span>
+            <code>irm christitus.com/win | iex</code>
+            <button class="copy-btn" data-copy="irm christitus.com/win | iex">Copy</button>
+          </div>
+        </div>
+        <div class="note note--warn">
+          <span class="material-symbols-rounded">warning</span>
+          <span><strong>Windows 10 is not supported by WinUtil.</strong> Windows 10 reached end of support on October 14, 2025.</span>
+        </div>
+
+        <div class="ps-card">
+          <div class="ps-card__head">
+            <span class="material-symbols-rounded">public</span>
+            <strong>Just the Browser — Browser debloat</strong>
+          </div>
+          <div class="ps-card__bar">
+            <span class="ps-card__dot ps-card__dot--r"></span>
+            <span class="ps-card__dot ps-card__dot--y"></span>
+            <span class="ps-card__dot ps-card__dot--g"></span>
+            <span class="ps-card__label">PowerShell (Admin)</span>
+          </div>
+          <div class="ps-card__body">
+            <span class="ps-card__prompt">PS&gt;</span>
+            <code>&amp; ([scriptblock]::Create((irm "https://raw.githubusercontent.com/corbindavenport/just-the-browser/main/main.ps1")))</code>
+            <button class="copy-btn" data-copy='&amp; ([scriptblock]::Create((irm "https://raw.githubusercontent.com/corbindavenport/just-the-browser/main/main.ps1")))'>Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================
+           WINGET TOOLS (last)
+           ====================================== -->
+      <div class="ps-section">
+        <h2 class="optimize-section__title">
+          <img src="https://api.winstall.app/icons/Devolutions.UniGetUI.png" alt="" onerror="this.remove()">
+          WinGet tools
+        </h2>
+        <p class="optimize-section__desc">WinGet is the official Windows package manager. Install it first, then use Winstall or UniGetUI for a GUI.</p>
+
+        <div class="ps-card">
+          <div class="ps-card__head">
+            <span class="material-symbols-rounded">download</span>
+            <strong>WinGet installer script</strong>
+          </div>
+          <div class="ps-card__bar">
+            <span class="ps-card__dot ps-card__dot--r"></span>
+            <span class="ps-card__dot ps-card__dot--y"></span>
+            <span class="ps-card__dot ps-card__dot--g"></span>
+            <span class="ps-card__label">PowerShell (Admin)</span>
+          </div>
+          <div class="ps-card__body">
+            <span class="ps-card__prompt">PS&gt;</span>
+            <code>Install-Script -Name winget-install -RequiredVersion 5.3.1</code>
+            <button class="copy-btn" data-copy="Install-Script -Name winget-install -RequiredVersion 5.3.1">Copy</button>
+          </div>
+        </div>
+
+        <div class="tools-grid" id="wingetToolsGrid" style="margin-top: 16px;"></div>
+      </div>
+
+    </div>
+
+    <!-- ==================================================
+         ANDROID PANEL
+         ================================================== -->
+    <div class="optimize-panel" data-panel="android" hidden>
+
+      <!-- Collapsed Android guide strip -->
+      <button class="opt-guide-strip" id="androidGuideOpen" aria-label="Open TaraTari Android Optimize Guide">
+        <div class="opt-guide-strip__icon">
+          <span class="material-symbols-rounded">auto_awesome</span>
+        </div>
+        <div class="opt-guide-strip__text">
+          <strong>TaraTari Android Optimize Guide</strong>
+          <small>3 steps · Shizuku, activate, debloat</small>
+        </div>
+        <span class="opt-guide-strip__chev">
+          <span class="material-symbols-rounded">chevron_right</span>
+        </span>
+      </button>
+
+      <!-- Full Android guide -->
+      <div class="opt-guide" id="androidGuide" hidden>
+        <div class="opt-guide__head">
+          <div>
+            <span class="opt-guide__tag">GUIDED</span>
+            <h2>Step-by-Step Debloat Guide</h2>
+            <p class="opt-guide__sub">by TaraTari Tools · Android</p>
+          </div>
+          <button class="icon-btn" id="androidGuideClose" aria-label="Close guide" title="Close guide">
+            <span class="material-symbols-rounded">close</span>
+          </button>
+        </div>
+
+        <div class="opt-guide__progress">
+          <span class="opt-guide__dot is-active" data-adot="1">1</span>
+          <span class="opt-guide__line" data-aline="1"></span>
+          <span class="opt-guide__dot" data-adot="2">2</span>
+          <span class="opt-guide__line" data-aline="2"></span>
+          <span class="opt-guide__dot" data-adot="3">3</span>
+        </div>
+
+        <div class="opt-guide__body">
+
+          <!-- Step 1 -->
+          <div class="opt-guide__slide is-active" data-aslide="1">
+            <h3>Step 1 — Install the two apps <span class="guide-badge">Required</span></h3>
+            <p class="opt-guide__text">Two apps power the whole debloat flow. Install them from the Play Store, in order. No root, no custom recovery.</p>
+
+            <div class="android-app-card">
+              <div class="android-app-card__icon">
+                <img src="https://shizuku.rikka.app/logo.png" alt="" onerror="this.style.display='none'">
+              </div>
+              <div class="android-app-card__body">
+                <div class="android-app-card__name">1. Shizuku</div>
+                <div class="android-app-card__desc">Grants apps root-like API access. Required for Canta. No root needed.</div>
+                <div class="android-app-card__actions">
+                  <a class="btn-mini btn-mini--filled" href="https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api" target="_blank" rel="noopener">
+                    <span class="material-symbols-rounded">shop</span> Play Store
+                  </a>
+                  <a class="btn-mini" href="https://www.apkmirror.com/apk/xingchen-rikka/shizuku-manager/shizuku-13-6-0-r1091-b844bc49-release/shizuku-13-6-0-r1091-b844bc49-android-apk-download/" target="_blank" rel="noopener">
+                    <span class="material-symbols-rounded">download</span> APK Mirror
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="android-app-card">
+              <div class="android-app-card__icon">
+                <img src="https://raw.githubusercontent.com/samolego/Canta/master/androidApp/src/main/res/mipmap-xxxhdpi/ic_launcher.png" alt="" onerror="this.style.display='none'">
+              </div>
+              <div class="android-app-card__body">
+                <div class="android-app-card__name">2. Canta</div>
+                <div class="android-app-card__desc">Uninstall system bloatware without root, using Shizuku. The main debloat tool.</div>
+                <div class="android-app-card__actions">
+                  <a class="btn-mini btn-mini--filled" href="https://play.google.com/store/apps/details?id=io.github.samolego.canta" target="_blank" rel="noopener">
+                    <span class="material-symbols-rounded">shop</span> Play Store
+                  </a>
+                  <a class="btn-mini btn-mini--text" href="https://samolego.github.io/Canta/install.html" target="_blank" rel="noopener">
+                    Install docs →
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="opt-guide__actions">
+              <button class="cta-btn" data-aguide-next>
+                <span>Apps installed, next</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="opt-guide__slide" data-aslide="2">
+            <h3>Step 2 — Activate Shizuku</h3>
+            <p class="opt-guide__text">Shizuku needs to be started once. Pick whichever method is easier — USB or wireless debugging. After it's running, you can close the terminal.</p>
+
+            <h4 class="opt-guide__h4">
+              <span class="material-symbols-rounded" style="font-size:16px;">usb</span>
+              Method A — ADB over USB
+            </h4>
+            <p class="opt-guide__text" style="font-size: 13px; margin-bottom: 12px;">Enable USB debugging in Developer Options, connect to a PC, then run:</p>
+
+            <div class="ps-card">
+              <div class="ps-card__head">
+                <span class="material-symbols-rounded">terminal</span>
+                <strong>Start Shizuku · v11.2.0+</strong>
+              </div>
+              <div class="ps-card__bar">
+                <span class="ps-card__dot ps-card__dot--r"></span>
+                <span class="ps-card__dot ps-card__dot--y"></span>
+                <span class="ps-card__dot ps-card__dot--g"></span>
+                <span class="ps-card__label">ADB Shell</span>
+              </div>
+              <div class="ps-card__body">
+                <span class="ps-card__prompt">$&gt;</span>
+                <code>adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/start.sh</code>
+                <button class="copy-btn" data-copy="adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/start.sh">Copy</button>
+              </div>
+            </div>
+
+            <h4 class="opt-guide__h4">
+              <span class="material-symbols-rounded" style="font-size:16px;">wifi</span>
+              Method B — Wireless debugging (Android 11+)
+            </h4>
+            <p class="opt-guide__text" style="font-size: 13px; margin-bottom: 12px;">Open Shizuku → "Start via Wireless debugging" → pair using the pairing code from Developer Options. No PC required.</p>
+
+            <div class="note note--info">
+              <span class="material-symbols-rounded">info</span>
+              <span>Shizuku resets on every reboot. Just open the app and re-run the steps — it takes 10 seconds once it's set up.</span>
+            </div>
+
+            <div class="opt-guide__actions">
+              <button class="btn-secondary" data-aguide-back>
+                <span class="material-symbols-rounded">arrow_back</span> Back
+              </button>
+              <button class="cta-btn" data-aguide-next>
+                <span>Shizuku is running</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="opt-guide__slide" data-aslide="3">
+            <h3>Step 3 — Debloat with Canta</h3>
+            <p class="opt-guide__text">Open Canta. It connects to Shizuku, lists every system package on your phone, and lets you uninstall them one by one. Take your time — this is the important part.</p>
+
+            <div class="guide-warning">
+              <div class="guide-warning__icon">
+                <span class="material-symbols-rounded">warning</span>
+              </div>
+              <div>
+                <h4>Be careful what you uninstall</h4>
+                <p>Removing the wrong package can break core phone functions (camera, calls, fingerprint sensor). Stick to obvious bloat — preinstalled social apps, trial software, duplicated manufacturer stores.</p>
+                <p>Don't know where to start? <strong>Search YouTube for "how to debloat Android using Canta"</strong> — there are step-by-step videos for every major phone brand.</p>
+                <div class="guide-warning__links">
+                  <a href="https://www.youtube.com/results?search_query=how+to+debloat+android+using+canta" target="_blank" rel="noopener" class="btn-mini">
+                    <span class="material-symbols-rounded">smart_display</span> Watch tutorials
+                  </a>
+                  <a href="https://samolego.github.io/Canta/install.html" target="_blank" rel="noopener" class="btn-mini">
+                    <span class="material-symbols-rounded">open_in_new</span> Canta docs
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="note note--info">
+              <span class="material-symbols-rounded">restart_alt</span>
+              <span>Reboot after debloating. Some changes only take effect after a fresh boot. If something breaks, reinstall the package — Canta shows the Play Store link.</span>
+            </div>
+
+            <div class="opt-guide__actions">
+              <button class="btn-secondary" data-aguide-back>
+                <span class="material-symbols-rounded">arrow_back</span> Back
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Core apps -->
+      <div class="optimize-section" style="margin-top: 0;">
+        <h2 class="optimize-section__title">
+          <span class="material-symbols-rounded">build</span>
+          Core apps
+        </h2>
+        <p class="optimize-section__desc">Install Shizuku first, then Canta. Task Manager is optional but useful for advanced users.</p>
+
+        <div class="android-app-card">
+          <div class="android-app-card__icon">
+            <img src="https://shizuku.rikka.app/logo.png" alt="" onerror="this.style.display='none'">
+          </div>
+          <div class="android-app-card__body">
+            <div class="android-app-card__name">Shizuku</div>
+            <div class="android-app-card__desc">Grants apps root-like API access. Required for Canta. No root needed.</div>
+            <div class="android-app-card__actions">
+              <a class="btn-mini btn-mini--filled" href="https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api" target="_blank" rel="noopener">
+                <span class="material-symbols-rounded">shop</span> Play Store
+              </a>
+              <a class="btn-mini" href="https://www.apkmirror.com/apk/xingchen-rikka/shizuku-manager/shizuku-13-6-0-r1091-b844bc49-release/shizuku-13-6-0-r1091-b844bc49-android-apk-download/" target="_blank" rel="noopener">
+                <span class="material-symbols-rounded">download</span> APK Mirror
+              </a>
+              <a class="btn-mini btn-mini--text" href="https://shizuku.rikka.app/guide/setup/" target="_blank" rel="noopener">
+                Setup docs →
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="android-app-card">
+          <div class="android-app-card__icon">
+            <img src="https://raw.githubusercontent.com/samolego/Canta/master/androidApp/src/main/res/mipmap-xxxhdpi/ic_launcher.png" alt="" onerror="this.style.display='none'">
+          </div>
+          <div class="android-app-card__body">
+            <div class="android-app-card__name">Canta</div>
+            <div class="android-app-card__desc">Uninstall system bloatware without root, using Shizuku. The main debloat tool.</div>
+            <div class="android-app-card__actions">
+              <a class="btn-mini btn-mini--filled" href="https://play.google.com/store/apps/details?id=io.github.samolego.canta" target="_blank" rel="noopener">
+                <span class="material-symbols-rounded">shop</span> Play Store
+              </a>
+              <a class="btn-mini" href="https://samolego.github.io/Canta/" target="_blank" rel="noopener">
+                <span class="material-symbols-rounded">public</span> Website
+              </a>
+              <a class="btn-mini btn-mini--text" href="https://samolego.github.io/Canta/install.html" target="_blank" rel="noopener">
+                Install docs →
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="android-app-card">
+          <div class="android-app-card__icon">
+            <img src="https://image.winudf.com/v2/image1/Y29tLnJrLnRhc2ttYW5hZ2VyX2ljb25fMTc2MDcwOTUyM18wMzI/icon.png?w=140&fakeurl=1" alt="" onerror="this.style.display='none'">
+          </div>
+          <div class="android-app-card__body">
+            <div class="android-app-card__name">Task Manager (root / Shizuku)</div>
+            <div class="android-app-card__desc">Advanced task manager. Works with root or Shizuku. See and kill every running process.</div>
+            <div class="android-app-card__actions">
+              <a class="btn-mini btn-mini--filled" href="https://play.google.com/store/apps/details?id=com.rk.taskmanager" target="_blank" rel="noopener">
+                <span class="material-symbols-rounded">shop</span> Play Store
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADB -->
+      <div class="ps-section">
+        <h2 class="optimize-section__title">
+          <span class="material-symbols-rounded">terminal</span>
+          ADB command for Shizuku
+        </h2>
+        <p class="optimize-section__desc">After installing Shizuku, run this once from your PC with USB debugging enabled. Starts Shizuku without needing a reboot.</p>
+
+        <div class="ps-card">
+          <div class="ps-card__head">
+            <span class="material-symbols-rounded">adb</span>
+            <strong>Shizuku v11.2.0+</strong>
+          </div>
+          <div class="ps-card__bar">
+            <span class="ps-card__dot ps-card__dot--r"></span>
+            <span class="ps-card__dot ps-card__dot--y"></span>
+            <span class="ps-card__dot ps-card__dot--g"></span>
+            <span class="ps-card__label">ADB Shell</span>
+          </div>
+          <div class="ps-card__body">
+            <span class="ps-card__prompt">$&gt;</span>
+            <code>adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/start.sh</code>
+            <button class="copy-btn" data-copy="adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/start.sh">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Debloat package -->
+      <div class="optimize-section">
+        <h2 class="optimize-section__title">
+          <span class="material-symbols-rounded">package_2</span>
+          Debloat package
+        </h2>
+        <p class="optimize-section__desc">Ready-made batch scripts to remove bloat on popular Android devices.</p>
+        <div class="tools-grid" id="androidDebloatGrid"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>Part of <a href="/">TaraTariTools</a> · hand-picked, no affiliates.</p>
+  </div>
+</footer>
+
+<nav class="bottom-nav" aria-label="Primary mobile">
+  <a href="/" class="bottom-nav__item">
+    <span class="bottom-nav__icon"><span class="material-symbols-rounded">home</span></span>
+    <span class="bottom-nav__label">Home</span>
+  </a>
+  <a href="/optimize/" class="bottom-nav__item active">
+    <span class="bottom-nav__icon"><span class="material-symbols-rounded">bolt</span></span>
+    <span class="bottom-nav__label">Optimize</span>
+  </a>
+  <a href="/ditch" class="bottom-nav__item">
+    <span class="bottom-nav__icon"><span class="material-symbols-rounded">swap_horiz</span></span>
+    <span class="bottom-nav__label">Ditch</span>
+  </a>
+  <a href="/installer/" class="bottom-nav__item">
+    <span class="bottom-nav__icon"><span class="material-symbols-rounded">download</span></span>
+    <span class="bottom-nav__label">Installer</span>
+  </a>
+</nav>
+
+<button class="back-top" id="backTop" aria-label="Back to top">
+  <span class="material-symbols-rounded">arrow_upward</span>
+</button>
+
+<script>
+/* =========================================================
+   THEME
+   ========================================================= */
+(function initTheme() {
+  const root = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  const icon = document.getElementById('themeIcon');
+  function setTheme(t) {
+    if (t === 'light') {
+      root.setAttribute('data-theme', 'light');
+      icon.textContent = 'light_mode';
+    } else {
+      root.removeAttribute('data-theme');
+      icon.textContent = 'dark_mode';
+    }
+    try { localStorage.setItem('taratan_theme', t); } catch(e) {}
+  }
+  const current = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  icon.textContent = current === 'light' ? 'light_mode' : 'dark_mode';
+  btn.addEventListener('click', () => {
+    const now = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    setTheme(now === 'light' ? 'dark' : 'light');
+  });
+})();
+
+/* =========================================================
+   TOOLS DATABASE
+   ========================================================= */
+const toolsDatabase = [
+  { id: 34, name: "Windows 10 ISO", url: "https://drive.google.com/file/d/1zl7Uv5VGzRsu0P5fFEcHyx-vmBkzc4S0/view?usp=sharing", icon: "https://img.icons8.com/color/48/000000/windows-10.png", category: "Operating Systems", platforms: [], isOS: true, desc: "Official Windows 10 installation image, Home and Pro editions." },
+  { id: 44, name: "Windows 11 25H2", url: "https://software-static.download.prss.microsoft.com/dbazure/888969d5-f34g-4e03-ac9d-1f9786c66749/26200.6584.250915-1905.25h2_ge_release_svc_refresh_CLIENT_CONSUMER_x64FRE_en-us.iso", icon: "https://img.icons8.com/color/48/000000/windows-11.png", category: "Operating Systems", platforms: [], isOS: true, desc: "Windows 11 25H2 · build 26200.6584 · x64 · English (US)." },
+  { id: 45, name: "Windows 11 LTSC", url: "https://oemsoc.download.prss.microsoft.com/dbazure/X23-81951_26100.1742.240906-0331.ge_release_svc_refresh_CLIENT_ENTERPRISES_OEM_x64FRE_en-us.iso_640de540-87c4-427f-be87-e6d53a3a60b4?t=2c3b664b-b119-4088-9db1-ccff72c6d22e&P1=102816950270&P2=601&P3=2&P4=OC448onxqdmdUsBUApAiE8pj1FZ%2bEPTU3%2bC6Quq29MVwMyyDUtR%2fsbiy7RdVoZOHaZRndvzeOOnIwJZ2x3%2bmP6YK9cjJSP41Lvs0SulF4SVyL5C0DdDmiWqh2QW%2bcDPj2Xp%2bMrI9NOeElSBS5kkOWP8Eiyf2VkkQFM3g5vIk3HJVvu5sWo6pFKpFv4lML%2bHaIiTSuwbPMs5xwEQTfScuTKfigNlUZPdHRMp1B3uKLgIA3r0IbRpZgHYMXEwXQ%2fSLMdDNQthpqQvz1PThVkx7ObD55CXgt0GNSAWRfjdURWb8ywWk1gT7ozAgpP%2fKNm56U5nh33WZSuMZIuO1SBM2vw%3d%3d", icon: "https://img.icons8.com/color/48/000000/windows-11.png", category: "Operating Systems", platforms: [], isOS: true, desc: "Windows 11 Enterprise LTSC · build 26100.1742 · x64 · English (US)." },
+  { id: 46, name: "Windows 10 LTSC", url: "https://buzzheavier.com/yhggy3l1e5oq", icon: "https://img.icons8.com/color/48/000000/windows-10.png", category: "Operating Systems", platforms: [], isOS: true, desc: "Windows 10 Enterprise LTSC · x64 · English." },
+  { id: 64, name: "Ventoy", url: "https://www.ventoy.net/en/index.html", icon: "https://static1.xdaimages.com/wordpress/wp-content/uploads/2024/08/ventoy-logo.png", category: "System / Utilities", platforms: ["Windows", "Linux"], desc: "Create a bootable USB from multiple ISOs at once. No reformatting needed when you swap images." },
+  { id: 81, name: "Rufus", url: "https://rufus.ie/", icon: "https://rufus.ie/favicon.ico", category: "System / Utilities", platforms: ["Windows"], desc: "Small, fast utility to create bootable USB flash drives from ISOs." },
+  { id: 74, name: "BleachBit", url: "https://github.com/bleachbit/bleachbit", icon: "https://img.alternativeto.net/icons/70/avif/bleachbit_324211.png", category: "System / Utilities", platforms: ["Windows", "Linux"], desc: "Free cache, log and temp file cleaner. Also shreds files securely." },
+  { id: 36, name: "Kudu", url: "https://usekudu.com/download", icon: "https://usekudu.com/favicon.ico", category: "System / Utilities", platforms: ["Windows", "macOS", "Linux"], desc: "Free system cleaner and browser cache remover." },
+  { id: 37, name: "WinHance", url: "https://winhance.net/", icon: "https://winhance.net/favicon.ico", category: "System / Utilities", platforms: ["Windows"], desc: "Open source Windows optimizer. Remove bloat and customize settings." },
+  { id: 75, name: "WinUtil", url: "https://winutil.christitus.com/", icon: "https://img.alternativeto.net/icons/70/avif/chris-titus-tech-s-windows-utility_329573.png", category: "System / Utilities", platforms: ["Windows"], desc: "Chris Titus's all-in-one Windows utility. Debloat, tweak and install apps. Windows 11 only." },
+  { id: 76, name: "RemoveWindowsAI", url: "https://github.com/zoicware/RemoveWindowsAI", icon: "https://img.alternativeto.net/icons/70/avif/removewindowsai_266368.png", category: "System / Utilities", platforms: ["Windows"], desc: "Removes Copilot and AI features from Windows 11. Windows 11 only." },
+  { id: 77, name: "OptimizerDuck", url: "https://github.com/itsfatduck/optimizerDuck", icon: "https://img.alternativeto.net/icons/70/avif/optimizerduck_286081.png", category: "System / Utilities", platforms: ["Windows"], desc: "Privacy-focused Windows optimizer. Disable telemetry and bloat." },
+  { id: 78, name: "Mem Reduct", url: "https://github.com/henrypp/memreduct", icon: "https://img.alternativeto.net/icons/70/avif/mem-reduct_100031.png", category: "System / Utilities", platforms: ["Windows"], desc: "Lightweight memory cleaner. Frees up RAM instantly." },
+  { id: 79, name: "TaraTari Installer", url: "https://tarataritools.github.io/installer/", iconSymbol: "download", category: "TaraTari Tools", platforms: ["Windows", "Android"], desc: "Install all your apps in one click. Curated list, no bundles, no surprises.", recommended: true },
+  { id: 41, name: "Ninite", url: "https://ninite.com/", icon: "https://www.google.com/s2/favicons?sz=128&domain=ninite.com", category: "Package Managers", platforms: ["Windows"], desc: "One-click bulk installer for popular apps." },
+  { id: 38, name: "Winstall", url: "https://winstall.app/", icon: "https://winstall.app/assets/logo.svg", category: "Package Managers", platforms: ["Windows"], desc: "Bulk install apps via winget with a clean UI." },
+  { id: 39, name: "UniGetUI", url: "https://devolutions.net/download-center/#unigetui", icon: "https://api.winstall.app/icons/Devolutions.UniGetUI.png", category: "Package Managers", platforms: ["Windows"], desc: "Modern GUI for winget, chocolatey, scoop and more." },
+  { id: 40, name: "WinGet", url: "https://learn.microsoft.com/en-us/windows/package-manager/winget/", iconSymbol: "terminal", category: "Package Managers", platforms: ["Windows"], desc: "Official Windows CLI package manager." },
+  { id: 33, name: "Android Debloat Package", url: "https://drive.google.com/file/d/1DhQJJ6nKDwgWNordT8tmv7r_-oxDnpAr/view?usp=sharing", icon: "https://img.icons8.com/color/48/000000/android-os.png", category: "System / Android Tools", platforms: ["Windows", "Linux"], desc: "Remove Android bloatware safely via ADB." }
+];
+
+const PLATFORM_META = {
+  Windows: { label: "Windows", icon: "https://cdn.simpleicons.org/windows/e8eaed", type: "img" },
+  Linux:   { label: "Linux",   icon: "https://cdn.simpleicons.org/linux/e8eaed",   type: "img" },
+  macOS:   { label: "macOS",   icon: "https://cdn.simpleicons.org/apple/e8eaed",   type: "img" },
+  Android: { label: "Android", icon: "https://cdn.simpleicons.org/android/e8eaed", type: "img" },
+  iOS:     { label: "iOS",     icon: "https://cdn.simpleicons.org/apple/e8eaed",   type: "img" },
+  Web:     { label: "Web",     icon: "public", type: "symbol" }
+};
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]);
+}
+
+function renderPlatformBadges(tool) {
+  if (tool.isOS || !tool.platforms || tool.platforms.length === 0) return '';
+  return `<div class="tool-card__badges">${tool.platforms.map(p => {
+    const m = PLATFORM_META[p];
+    if (!m) return '';
+    const icon = m.type === 'img'
+      ? `<img src="${m.icon}" alt="" onerror="this.remove()">`
+      : `<span class="material-symbols-rounded" style="font-size:11px;">${m.icon}</span>`;
+    return `<span class="platform-badge">${icon}${m.label}</span>`;
+  }).join('')}</div>`;
+}
+
+function renderToolCard(tool) {
+  const icon = tool.iconSymbol
+    ? `<span class="material-symbols-rounded">${tool.iconSymbol}</span>`
+    : `<img src="${escapeHtml(tool.icon)}" alt="${escapeHtml(tool.name)} icon" loading="lazy" onerror="this.src='https://placehold.co/40x40/26262b/4ade80?text=?'">`;
+  const recChip = tool.recommended ? '<span class="rec-chip">Recommended</span>' : '';
+  return `
+    <a class="tool-card" href="${escapeHtml(tool.url)}" target="_blank" rel="noopener noreferrer">
+      <div class="tool-card__icon">${icon}</div>
+      <div class="tool-card__body">
+        <div class="tool-card__name"><span>${escapeHtml(tool.name)}</span>${recChip}</div>
+        <div class="tool-card__cat">${escapeHtml(tool.category)}</div>
+        <div class="tool-card__desc">${escapeHtml(tool.desc)}</div>
+        ${renderPlatformBadges(tool)}
+      </div>
+    </a>`;
+}
+
+function getTool(id) { return toolsDatabase.find(t => t.id === id); }
+
+/* =========================================================
+   PLAYBOOKS
+   ========================================================= */
+const PLAYBOOKS = {
+  atlas: {
+    name: "Atlas OS",
+    desc: "Maximum performance. Removes background services, telemetry and bloatware. Best for gaming and low-end hardware.",
+    installUrl: "https://github.com/Ameliorated-LLC/trusted-uninstaller-cli/releases/download/0.8.4/AME-Beta-v0.8.4.exe",
+    playbookUrl: "https://github.com/Atlas-OS/Atlas/releases/download/0.5.0-hotfix/AtlasPlaybook_v0.5.0-hotfix.apbx",
+    playbookLabel: "Atlas Playbook",
+    playbookMeta: "Atlas v0.5.0 hotfix · .apbx"
+  },
+  revios: {
+    name: "ReviOS",
+    desc: "Balanced optimization. Keeps essential features while removing bloat and telemetry. Works on both Windows 10 and 11.",
+    installUrl: "https://github.com/Ameliorated-LLC/trusted-uninstaller-cli/releases/download/0.8.4/AME-Beta-v0.8.4.exe",
+    playbookUrl: "https://drive.google.com/file/d/1FWBGBTVGTl1N11whcRznH7bZeMDkwAjP/view?usp=sharing",
+    playbookLabel: "ReviOS Playbook",
+    playbookMeta: "ReviOS latest · .apbx"
+  }
+};
+
+function inlineLoaderHTML() {
+  return `
+    <div class="inline-loader">
+      <div class="bolt-loader">
+        <svg class="bolt-loader__bolt" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z"/>
+        </svg>
+      </div>
+    </div>`;
+}
+
+function renderDownloadBlock(playbookKey) {
+  const pb = PLAYBOOKS[playbookKey];
+  return `
+    <div class="playbook-detail">
+      <h3>${pb.name}</h3>
+      <p>${pb.desc}</p>
+      <div class="dl-actions">
+        <a class="cta-btn" href="${pb.installUrl}" target="_blank" rel="noopener">
+          <span>
+            <span class="dl-icon-row">
+              <span class="material-symbols-rounded">download</span>
+              AME Wizard
+            </span>
+            <span class="dl-meta">Required installer · v0.8.4</span>
+          </span>
+        </a>
+        <a class="cta-btn" href="${pb.playbookUrl}" target="_blank" rel="noopener">
+          <span>
+            <span class="dl-icon-row">
+              <span class="material-symbols-rounded">download</span>
+              ${pb.playbookLabel}
+            </span>
+            <span class="dl-meta">${pb.playbookMeta || 'Playbook file'}</span>
+          </span>
+        </a>
+      </div>
+      <div class="note note--info">
+        <span class="material-symbols-rounded">info</span>
+        <span>Download both files first. AME Wizard runs the playbook. The playbook changes Windows settings and removes bloat.</span>
+      </div>
+      <ol class="steps-list">
+        <li>Download AME Wizard and the ${pb.playbookLabel}.</li>
+        <li>Run AME Wizard as administrator.</li>
+        <li>Load the playbook file inside AME Wizard.</li>
+        <li>Follow the on-screen steps. The PC will restart.</li>
+      </ol>
+    </div>`;
+}
+
+function bindCtaButtons(root) {
+  (root || document).querySelectorAll('.cta-btn').forEach(btn => {
+    if (btn.dataset.ctaBound) return;
+    btn.dataset.ctaBound = '1';
+    btn.addEventListener('click', function() {
+      this.classList.add('cta-pressed');
+      clearTimeout(this._ctaTimer);
+      this._ctaTimer = setTimeout(() => this.classList.remove('cta-pressed'), 500);
+    });
+  });
+}
+
+/* =========================================================
+   PLAYBOOK SECTION (used by wizard step 3 & manual)
+   ========================================================= */
+const OS_CARDS_HTML = `
+  <div class="os-cards">
+    <button class="os-card" data-os="win10">
+      <span class="material-symbols-rounded">desktop_windows</span>
+      <strong>Windows 10</strong>
+      <small>ReviOS only. Atlas is end-of-life on Win10.</small>
+    </button>
+    <button class="os-card" data-os="win11">
+      <span class="material-symbols-rounded">desktop_windows</span>
+      <strong>Windows 11</strong>
+      <small>Choose between Atlas and ReviOS.</small>
+    </button>
+  </div>
+`;
+
+function initPlaybookSection(osContainerId, playbookContainerId) {
+  const osContainer = document.getElementById(osContainerId);
+  const playbookContainer = document.getElementById(playbookContainerId);
+  if (!osContainer || !playbookContainer) return;
+
+  osContainer.innerHTML = OS_CARDS_HTML;
+
+  osContainer.querySelectorAll('.os-card').forEach(card => {
+    card.addEventListener('click', function() {
+      osContainer.querySelectorAll('.os-card').forEach(c => c.classList.remove('selected'));
+      this.classList.add('selected');
+
+      const os = this.dataset.os;
+      playbookContainer.innerHTML = '';
+      playbookContainer.hidden = false;
+      osContainer.style.display = 'none';
+
+      if (os === 'win10') {
+        playbookContainer.innerHTML = `
+          <div class="note note--warn">
+            <span class="material-symbols-rounded">warning</span>
+            <span><strong>Windows 10 reached end of support.</strong> ReviOS is the recommended playbook. Atlas still works on Win10 but is end-of-life.</span>
+          </div>
+          ${renderDownloadBlock('revios')}
+          <button class="legacy-toggle" data-legacy-toggle>Also try Atlas on Windows 10 (legacy, unsupported)</button>
+          <div class="legacy-content" data-legacy-content>
+            <div class="note note--warn">
+              <span class="material-symbols-rounded">warning</span>
+              <span>Atlas for Windows 10 is no longer maintained. Use ReviOS unless you have a specific reason.</span>
+            </div>
+            ${renderDownloadBlock('atlas')}
+          </div>
+          <button class="back-btn" data-reset>
+            <span class="material-symbols-rounded" style="font-size:16px;">arrow_back</span>
+            Choose a different Windows version
+          </button>
+        `;
+        bindCtaButtons(playbookContainer);
+
+        const legacyBtn = playbookContainer.querySelector('[data-legacy-toggle]');
+        if (legacyBtn) {
+          legacyBtn.addEventListener('click', () => {
+            playbookContainer.querySelector('[data-legacy-content]').classList.toggle('open');
+          });
+        }
+      } else {
+        playbookContainer.innerHTML = `
+          <p style="margin-bottom:16px;color:var(--text-muted);font-size:14px;">Pick a playbook. Both need AME Wizard.</p>
+          <div class="playbook-select">
+            <button class="playbook-card" data-pb="atlas">
+              <h3>Atlas OS</h3>
+              <p>${PLAYBOOKS.atlas.desc}</p>
+            </button>
+            <button class="playbook-card" data-pb="revios">
+              <h3>ReviOS</h3>
+              <p>${PLAYBOOKS.revios.desc}</p>
+            </button>
+          </div>
+          <div data-playbook-detail></div>
+          <button class="back-btn" data-reset>
+            <span class="material-symbols-rounded" style="font-size:16px;">arrow_back</span>
+            Choose a different Windows version
+          </button>
+        `;
+
+        playbookContainer.querySelectorAll('.playbook-card').forEach(pbCard => {
+          pbCard.addEventListener('click', function() {
+            playbookContainer.querySelectorAll('.playbook-card').forEach(c => c.classList.remove('selected'));
+            this.classList.add('selected');
+            const detail = playbookContainer.querySelector('[data-playbook-detail]');
+            detail.innerHTML = inlineLoaderHTML();
+            setTimeout(() => {
+              detail.innerHTML = renderDownloadBlock(this.dataset.pb);
+              bindCtaButtons(detail);
+            }, 380);
+          });
+        });
+      }
+
+      const resetBtn = playbookContainer.querySelector('[data-reset]');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          playbookContainer.innerHTML = '';
+          playbookContainer.hidden = true;
+          osContainer.style.display = '';
+          osContainer.querySelectorAll('.os-card').forEach(c => c.classList.remove('selected'));
+        });
+      }
+    });
+  });
+}
+
+/* =========================================================
+   WINDOWS GUIDE STATE
+   ========================================================= */
+let currentGuideStep = 1;
+const totalGuideSteps = 3;
+
+const winGuide = document.getElementById('winGuide');
+const winGuideOpen = document.getElementById('winGuideOpen');
+const winGuideClose = document.getElementById('winGuideClose');
+
+function setGuideStep(step) {
+  if (step < 1 || step > totalGuideSteps) return;
+  currentGuideStep = step;
+
+  document.querySelectorAll('#winGuide .opt-guide__slide').forEach(s => {
+    s.classList.toggle('is-active', parseInt(s.dataset.slide, 10) === step);
+  });
+
+  document.querySelectorAll('#winGuide .opt-guide__dot').forEach(d => {
+    const dotStep = parseInt(d.dataset.dot, 10);
+    d.classList.toggle('is-active', dotStep === step);
+    d.classList.toggle('is-done', dotStep < step);
+  });
+
+  document.querySelectorAll('#winGuide .opt-guide__line').forEach(line => {
+    const lineIdx = parseInt(line.dataset.line, 10);
+    line.classList.toggle('is-done', lineIdx < step);
+  });
+
+  if (winGuide && step > 1) {
+    const top = winGuide.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+}
+
+function openWinGuide() {
+  winGuideOpen.hidden = true;
+  winGuide.hidden = false;
+  setGuideStep(currentGuideStep);
+  try { localStorage.setItem('taratan_win_guide_open', '1'); } catch(e) {}
+}
+
+function closeWinGuide() {
+  winGuide.hidden = true;
+  winGuideOpen.hidden = false;
+  try { localStorage.setItem('taratan_win_guide_open', '0'); } catch(e) {}
+}
+
+winGuideOpen.addEventListener('click', openWinGuide);
+winGuideClose.addEventListener('click', closeWinGuide);
+
+document.querySelectorAll('#winGuide [data-guide-next]').forEach(btn => {
+  btn.addEventListener('click', () => setGuideStep(currentGuideStep + 1));
+});
+document.querySelectorAll('#winGuide [data-guide-back]').forEach(btn => {
+  btn.addEventListener('click', () => setGuideStep(currentGuideStep - 1));
+});
+
+/* =========================================================
+   ANDROID GUIDE STATE
+   ========================================================= */
+let currentAGuideStep = 1;
+const totalAGuideSteps = 3;
+
+const androidGuide = document.getElementById('androidGuide');
+const androidGuideOpen = document.getElementById('androidGuideOpen');
+const androidGuideClose = document.getElementById('androidGuideClose');
+
+function setAGuideStep(step) {
+  if (step < 1 || step > totalAGuideSteps) return;
+  currentAGuideStep = step;
+
+  document.querySelectorAll('#androidGuide .opt-guide__slide').forEach(s => {
+    s.classList.toggle('is-active', parseInt(s.dataset.aslide, 10) === step);
+  });
+
+  document.querySelectorAll('#androidGuide .opt-guide__dot').forEach(d => {
+    const dotStep = parseInt(d.dataset.adot, 10);
+    d.classList.toggle('is-active', dotStep === step);
+    d.classList.toggle('is-done', dotStep < step);
+  });
+
+  document.querySelectorAll('#androidGuide .opt-guide__line').forEach(line => {
+    const lineIdx = parseInt(line.dataset.aline, 10);
+    line.classList.toggle('is-done', lineIdx < step);
+  });
+
+  if (androidGuide && step > 1) {
+    const top = androidGuide.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+}
+
+function openAndroidGuide() {
+  androidGuideOpen.hidden = true;
+  androidGuide.hidden = false;
+  setAGuideStep(currentAGuideStep);
+  try { localStorage.setItem('taratan_android_guide_open', '1'); } catch(e) {}
+}
+
+function closeAndroidGuide() {
+  androidGuide.hidden = true;
+  androidGuideOpen.hidden = false;
+  try { localStorage.setItem('taratan_android_guide_open', '0'); } catch(e) {}
+}
+
+androidGuideOpen.addEventListener('click', openAndroidGuide);
+androidGuideClose.addEventListener('click', closeAndroidGuide);
+
+document.querySelectorAll('#androidGuide [data-aguide-next]').forEach(btn => {
+  btn.addEventListener('click', () => setAGuideStep(currentAGuideStep + 1));
+});
+document.querySelectorAll('#androidGuide [data-aguide-back]').forEach(btn => {
+  btn.addEventListener('click', () => setAGuideStep(currentAGuideStep - 1));
+});
+
+/* =========================================================
+   RENDER SECTIONS
+   ========================================================= */
+function renderAllSections() {
+  // Wizard step 1 — ISOs
+  const isoIds = [44, 45, 34, 46];
+  document.getElementById('guideIsoGrid').innerHTML = isoIds
+    .map(id => getTool(id)).filter(Boolean).map(renderToolCard).join('');
+
+  // Wizard step 1 — USB tools
+  const usbIds = [64, 81];
+  document.getElementById('guideUsbGrid').innerHTML = usbIds
+    .map(id => getTool(id)).filter(Boolean).map(renderToolCard).join('');
+
+  // Optimizer Tools — subcategories
+  const generalIds = [37, 75, 76, 77]; // WinHance, WinUtil, RemoveWindowsAI, OptimizerDuck
+  document.getElementById('generalToolsGrid').innerHTML = generalIds
+    .map(id => getTool(id)).filter(Boolean).map(renderToolCard).join('');
+
+  const ramIds = [78]; // Mem Reduct
+  document.getElementById('ramToolsGrid').innerHTML = ramIds
+    .map(id => getTool(id)).filter(Boolean).map(renderToolCard).join('');
+
+  const cacheIds = [36, 74]; // Kudu, BleachBit
+  document.getElementById('cacheToolsGrid').innerHTML = cacheIds
+    .map(id => getTool(id)).filter(Boolean).map(renderToolCard).join('');
+
+  // Bulk App Installer
+  const installerIds = [79, 41]; // TaraTari Installer, Ninite
+  document.getElementById('starterPackGrid').innerHTML = installerIds
+    .map(id => getTool(id)).filter(Boolean).map(renderToolCard).join('');
+
+  // ISOs (ISO cards + USB tools)
+  const isoToolIds = [44, 45, 34, 46, 64, 81];
+  document.getElementById('isoToolsGrid').innerHTML = isoToolIds
+    .map(id => getTool(id)).filter(Boolean).map(renderToolCard).join('');
+
+  // WinGet tools
+  const wingetIds = [38, 39, 40];
+  document.getElementById('wingetToolsGrid').innerHTML = wingetIds
+    .map(id => getTool(id)).filter(Boolean).map(renderToolCard).join('');
+
+  // Android debloat
+  const debloatIds = [33];
+  document.getElementById('androidDebloatGrid').innerHTML = debloatIds
+    .map(id => getTool(id)).filter(Boolean).map(renderToolCard).join('');
+
+  // Init both playbook pickers
+  initPlaybookSection('wizardStepOs', 'wizardStepPlaybook');
+  initPlaybookSection('stepOs', 'stepPlaybook');
+}
+
+/* =========================================================
+   PLATFORM TABS
+   ========================================================= */
+function setOptimizeTab(tab) {
+  document.querySelectorAll('.optimize-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.opt === tab);
+  });
+  document.querySelectorAll('.optimize-panel').forEach(p => {
+    p.hidden = p.dataset.panel !== tab;
+  });
+}
+
+document.querySelectorAll('.optimize-tab').forEach(tab => {
+  tab.addEventListener('click', () => setOptimizeTab(tab.dataset.opt));
+});
+
+/* =========================================================
+   NAV INDICATOR
+   ========================================================= */
+function positionIndicator(btn, animate) {
+  const indicator = document.getElementById('navIndicator');
+  if (!indicator || !btn) return;
+  if (!animate) indicator.style.transition = 'none';
+  indicator.style.width = btn.offsetWidth + 'px';
+  indicator.style.transform = `translateY(-50%) translateX(${btn.offsetLeft}px)`;
+  if (!animate) {
+    indicator.offsetHeight;
+    indicator.style.transition = '';
+  }
+}
+
+function initNavIndicator() {
+  const indicator = document.getElementById('navIndicator');
+  const desktopNav = document.getElementById('desktopNav');
+
+  const active = document.querySelector('.nav__item.active');
+  if (active) positionIndicator(active, false);
+
+  document.querySelectorAll('.nav__item').forEach(item => {
+    item.addEventListener('mouseenter', function() {
+      if (!indicator) return;
+      indicator.style.width = this.offsetWidth + 'px';
+      indicator.style.transform = `translateY(-50%) translateX(${this.offsetLeft}px)`;
+    });
+  });
+
+  if (desktopNav) {
+    desktopNav.addEventListener('mouseleave', function() {
+      const current = document.querySelector('.nav__item.active');
+      if (indicator && current) {
+        indicator.style.width = current.offsetWidth + 'px';
+        indicator.style.transform = `translateY(-50%) translateX(${current.offsetLeft}px)`;
+      }
+    });
+  }
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      const currentActive = document.querySelector('.nav__item.active');
+      if (currentActive) positionIndicator(currentActive, false);
+    });
+  }
+}
+
+window.addEventListener('resize', debounce(function() {
+  const active = document.querySelector('.nav__item.active');
+  if (active) positionIndicator(active, false);
+}, 200), { passive: true });
+
+/* =========================================================
+   COPY BUTTONS
+   ========================================================= */
+document.querySelectorAll('.copy-btn[data-copy]').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const text = this.dataset.copy;
+    const self = this;
+    const done = () => {
+      const orig = self.textContent;
+      self.textContent = 'Copied';
+      self.classList.add('copied');
+      setTimeout(() => { self.textContent = orig; self.classList.remove('copied'); }, 1800);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+    } else {
+      fallbackCopy(text, done);
+    }
+  });
+});
+
+function fallbackCopy(text, cb) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); cb(); } catch(e) {}
+  document.body.removeChild(ta);
+}
+
+/* =========================================================
+   SCROLL
+   ========================================================= */
+const backTop = document.getElementById('backTop');
+let scrollPending = false;
+window.addEventListener('scroll', function() {
+  if (scrollPending) return;
+  scrollPending = true;
+  requestAnimationFrame(() => {
+    backTop.classList.toggle('visible', window.scrollY > 400);
+    scrollPending = false;
+  });
+}, { passive: true });
+backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+function debounce(fn, wait) {
+  let timer;
+  return function(...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), wait);
+  };
+}
+
+/* =========================================================
+   BFCACHE SAFETY
+   ========================================================= */
+window.addEventListener('pageshow', function(event) {
+  if (event.persisted) {
+    document.getElementById('pageLoader').classList.add('done');
+    const active = document.querySelector('.nav__item.active');
+    if (active) positionIndicator(active, false);
+  }
+});
+
+window.addEventListener('pagehide', function() {
+  document.getElementById('pageLoader').classList.add('done');
+});
+
+/* =========================================================
+   INIT
+   ========================================================= */
+function init() {
+  renderAllSections();
+  bindCtaButtons();
+  setOptimizeTab('pc');
+
+  // Guides start CLOSED by default (unless saved as open)
+  let winOpen = false;
+  let androidOpen = false;
+  try {
+    winOpen = localStorage.getItem('taratan_win_guide_open') === '1';
+    androidOpen = localStorage.getItem('taratan_android_guide_open') === '1';
+  } catch (e) {}
+
+  if (winOpen) {
+    winGuide.hidden = false;
+    winGuideOpen.hidden = true;
+    setGuideStep(1);
+  } else {
+    winGuide.hidden = true;
+    winGuideOpen.hidden = false;
+  }
+
+  if (androidOpen) {
+    androidGuide.hidden = false;
+    androidGuideOpen.hidden = true;
+    setAGuideStep(1);
+  } else {
+    androidGuide.hidden = true;
+    androidGuideOpen.hidden = false;
+  }
+
+  initNavIndicator();
+
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('pageLoader').classList.add('done');
+    }, 800);
+  });
+  if (document.readyState === 'complete') {
+    setTimeout(() => {
+      document.getElementById('pageLoader').classList.add('done');
+    }, 800);
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+</script>
+
+</body>
+</html>
