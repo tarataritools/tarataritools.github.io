@@ -1207,9 +1207,9 @@ a:hover { text-decoration: underline; }
       <button class="nav__item active" data-target="home">
         <span class="material-symbols-rounded">home</span> Home
       </button>
-      <button class="nav__item" data-target="optimize">
+      <a href="https://tarataritools.github.io/optimize" class="nav__item">
         <span class="material-symbols-rounded">bolt</span> Optimize
-      </button>
+      </a>
       <a href="https://tarataritools.github.io/ditch" class="nav__item">
         <span class="material-symbols-rounded">swap_horiz</span> TaraTariDitch
         <span class="new-badge">NEW</span>
@@ -2319,8 +2319,25 @@ window.addEventListener('pageshow', function(event) {
     hideLoader();
     navBusy = false;
     userChoseOptTab = false;
-    // Reposition indicator after restore
-    const active = document.querySelector('.nav__item.active');
+
+    // Sync nav active state with visible page
+    const visiblePage = document.querySelector('.page.active');
+    if (visiblePage) {
+      const pageTarget = visiblePage.id.replace('page-', '');
+      document.querySelectorAll('.nav__item, .bottom-nav__item').forEach(el => {
+        el.classList.toggle('active', el.dataset.target === pageTarget);
+      });
+    }
+
+    // Ensure there's always an active nav item; fall back to Home
+    let active = document.querySelector('.nav__item.active');
+    if (!active) {
+      const home = document.querySelector('.nav__item[data-target="home"]');
+      if (home) {
+        home.classList.add('active');
+        active = home;
+      }
+    }
     if (active) positionIndicator(active, false);
   }
 });
@@ -2421,6 +2438,16 @@ slides.forEach(slide => {
         goInternal('installer');
       } else {
         goExternal('https://tarataritools.github.io/installer/');
+      }
+      return;
+    }
+
+    // Optimize slide: mobile → internal page, desktop → external optimize site
+    if (this.dataset.target === 'optimize') {
+      if (isMobileViewport()) {
+        goInternal('optimize');
+      } else {
+        goExternal('https://tarataritools.github.io/optimize');
       }
       return;
     }
